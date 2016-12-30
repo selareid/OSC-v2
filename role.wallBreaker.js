@@ -20,12 +20,13 @@ module.exports = {
                             }
                             else {
                                 var targetStructure = this.getTargetStructure(creep);
-                                if (targetStructure) {
-                                    var attackStructureResult = creep.attack(targetStructure);
+                                var targetSpawn = targetFlag.room.find(FIND_HOSTILE_SPAWNS)[0];
+                                if (targetSpawn) {
+                                    var attackStructureResult = creep.attack(targetSpawn);
 
                                     switch (attackStructureResult) {
                                         case -9: // returns ERR_NOT_IN_RANGE
-                                            creep.moveTo(attackStructureResult, {reusePath: 3, ignoreRoads: true});
+                                            creep.moveTo(attackStructureResult, {reusePath: 3, ignoreRoads: true, ignoreDestructibleStructures: true});
                                             break;
                                         case 0: // returns OK
                                             //creep.say something here using prototype.creepSpeech.js
