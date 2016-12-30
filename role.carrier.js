@@ -47,9 +47,16 @@ module.exports = {
 
             var droppedResource = room.find(FIND_DROPPED_RESOURCES)[0];
             if (droppedResource) {
-                if (creep.pickup(droppedResource) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(droppedResource);
+                var pickupResult = creep.pickup(droppedResource);
+                switch (pickupResult) {
+                    case 0:
+                        delete creep.memory.container;
+                        break;
+                    case -9:
+                        creep.moveTo(droppedResource, {reusePath: 7});
+                        break;
                 }
+
             }
             else {
 
@@ -86,8 +93,14 @@ module.exports = {
                     var link = creep.pos.findClosestByRange(_.filter(global[room.name].links, (l) => l.energy > 0));
 
                     if (link) {
-                        if (creep.withdraw(link, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                            creep.moveTo(link, {reusePath: 10})
+                        var withdrawResult = creep.withdraw(link, RESOURCE_ENERGY);
+                        switch (withdrawResult) {
+                            case 0:
+                                delete creep.memory.container;
+                                break;
+                            case -9:
+                                creep.moveTo(droppedResource, {reusePath: 9});
+                                break;
                         }
                     }
                     else {
