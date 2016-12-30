@@ -100,7 +100,7 @@ module.exports = {
     },
 
     findStructureToRepair: function (room, creep) {
-        var structure = creep.memory.structureToRepair;
+        var structure = Game.getObjectById(creep.memory.structureToRepair);
 
         if (structure) {
             if (!structure.hits < structure.hitsMax) {
@@ -117,7 +117,7 @@ module.exports = {
             }));
         }
 
-        creep.memory.structureToRepair = structure;
+        creep.memory.structureToRepair = structure.id;
         return structure;
     },
 
