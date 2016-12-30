@@ -1,6 +1,6 @@
-require('prototype.room')();
+require('prototype.room');
 
-const spawnHandler = require('spawnHandler');
+const spawnHandler = require('spawnerHandler');
 const linkHandler = require ('linkHandler');
 const defenceHandler = require ('defenceHandler');
 const towerHandler = require ('towerHandler');
