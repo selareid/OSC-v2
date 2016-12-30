@@ -303,14 +303,8 @@ module.exports = {
             else if (minimumNumberOfUpgraders > upgradersInQueue + numberOfUpgraders) {
                 creepToAddToQueue = 'upgrader';
             }
-            else if (minimumNumberOfBuilders > buildersInQueue + numberOfBuilders) {
-                creepToAddToQueue = 'builder';
-            }
             else if (minimumNumberOfCaretakers > caretakersInQueue + numberOfCaretakers) {
                 creepToAddToQueue = 'caretaker';
-            }
-            else if (minimumNumberOfDefenceManagers > defenceManagersInQueue + numberOfDefenceManagers) {
-                creepToAddToQueue = 'defenceManager';
             }
             else if (minimumNumberOfEnergyThiefs > energyThiefsInQueue + numberOfEnergyThiefs) {
                 creepToAddToQueue = 'energyThief';
