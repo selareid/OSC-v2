@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="44df1398-4323-413e-b48d-9ad218ef7d8d" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spawnerHandler.js" afterPath="$PROJECT_DIR$/spawnerHandler.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/role.caretaker.js" afterPath="$PROJECT_DIR$/role.caretaker.js" />
     </list>
     <ignored path="NSC-v2.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -28,11 +28,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="spawnerHandler.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/spawnerHandler.js">
+      <file leaf-file-name="role.caretaker.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/role.caretaker.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="86">
-              <caret line="307" column="13" selection-start-line="307" selection-start-column="13" selection-end-line="307" selection-end-column="13" />
+            <state relative-caret-position="135">
+              <caret line="109" column="15" selection-start-line="109" selection-start-column="15" selection-end-line="109" selection-end-column="15" />
               <folding />
             </state>
           </provider>
@@ -56,10 +56,10 @@
         <option value="$PROJECT_DIR$/role.wallBreaker.js" />
         <option value="$PROJECT_DIR$/screeps-profiler.js" />
         <option value="$PROJECT_DIR$/main.js" />
-        <option value="$PROJECT_DIR$/role.caretaker.js" />
         <option value="$PROJECT_DIR$/prototype.creepSpeech.js" />
         <option value="$PROJECT_DIR$/prototype.spawn.js" />
         <option value="$PROJECT_DIR$/spawnerHandler.js" />
+        <option value="$PROJECT_DIR$/role.caretaker.js" />
       </list>
     </option>
   </component>
@@ -154,12 +154,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1483057831957</updated>
-      <workItem from="1483057833192" duration="13995000" />
+      <workItem from="1483057833192" duration="14127000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="13995000" />
+    <option name="totallyTimeSpent" value="14127000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1" y="23" width="1920" height="990" extended-state="6" />
@@ -361,14 +361,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/role.caretaker.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="61" column="52" selection-start-line="61" selection-start-column="52" selection-end-line="61" selection-end-column="52" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/prototype.creepSpeech.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
@@ -389,6 +381,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="86">
           <caret line="307" column="13" selection-start-line="307" selection-start-column="13" selection-end-line="307" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/role.caretaker.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="109" column="15" selection-start-line="109" selection-start-column="15" selection-end-line="109" selection-end-column="15" />
           <folding />
         </state>
       </provider>

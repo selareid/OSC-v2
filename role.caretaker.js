@@ -106,14 +106,14 @@ module.exports = {
             if (!structure.hits < structure.hitsMax) {
                 structure = creep.pos.findClosestByRange(room.find(FIND_STRUCTURES, {
                     filter: (s) => s.structureType != STRUCTURE_WALL && s.structureType != STRUCTURE_RAMPART
-                    && s.hits < (s.hitsMax * 0.2)
+                    && s.hits < (s.hitsMax * 0.5)
                 }));
             }
         }
         else {
             structure = creep.pos.findClosestByRange(room.find(FIND_STRUCTURES, {
                 filter: (s) => s.structureType != STRUCTURE_WALL && s.structureType != STRUCTURE_RAMPART
-                && s.hits < (s.hitsMax * 0.2)
+                && s.hits < (s.hitsMax * 0.5)
             }));
         }
 
