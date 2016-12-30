@@ -1,6 +1,6 @@
 require('global');
-const roomHandler = require('roomHandler')();
-const creepHandler = require('creepHandler')();
+const roomHandler = require('roomHandler');
+const creepHandler = require('creepHandler');
 
 console.log('reset!'); // reset log
 console.log(Game.cpu.bucket); // reset log
