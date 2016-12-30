@@ -17,6 +17,7 @@ module.exports = {
         if (creep.memory.working == true) {
             var structureToRepair = this.findStructureToRepair(room, creep);
             if (structureToRepair) {
+                creep.creepSpeech(room, 'repairing');
                 if (creep.repair(structureToRepair) == ERR_NOT_IN_RANGE) {
                     this.moveToWithCostMatrix(room, creep, structureToRepair);
                 }
@@ -24,6 +25,7 @@ module.exports = {
             else {
                 var structureToBuild = creep.pos.findClosestByRange(room.find(FIND_MY_CONSTRUCTION_SITES));
                 if (structureToBuild) {
+                    creep.creepSpeech(room, 'building');
                     if (creep.build(structureToBuild) == ERR_NOT_IN_RANGE) {
                         this.moveToWithCostMatrix(room, creep, structureToBuild);
                     }
@@ -31,6 +33,7 @@ module.exports = {
                 else {
                     var defenseToRepair = this.findDefence(room, creep);
                     if (defenseToRepair) {
+                        creep.creepSpeech(room, 'repairingDefence');
                         if (creep.repair(defenseToRepair) == ERR_NOT_IN_RANGE) {
                             this.moveToWithCostMatrix(room, creep, defenseToRepair);
                         }
@@ -38,6 +41,7 @@ module.exports = {
                     else {
                         var towerToRefill = this.getTowerToRefill(room);
                         if (towerToRefill) {
+                            creep.creepSpeech(room, 'refillingTower');
                             if (creep.build(towerToRefill) == ERR_NOT_IN_RANGE) {
                                 creep.moveTo(towerToRefill, {reusePath: 10});
                             }
