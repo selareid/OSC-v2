@@ -5,9 +5,6 @@ const roleCarrier = require ('role.carrier');
 const roleDistributor = require ('role.distributor');
 const roleUpgrader = require ('role.upgrader');
 const roleCaretaker = require ('role.caretaker');
-const roleBuilder = require ('role.builder');
-const roleRepairer = require ('role.repairer');
-const roleDefenceManager = require ('role.defenceManager');
 const roleLandlord = require ('role.landlord');
 const otherRoomCreep = require ('role.otherRoomCreep');
 const energyThief = require ('role.energyThief');
@@ -83,17 +80,8 @@ module.exports = {
                 case 'upgrader':
                     roleUpgrader.run(room, creep);
                     break;
-                case 'builder':
-                    roleBuilder.run(room, creep);
-                    break;
                 case 'caretaker':
                     roleCaretaker.run(room, creep);
-                    break;
-                case 'repairer':
-                    roleRepairer.run(room, creep);
-                    break;
-                case 'defenceManager':
-                    roleDefenceManager.run(room, creep, Memory.rooms[room].isUnderAttack);
                     break;
                 case 'landlord':
                     roleLandlord.run(room, creep);
