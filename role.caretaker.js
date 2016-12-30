@@ -31,7 +31,7 @@ module.exports = {
                 else {
                     var defenseToRepair = this.findDefence(room, creep);
                     if (defenseToRepair) {
-                        if (creep.build(defenseToRepair) == ERR_NOT_IN_RANGE) {
+                        if (creep.repair(defenseToRepair) == ERR_NOT_IN_RANGE) {
                             this.moveToWithCostMatrix(room, creep, defenseToRepair);
                         }
                     }

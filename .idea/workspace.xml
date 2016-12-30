@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="44df1398-4323-413e-b48d-9ad218ef7d8d" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/prototype.spawn.js" afterPath="$PROJECT_DIR$/prototype.spawn.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/role.caretaker.js" afterPath="$PROJECT_DIR$/role.caretaker.js" />
     </list>
     <ignored path="NSC-v2.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -28,31 +28,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="spawnerHandler.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/spawnerHandler.js">
+      <file leaf-file-name="role.caretaker.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/role.caretaker.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="600">
-              <caret line="86" column="67" selection-start-line="86" selection-start-column="67" selection-end-line="86" selection-end-column="67" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="role.wallBreaker.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/role.wallBreaker.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="395">
-              <caret line="28" column="148" selection-start-line="28" selection-start-column="148" selection-end-line="28" selection-end-column="148" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="prototype.spawn.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/prototype.spawn.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="705">
-              <caret line="147" column="31" selection-start-line="147" selection-start-column="31" selection-end-line="147" selection-end-column="31" />
+            <state relative-caret-position="290">
+              <caret line="97" column="4" selection-start-line="97" selection-start-column="4" selection-end-line="97" selection-end-column="4" />
               <folding />
             </state>
           </provider>
@@ -70,7 +50,6 @@
         <option value="$PROJECT_DIR$/role.otherRoomCreep.js" />
         <option value="$PROJECT_DIR$/role.energyThief.js" />
         <option value="$PROJECT_DIR$/main.js" />
-        <option value="$PROJECT_DIR$/role.caretaker.js" />
         <option value="$PROJECT_DIR$/creepHandler.js" />
         <option value="$PROJECT_DIR$/roomHandler.js" />
         <option value="$PROJECT_DIR$/defenceHandler.js" />
@@ -78,6 +57,7 @@
         <option value="$PROJECT_DIR$/spawnerHandler.js" />
         <option value="$PROJECT_DIR$/role.wallBreaker.js" />
         <option value="$PROJECT_DIR$/prototype.spawn.js" />
+        <option value="$PROJECT_DIR$/role.caretaker.js" />
       </list>
     </option>
   </component>
@@ -171,12 +151,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1483057831957</updated>
-      <workItem from="1483057833192" duration="10691000" />
+      <workItem from="1483057833192" duration="10858000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10691000" />
+    <option name="totallyTimeSpent" value="10858000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1920" height="990" extended-state="6" />
@@ -303,14 +283,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/role.caretaker.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="35" selection-start-line="2" selection-start-column="35" selection-end-line="2" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/creepHandler.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="635">
@@ -353,22 +325,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/spawnerHandler.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="600">
-          <caret line="86" column="67" selection-start-line="86" selection-start-column="67" selection-end-line="86" selection-end-column="67" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/role.wallBreaker.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="395">
-          <caret line="28" column="148" selection-start-line="28" selection-start-column="148" selection-end-line="28" selection-end-column="148" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/prototype.room.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="500">
@@ -381,6 +337,30 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="705">
           <caret line="147" column="31" selection-start-line="147" selection-start-column="31" selection-end-line="147" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/role.wallBreaker.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="395">
+          <caret line="28" column="148" selection-start-line="28" selection-start-column="148" selection-end-line="28" selection-end-column="148" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spawnerHandler.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="600">
+          <caret line="86" column="67" selection-start-line="86" selection-start-column="67" selection-end-line="86" selection-end-column="67" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/role.caretaker.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="290">
+          <caret line="97" column="4" selection-start-line="97" selection-start-column="4" selection-end-line="97" selection-end-column="4" />
           <folding />
         </state>
       </provider>
