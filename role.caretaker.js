@@ -31,19 +31,19 @@ module.exports = {
                     }
                 }
                 else {
-                    var defenseToRepair = this.findDefence(room, creep);
-                    if (defenseToRepair) {
-                        creep.creepSpeech(room, 'repairingDefence');
-                        if (creep.repair(defenseToRepair) == ERR_NOT_IN_RANGE) {
-                            this.moveToWithCostMatrix(room, creep, defenseToRepair);
+                    var towerToRefill = this.getTowerToRefill(room);
+                    if (towerToRefill) {
+                        creep.creepSpeech(room, 'refillingTower');
+                        if (creep.build(towerToRefill) == ERR_NOT_IN_RANGE) {
+                            creep.moveTo(towerToRefill, {reusePath: 10});
                         }
                     }
                     else {
-                        var towerToRefill = this.getTowerToRefill(room);
-                        if (towerToRefill) {
-                            creep.creepSpeech(room, 'refillingTower');
-                            if (creep.build(towerToRefill) == ERR_NOT_IN_RANGE) {
-                                creep.moveTo(towerToRefill, {reusePath: 10});
+                        var defenseToRepair = this.findDefence(room, creep);
+                        if (defenseToRepair) {
+                            creep.creepSpeech(room, 'repairingDefence');
+                            if (creep.repair(defenseToRepair) == ERR_NOT_IN_RANGE) {
+                                this.moveToWithCostMatrix(room, creep, defenseToRepair);
                             }
                         }
                     }
