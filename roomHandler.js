@@ -1,5 +1,6 @@
 require('prototype.room')();
 
+const spawnHandler = require('spawnHandler')();
 const linkHandler = require ('linkHandler');
 const defenceHandler = require ('defenceHandler');
 const towerHandler = require ('towerHandler');
@@ -127,5 +128,7 @@ module.exports = {
         //tower stuff starts
         towerHandler.run(room);
         //tower stuff ends
+
+        spawnHandler.run(room);
     }
 };

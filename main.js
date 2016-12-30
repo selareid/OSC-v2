@@ -74,8 +74,6 @@ if (Game.cpu.bucket > 300) module.exports.loop = function () {
                         else {
                             Memory.rooms = {};
                         }
-
-                        roomHandler.run(room);
                     }
                     catch (err) {
                         if (err !== null && err !== undefined) {
@@ -83,11 +81,9 @@ if (Game.cpu.bucket > 300) module.exports.loop = function () {
                             console.log("Error in Memory.room logic: \n" + err + "\n" + err.stack);
                         }
                     }
-                    // run roomHandler here
+                roomHandler.run(room);
             }
         }
-
-        //spawn stuff here
 
         creepHandler.run();
 
