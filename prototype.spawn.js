@@ -145,7 +145,7 @@ module.exports = function () {
                         }
                     }
                     return this.createCreep(sortedParts(body), creepName(roleName), {role: roleName, room: room.name, working: false});
-                case 'repairer':
+                case 'caretaker':
                     numberOfParts = Math.floor((energy - (energy * amountToSave)) / 200);
                     if (numberOfParts > 0) {
                         if (numberOfParts > 16) numberOfParts = 16;
