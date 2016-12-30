@@ -3,7 +3,7 @@ require('global');
 require('prototype.spawn')();
 
 module.exports = {
-    run: function (room) {
+    run: function (room, remoteCreepFlags, roomToStealFrom) {
 
         //make sure memory is set
         if (!Memory.rooms[room].spawnQueue || Game.time % 50 == 0) {
@@ -136,7 +136,6 @@ module.exports = {
                 else {
                     minimumNumberOfOtherRoomCreeps = 0;
                 }
-                var roomToStealFrom = global[room.name].cachedroomToStealFrom;
                 if (roomToStealFrom && roomToStealFrom.memory != undefined) {
                     minimumNumberOfEnergyThiefs = roomToStealFrom.memory.numberOfCreeps;
                 }
@@ -209,7 +208,6 @@ module.exports = {
                 minimumNumberOfLandlords = numberOfClaimFlags + amountOfReservers;
 
                 //set number of remote creeps
-                var remoteCreepFlags = global[room.name].cachedRemoteCreepFlags;
                 var tempRemoteHarvesters = 0;
                 var tempRemoteHaulers = 0;
 
@@ -247,17 +245,58 @@ module.exports = {
 
             minimumNumberOfGuards = 1;
 
+            //set number of some creep roles depending on energy mode
+            switch (Memory.rooms[room].energyMode) {
+                case 'spendy':
+                    if (room.controller.level < 8) {
+                        if (room.controller.level < 5) {
+                            minimumNumberOfUpgraders = 7;
+                        }
+                        else {
+                            minimumNumberOfUpgraders = 10;
+                        }
+                    }
+                    else {
+                        minimumNumberOfUpgraders = 1;
+                    }
 
-            if (room.controller.level < 8) {
-                if (room.controller.level < 5) {
-                    minimumNumberOfUpgraders = 7;
-                }
-                else {
-                    minimumNumberOfUpgraders = 10;
-                }
-            }
-            else {
-                minimumNumberOfUpgraders = 1;
+                    minimumNumberOfBuilders = 1;
+                    minimumNumberOfRepairers = 1;
+                    break;
+                case 'normal':
+                    minimumNumberOfUpgraders = 1;
+                    minimumNumberOfBuilders = 1;
+                    minimumNumberOfRepairers = 1;
+                    break;
+                case 'ok':
+                    minimumNumberOfUpgraders = 1;
+                    minimumNumberOfBuilders = 1;
+                    minimumNumberOfRepairers = 1;
+                    minimumNumberOfMarketMovers = 0;
+                    break;
+                case 'saving':
+                    minimumNumberOfUpgraders = 1;
+                    minimumNumberOfBuilders = 1;
+                    minimumNumberOfRepairers = 1;
+                    //minimumNumberOfDefenceManagers = 1;
+                    minimumNumberOfLandlords = 0;
+                    // minimumNumberOfRemoteHarvesters = 0;
+                    // minimumNumberOfRemoteHaulers = 0;
+                    minimumNumberOfOtherRoomCreeps = 0;
+//minimumNumberOfEnergyThiefs = 0;
+                    minimumNumberOfMiners = 0;
+                    minimumNumberOfMarketMovers = 0;
+                    minimumNumberOfGuards = 1;
+                    break;
+                case 'upgrading':
+                    minimumNumberOfHarvesters = 5;
+                    minimumNumberOfUpgraders = 3;
+                    break;
+                case 'building':
+                    minimumNumberOfBuilders = 3;
+                    break;
+                default:
+                    break;
             }
 
             var isUnderAttack = Memory.rooms[room].isUnderAttack;
@@ -279,10 +318,6 @@ module.exports = {
                 minimumNumberOfOtherRoomCreeps = 0;
                 minimumNumberOfEnergyHelpers = 0;
                 minimumNumberOfMiners = 0;
-            }
-            else {
-                minimumNumberOfBuilders = 1;
-                minimumNumberOfRepairers = 1;
             }
 
             //add creeps close to death to queue
