@@ -254,10 +254,10 @@ module.exports = {
 
             if (room.controller.level < 8) {
                 if (room.controller.level < 5) {
-                    minimumNumberOfUpgraders = 7;
+                    minimumNumberOfUpgraders = 3;
                 }
                 else {
-                    minimumNumberOfUpgraders = 10;
+                    minimumNumberOfUpgraders = 5;
                 }
             }
             else {
