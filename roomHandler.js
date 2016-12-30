@@ -91,10 +91,6 @@ module.exports = {
             if (Game.time % 23 == 0 || global[room.name].cachedRemoteCreepFlags == undefined) {
                 var newRemoteCreepFlags = room.getRemoteFlags(); // get remote flags
                 global[room.name].cachedRemoteCreepFlags = newRemoteCreepFlags; //cache remote flags
-                return newRemoteCreepFlags; // use new remote flags
-            }
-            else {
-                return global[room.name].cachedRemoteCreepFlags; //used cached remote flags
             }
         //remote flag stuff ends
 
