@@ -16,13 +16,6 @@ module.exports = {
                 Game.notify('Prepare to die future self');
             }
         }
-
-        var towers = room.find(FIND_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_TOWER});
-
-        for (let tower of towers) {
-            towerHandler.attackRun(room, tower);
-        }
-
     },
 
     getHostileCreeps: function (room) {
