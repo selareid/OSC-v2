@@ -117,7 +117,7 @@ module.exports = {
             }));
         }
 
-        creep.memory.structureToRepair = structure.id;
+        if (structure) creep.memory.structureToRepair = structure.id;
         return structure;
     },
 
