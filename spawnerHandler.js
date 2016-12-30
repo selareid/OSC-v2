@@ -86,7 +86,7 @@ module.exports = {
             Memory.rooms[room].spawnQueue.priority.push('harvester');
             Memory.rooms[room].spawnQueue.normal.push('harvester');
         }
-        else if (numberOfDistributors == 0 && (Memory.rooms[room].spawnQueue.priority[0] != 'distributor' || Memory.rooms[room].spawnQueue.normal[0] != 'distributor')) {
+        else if (numberOfDistributors == 0 && Memory.rooms[room].spawnQueue.normal[0] != 'distributor') {
             Memory.rooms[room].spawnQueue.normal.splice(0, 0, 'distributor');
             Memory.rooms[room].spawnQueue.priority = [];
         }
