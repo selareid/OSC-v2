@@ -1,6 +1,6 @@
 require('prototype.room')();
 
-const spawnHandler = require('spawnerHandler');
+const spawnerHandler = require ('spawnerHandler');
 const linkHandler = require ('linkHandler');
 const defenceHandler = require ('defenceHandler');
 const towerHandler = require ('towerHandler');
@@ -131,6 +131,15 @@ module.exports = {
         towerHandler.run(room);
         //tower stuff ends
 
-        spawnHandler.run(room);
+        try {
+            spawnerHandler.run(room);
+        }
+        catch (err) {
+            if (err !== null && err !== undefined) {
+                Game.notify("Error in spawner logic: \n" + err + "\n " + err.stack);
+                console.log("Error in spawner logic: \n" + err + "\n" + err.stack + " room: " + room.name);
+            }
+        }
+
     }
 };
