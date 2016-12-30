@@ -25,13 +25,15 @@ const roleWarHealer = require ('role.warHealer');
 const roleTowerDrainer = require ('role.towerDrainer');
 
 module.exports = {
-    run: function (room, areWeUnderAttack, otherRoomCreepsRoomToGoToPos, remoteCreepFlags, energyThiefFlag, energyHelperFlag) {
+    run: function () {
 
         try {
             for (let name in Game.creeps) {
                 let creep = Game.creeps[name];
+                let room = Game.rooms[creep.memory.room];
 
-                this.creepActions(room, creep, remoteCreepFlags, energyThiefFlag, energyHelperFlag, otherRoomCreepsRoomToGoToPos);
+
+                this.creepActions(room, creep);
 
             }
         }
@@ -44,7 +46,7 @@ module.exports = {
 
     },
 
-    creepActions: function (room, creep, remoteCreepFlags, energyThiefFlag, energyHelperFlag, roomToGoTo) {
+    creepActions: function (room, creep) {
         if (creep.memory.room == room.name && creep.spawning === false) {
             var energyOfTowers = this.getEnergyOfTower(room);
             if (!global[creep.name]) {
@@ -93,28 +95,19 @@ module.exports = {
                     roleLandlord.run(room, creep);
                     break;
                 case 'otherRoomCreep':
-                    if (roomToGoTo) {
-                        otherRoomCreep.run(room, creep, roomToGoTo);
-                    }
-                    else {
-                        creep.memory.role = 'upgrader';
-                    }
+                        otherRoomCreep.run(room, creep);
                     break;
                 case 'energyThief':
-                    if (energyThiefFlag) {
-                        if (Game.cpu.bucket > 1000) energyThief.run(room, creep, energyThiefFlag);
-                    }
-                    else {
-                        creep.memory.role = 'carrier';
-                    }
+                        if (Game.cpu.bucket > 1000) energyThief.run(room, creep);
                     break;
                 case 'remoteHarvester':
-                    roleRemoteHarvester.run(room, creep, remoteCreepFlags);
+                    roleRemoteHarvester.run(room, creep, global[room.name].cachedRemoteCreepFlags);
                     break;
                 case 'remoteHauler':
-                    roleRemoteHauler.run(room, creep, remoteCreepFlags);
+                    roleRemoteHauler.run(room, creep, global[room.name].cachedRemoteCreepFlags);
                     break;
                 case 'energyHelper':
+                    var energyHelperFlag = global[room.name].cachedEnergyHelperFlags[0];
                     if (energyHelperFlag != undefined && energyHelperFlag.room != undefined) {
                         if (Game.cpu.bucket > 500) roleEnergyHelper.run(room, creep, energyHelperFlag);
                     }

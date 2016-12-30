@@ -1,3 +1,6 @@
+const roomHandler = require('roomHandler')();
+const creepHandler = require('creepHandler')();
+
 console.log('reset!'); // reset log
 console.log(Game.cpu.bucket); // reset log
 
@@ -71,6 +74,8 @@ if (Game.cpu.bucket > 300) module.exports.loop = function () {
                         else {
                             Memory.rooms = {};
                         }
+
+                        roomHandler.run(room);
                     }
                     catch (err) {
                         if (err !== null && err !== undefined) {
@@ -82,6 +87,8 @@ if (Game.cpu.bucket > 300) module.exports.loop = function () {
             }
         }
 
-        // creep stuff here
+        //spawn stuff here
+
+        creepHandler.run();
 
 };
