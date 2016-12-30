@@ -3,10 +3,14 @@ require('global');
 const roomHandler = require('roomHandler');
 const creepHandler = require('creepHandler');
 
+const profiler = require('screeps-profiler');
+
 console.log('reset!'); // reset log
 console.log(Game.cpu.bucket); // reset log
 
+profiler.enable();
 if (Game.cpu.bucket > 300) module.exports.loop = function () {
+    profiler.wrap(function () {
 
         try {
             //memory stuff
@@ -46,9 +50,9 @@ if (Game.cpu.bucket > 300) module.exports.loop = function () {
         }
 
         var attackTeamFlags = _.filter(Game.flags, f => f.memory.type == 'attackTeamFlag' && f.memory.team != undefined
-    && f.memory.timeToAttack != undefined && f.memory.timeToAttack != null && f.memory.timeToRally != undefined && f.memory.timeToRally != null
-    && f.memory.rallyFlag);
-    
+        && f.memory.timeToAttack != undefined && f.memory.timeToAttack != null && f.memory.timeToRally != undefined && f.memory.timeToRally != null
+        && f.memory.rallyFlag);
+
         for (let flag of attackTeamFlags) {
             if (global['warCache'][flag.memory.team] == undefined || Game.time % 3 == 0) {
                 global['warCache'][flag.memory.team] = {
@@ -62,31 +66,32 @@ if (Game.cpu.bucket > 300) module.exports.loop = function () {
         }
         //attack team flag stuff and global ends
 
-    //room stuff
+        //room stuff
         for (let room_it in Game.rooms) {
             var room = Game.rooms[room_it];
             var controller = room.controller;
             if (controller && controller.my) {
-                    try {
-                        if (Memory.rooms) {
-                            if (!Memory.rooms[room]) {
-                                Memory.rooms[room] = {};
-                            }
-                        }
-                        else {
-                            Memory.rooms = {};
+                try {
+                    if (Memory.rooms) {
+                        if (!Memory.rooms[room]) {
+                            Memory.rooms[room] = {};
                         }
                     }
-                    catch (err) {
-                        if (err !== null && err !== undefined) {
-                            Game.notify("Error in Memory.room logic: \n" + err + "\n " + err.stack);
-                            console.log("Error in Memory.room logic: \n" + err + "\n" + err.stack);
-                        }
+                    else {
+                        Memory.rooms = {};
                     }
+                }
+                catch (err) {
+                    if (err !== null && err !== undefined) {
+                        Game.notify("Error in Memory.room logic: \n" + err + "\n " + err.stack);
+                        console.log("Error in Memory.room logic: \n" + err + "\n" + err.stack);
+                    }
+                }
                 roomHandler.run(room);
             }
         }
 
         creepHandler.run();
 
+    });
 };
