@@ -133,31 +133,7 @@ module.exports = function () {
                         body.push(CARRY);
                     }
                     return this.createCreep(sortedParts(body), creepName(roleName), {role: roleName, room: room.name, working: false});
-                case 'builder':
-                    numberOfParts = Math.floor((energy - (energy * amountToSave)) / 200);
-                    if (numberOfParts > 0) {
-                        if (numberOfParts > 16) numberOfParts = 16;
-
-                        for (let i = 0; i < numberOfParts; i++) {
-                            body.push(WORK);
-                            body.push(CARRY);
-                            body.push(MOVE);
-                        }
-                    }
-                    return this.createCreep(sortedParts(body), creepName(roleName), {role: roleName, room: room.name, working: false});
                 case 'caretaker':
-                    numberOfParts = Math.floor((energy - (energy * amountToSave)) / 200);
-                    if (numberOfParts > 0) {
-                        if (numberOfParts > 16) numberOfParts = 16;
-
-                        for (let i = 0; i < numberOfParts; i++) {
-                            body.push(WORK);
-                            body.push(CARRY);
-                            body.push(MOVE);
-                        }
-                    }
-                    return this.createCreep(sortedParts(body), creepName(roleName), {role: roleName, room: room.name, working: false});
-                case 'defenceManager':
                     numberOfParts = Math.floor((energy - (energy * amountToSave)) / 200);
                     if (numberOfParts > 0) {
                         if (numberOfParts > 16) numberOfParts = 16;
