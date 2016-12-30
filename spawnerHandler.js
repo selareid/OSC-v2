@@ -16,7 +16,7 @@ module.exports = {
         var minimumNumberOfDistributors = Memory.rooms[room].populationGoal[2];
         var minimumNumberOfUpgraders = Memory.rooms[room].populationGoal[3];
         var minimumNumberOfBuilders = Memory.rooms[room].populationGoal[4];
-        var minimumNumberOfRepairers = Memory.rooms[room].populationGoal[5];
+        var minimumNumberOfCaretakers = Memory.rooms[room].populationGoal[5];
         var minimumNumberOfDefenceManagers = Memory.rooms[room].populationGoal[6];
         var minimumNumberOfLandlords = Memory.rooms[room].populationGoal[7];
         var minimumNumberOfRemoteHarvesters = Memory.rooms[room].populationGoal[8];
@@ -40,7 +40,7 @@ module.exports = {
         var numberOfDistributors = _.sum(Game.creeps, (c) => c.memory.role == 'distributor' && c.memory.room == room.name);
         var numberOfUpgraders = _.sum(Game.creeps, (c) => c.memory.role == 'upgrader' && c.memory.room == room.name);
         var numberOfBuilders = _.sum(Game.creeps, (c) => c.memory.role == 'builder' && c.memory.room == room.name);
-        var numberOfRepairers = _.sum(Game.creeps, (c) => c.memory.role == 'repairer' && c.memory.room == room.name);
+        var numberOfCaretakers = _.sum(Game.creeps, (c) => c.memory.role == 'caretaker' && c.memory.room == room.name);
         var numberOfDefenceManagers = _.sum(Game.creeps, (c) => c.memory.role == 'defenceManager' && c.memory.room == room.name);
         var numberOfLandlords = _.sum(Game.creeps, (c) => c.memory.role == 'landlord' && c.memory.room == room.name);
         var numberOfRemoteHarvesters = _.sum(Game.creeps, (c) => c.memory.role == 'remoteHarvester' && c.memory.room == room.name);
@@ -95,7 +95,7 @@ module.exports = {
                 var distributorsInQueue = _.sum(Memory.rooms[room].spawnQueue.normal, (r) => r == 'distributor');
                 var upgradersInQueue = _.sum(Memory.rooms[room].spawnQueue.normal, (r) => r == 'upgrader');
                 var buildersInQueue = _.sum(Memory.rooms[room].spawnQueue.normal, (r) => r == 'builder');
-                var repairersInQueue = _.sum(Memory.rooms[room].spawnQueue.normal, (r) => r == 'repairer');
+                var caretakersInQueue = _.sum(Memory.rooms[room].spawnQueue.normal, (r) => r == 'caretaker');
                 var defenceManagersInQueue = _.sum(Memory.rooms[room].spawnQueue.normal, (r) => r == 'defenceManager');
                 var landlordsInQueue = _.sum(Memory.rooms[room].spawnQueue.normal, (r) => r == 'landlord');
                 var remoteHarvestersInQueue = _.sum(Memory.rooms[room].spawnQueue.normal, (r) => r == 'remoteHarvester');
@@ -196,10 +196,10 @@ module.exports = {
                 //set minimumNumberOfDefenceManagers
                 var lowestDefenceHits = _.min(_.filter(room.find(FIND_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_RAMPART || s.structureType == STRUCTURE_WALL})), 'hits').hits;
                 if (lowestDefenceHits > 80000) {
-                    minimumNumberOfDefenceManagers = 1;
+                    minimumNumberOfDefenceManagers = 0;
                 }
                 else if (lowestDefenceHits > 50000) {
-                    minimumNumberOfDefenceManagers = 2;
+                    minimumNumberOfDefenceManagers = 0;
                 }
 
                 //set number of landlords
@@ -270,9 +270,9 @@ module.exports = {
 
                 minimumNumberOfGuards = Math.round(numberOfHostiles * 2.6);
                 minimumNumberOfUpgraders = 0;
-                minimumNumberOfBuilders = 1;
-                minimumNumberOfRepairers = 1;
-                minimumNumberOfDefenceManagers = 1;
+                minimumNumberOfBuilders = 0;
+                minimumNumberOfCaretakers = 1;
+                minimumNumberOfDefenceManagers = 0;
                 minimumNumberOfLandlords = 0;
                 minimumNumberOfRemoteHarvesters = 0;
                 minimumNumberOfRemoteHaulers = 0;
@@ -281,8 +281,8 @@ module.exports = {
                 minimumNumberOfMiners = 0;
             }
             else {
-                minimumNumberOfBuilders = 1;
-                minimumNumberOfRepairers = 1;
+                minimumNumberOfBuilders = 0;
+                minimumNumberOfCaretakers = 1;
             }
 
             //add creeps close to death to queue
@@ -316,8 +316,8 @@ module.exports = {
             else if (minimumNumberOfBuilders > buildersInQueue + numberOfBuilders) {
                 creepToAddToQueue = 'builder';
             }
-            else if (minimumNumberOfRepairers > repairersInQueue + numberOfRepairers) {
-                creepToAddToQueue = 'repairer';
+            else if (minimumNumberOfCaretakers > caretakersInQueue + numberOfCaretakers) {
+                creepToAddToQueue = 'caretaker';
             }
             else if (minimumNumberOfDefenceManagers > defenceManagersInQueue + numberOfDefenceManagers) {
                 creepToAddToQueue = 'defenceManager';
@@ -400,7 +400,7 @@ module.exports = {
         Memory.rooms[room].populationGoal[2] = minimumNumberOfDistributors;
         Memory.rooms[room].populationGoal[3] = minimumNumberOfUpgraders;
         Memory.rooms[room].populationGoal[4] = minimumNumberOfBuilders;
-        Memory.rooms[room].populationGoal[5] = minimumNumberOfRepairers;
+        Memory.rooms[room].populationGoal[5] = minimumNumberOfCaretakers;
         Memory.rooms[room].populationGoal[6] = minimumNumberOfDefenceManagers;
         Memory.rooms[room].populationGoal[7] = minimumNumberOfLandlords;
         Memory.rooms[room].populationGoal[8] = minimumNumberOfRemoteHarvesters;
