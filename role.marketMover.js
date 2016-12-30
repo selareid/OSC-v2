@@ -90,7 +90,7 @@ module.exports = {
                     creep.memory.working = false;
                     break;
                 case -9:
-                    creep.moveTo(rooms.storage);
+                    creep.moveTo(room.storage);
                     break;
             }
         }
