@@ -15,24 +15,22 @@ module.exports = {
         var minimumNumberOfCarriers = Memory.rooms[room].populationGoal[1];
         var minimumNumberOfDistributors = Memory.rooms[room].populationGoal[2];
         var minimumNumberOfUpgraders = Memory.rooms[room].populationGoal[3];
-        var minimumNumberOfBuilders = Memory.rooms[room].populationGoal[4];
-        var minimumNumberOfCaretakers = Memory.rooms[room].populationGoal[5];
-        var minimumNumberOfDefenceManagers = Memory.rooms[room].populationGoal[6];
-        var minimumNumberOfLandlords = Memory.rooms[room].populationGoal[7];
-        var minimumNumberOfRemoteHarvesters = Memory.rooms[room].populationGoal[8];
-        var minimumNumberOfRemoteHaulers = Memory.rooms[room].populationGoal[9];
-        var minimumNumberOfOtherRoomCreeps = Memory.rooms[room].populationGoal[10];
-        var minimumNumberOfEnergyThiefs = Memory.rooms[room].populationGoal[11];
-        var minimumNumberOfEnergyHelpers = Memory.rooms[room].populationGoal[12];
-        var minimumNumberOfMiners = Memory.rooms[room].populationGoal[13];
-        var minimumNumberOfMarketMovers = Memory.rooms[room].populationGoal[14];
-        var minimumNumberOfGuards = Memory.rooms[room].populationGoal[15];
-        var minimumNumberOfCreepHarassers = Memory.rooms[room].populationGoal[16];
-        var minimumNumberOfSpawnSmashers = Memory.rooms[room].populationGoal[17];
-        var minimumNumberOfStructureDestroyers = Memory.rooms[room].populationGoal[18];
-        var minimumNumberOfWallBreakers = Memory.rooms[room].populationGoal[19];
-        var minimumNumberOfWarHealers = Memory.rooms[room].populationGoal[20];
-        var minimumNumberOfTowerDrainers = Memory.rooms[room].populationGoal[21];
+        var minimumNumberOfCaretakers = Memory.rooms[room].populationGoal[4];
+        var minimumNumberOfLandlords = Memory.rooms[room].populationGoal[5];
+        var minimumNumberOfRemoteHarvesters = Memory.rooms[room].populationGoal[6];
+        var minimumNumberOfRemoteHaulers = Memory.rooms[room].populationGoal[7];
+        var minimumNumberOfOtherRoomCreeps = Memory.rooms[room].populationGoal[8];
+        var minimumNumberOfEnergyThiefs = Memory.rooms[room].populationGoal[9];
+        var minimumNumberOfEnergyHelpers = Memory.rooms[room].populationGoal[10];
+        var minimumNumberOfMiners = Memory.rooms[room].populationGoal[11];
+        var minimumNumberOfMarketMovers = Memory.rooms[room].populationGoal[12];
+        var minimumNumberOfGuards = Memory.rooms[room].populationGoal[13];
+        var minimumNumberOfCreepHarassers = Memory.rooms[room].populationGoal[14];
+        var minimumNumberOfSpawnSmashers = Memory.rooms[room].populationGoal[15];
+        var minimumNumberOfStructureDestroyers = Memory.rooms[room].populationGoal[16];
+        var minimumNumberOfWallBreakers = Memory.rooms[room].populationGoal[17];
+        var minimumNumberOfWarHealers = Memory.rooms[room].populationGoal[18];
+        var minimumNumberOfTowerDrainers = Memory.rooms[room].populationGoal[19];
 
         //get number of each creeps of each role
         var numberOfHarvesters = _.sum(Game.creeps, (c) => c.memory.role == 'harvester' && c.memory.room == room.name);
@@ -197,15 +195,6 @@ module.exports = {
                     }
                 }
 
-                //set minimumNumberOfDefenceManagers
-                var lowestDefenceHits = _.min(_.filter(room.find(FIND_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_RAMPART || s.structureType == STRUCTURE_WALL})), 'hits').hits;
-                if (lowestDefenceHits > 80000) {
-                    minimumNumberOfDefenceManagers = 0;
-                }
-                else if (lowestDefenceHits > 50000) {
-                    minimumNumberOfDefenceManagers = 0;
-                }
-
                 //set number of landlords
                 var numberOfClaimFlags = _.sum(Game.flags, (f) => f.memory.type == 'claimFlag' && f.memory.room == room.name);
                 var reserveFlags = _.filter(Game.flags, (f) => f.memory.type == 'reserveFlag' && f.memory.room == room.name);
@@ -274,9 +263,7 @@ module.exports = {
 
                 minimumNumberOfGuards = Math.round(numberOfHostiles * 2.6);
                 minimumNumberOfUpgraders = 0;
-                minimumNumberOfBuilders = 0;
                 minimumNumberOfCaretakers = 1;
-                minimumNumberOfDefenceManagers = 0;
                 minimumNumberOfLandlords = 0;
                 minimumNumberOfRemoteHarvesters = 0;
                 minimumNumberOfRemoteHaulers = 0;
@@ -285,7 +272,6 @@ module.exports = {
                 minimumNumberOfMiners = 0;
             }
             else {
-                minimumNumberOfBuilders = 0;
                 minimumNumberOfCaretakers = 1;
             }
 
@@ -403,24 +389,22 @@ module.exports = {
         Memory.rooms[room].populationGoal[1] = minimumNumberOfCarriers;
         Memory.rooms[room].populationGoal[2] = minimumNumberOfDistributors;
         Memory.rooms[room].populationGoal[3] = minimumNumberOfUpgraders;
-        Memory.rooms[room].populationGoal[4] = minimumNumberOfBuilders;
-        Memory.rooms[room].populationGoal[5] = minimumNumberOfCaretakers;
-        Memory.rooms[room].populationGoal[6] = minimumNumberOfDefenceManagers;
-        Memory.rooms[room].populationGoal[7] = minimumNumberOfLandlords;
-        Memory.rooms[room].populationGoal[8] = minimumNumberOfRemoteHarvesters;
-        Memory.rooms[room].populationGoal[9] = minimumNumberOfRemoteHaulers;
-        Memory.rooms[room].populationGoal[10] = minimumNumberOfOtherRoomCreeps;
-        Memory.rooms[room].populationGoal[11] = minimumNumberOfEnergyThiefs;
-        Memory.rooms[room].populationGoal[12] = minimumNumberOfEnergyHelpers;
-        Memory.rooms[room].populationGoal[13] = minimumNumberOfMiners;
-        Memory.rooms[room].populationGoal[14] = minimumNumberOfMarketMovers;
-        Memory.rooms[room].populationGoal[15] = minimumNumberOfGuards;
-        Memory.rooms[room].populationGoal[16] = minimumNumberOfCreepHarassers;
-        Memory.rooms[room].populationGoal[17] = minimumNumberOfSpawnSmashers;
-        Memory.rooms[room].populationGoal[18] = minimumNumberOfStructureDestroyers;
-        Memory.rooms[room].populationGoal[19] = minimumNumberOfWallBreakers;
-        Memory.rooms[room].populationGoal[20] = minimumNumberOfWarHealers;
-        Memory.rooms[room].populationGoal[21] = minimumNumberOfTowerDrainers;
+        Memory.rooms[room].populationGoal[4] = minimumNumberOfCaretakers;
+        Memory.rooms[room].populationGoal[5] = minimumNumberOfLandlords;
+        Memory.rooms[room].populationGoal[6] = minimumNumberOfRemoteHarvesters;
+        Memory.rooms[room].populationGoal[7] = minimumNumberOfRemoteHaulers;
+        Memory.rooms[room].populationGoal[8] = minimumNumberOfOtherRoomCreeps;
+        Memory.rooms[room].populationGoal[9] = minimumNumberOfEnergyThiefs;
+        Memory.rooms[room].populationGoal[10] = minimumNumberOfEnergyHelpers;
+        Memory.rooms[room].populationGoal[11] = minimumNumberOfMiners;
+        Memory.rooms[room].populationGoal[12] = minimumNumberOfMarketMovers;
+        Memory.rooms[room].populationGoal[13] = minimumNumberOfGuards;
+        Memory.rooms[room].populationGoal[14] = minimumNumberOfCreepHarassers;
+        Memory.rooms[room].populationGoal[15] = minimumNumberOfSpawnSmashers;
+        Memory.rooms[room].populationGoal[16] = minimumNumberOfStructureDestroyers;
+        Memory.rooms[room].populationGoal[17] = minimumNumberOfWallBreakers;
+        Memory.rooms[room].populationGoal[18] = minimumNumberOfWarHealers;
+        Memory.rooms[room].populationGoal[19] = minimumNumberOfTowerDrainers;
 
         //grafana population stats stuff
         // Memory.stats['room.' + room.name + '.creeps' + '.numberOfHarvesters'] = numberOfHarvesters;
@@ -482,77 +466,69 @@ module.exports = {
         if (Memory.rooms[room].populationGoal[3] == undefined) {
             Memory.rooms[room].populationGoal[3] = 1;
         }
-        //builders
+        //caretakers
         if (Memory.rooms[room].populationGoal[4] == undefined) {
             Memory.rooms[room].populationGoal[4] = 0;
         }
-        //caretakers
+        //landlords
         if (Memory.rooms[room].populationGoal[5] == undefined) {
             Memory.rooms[room].populationGoal[5] = 0;
         }
-        //defenceManagers
+        //remoteHarvesters
         if (Memory.rooms[room].populationGoal[6] == undefined) {
             Memory.rooms[room].populationGoal[6] = 0;
         }
-        //landlords
+        //remoteHaulers
         if (Memory.rooms[room].populationGoal[7] == undefined) {
             Memory.rooms[room].populationGoal[7] = 0;
         }
-        //remoteHarvesters
+        //otherRoomCreeps
         if (Memory.rooms[room].populationGoal[8] == undefined) {
             Memory.rooms[room].populationGoal[8] = 0;
         }
-        //remoteHaulers
+        //energyThiefs
         if (Memory.rooms[room].populationGoal[9] == undefined) {
             Memory.rooms[room].populationGoal[9] = 0;
         }
-        //otherRoomCreeps
+        //energyHelpers
         if (Memory.rooms[room].populationGoal[10] == undefined) {
             Memory.rooms[room].populationGoal[10] = 0;
         }
-        //energyThiefs
+        //miners
         if (Memory.rooms[room].populationGoal[11] == undefined) {
             Memory.rooms[room].populationGoal[11] = 0;
         }
-        //energyHelpers
+        //marketMovers
         if (Memory.rooms[room].populationGoal[12] == undefined) {
             Memory.rooms[room].populationGoal[12] = 0;
         }
-        //miners
+        //guards
         if (Memory.rooms[room].populationGoal[13] == undefined) {
-            Memory.rooms[room].populationGoal[13] = 0;
+            Memory.rooms[room].populationGoal[13] = 3;
         }
-        //marketMovers
+        //creep harassers
         if (Memory.rooms[room].populationGoal[14] == undefined) {
             Memory.rooms[room].populationGoal[14] = 0;
         }
-        //guards
+        //spawn smashers
         if (Memory.rooms[room].populationGoal[15] == undefined) {
-            Memory.rooms[room].populationGoal[15] = 3;
+            Memory.rooms[room].populationGoal[15] = 0;
         }
-        //creep harassers
+        //structure destroyer
         if (Memory.rooms[room].populationGoal[16] == undefined) {
             Memory.rooms[room].populationGoal[16] = 0;
         }
-        //spawn smashers
+        //wall destroyer
         if (Memory.rooms[room].populationGoal[17] == undefined) {
             Memory.rooms[room].populationGoal[17] = 0;
         }
-        //structure destroyer
+        //war healer
         if (Memory.rooms[room].populationGoal[18] == undefined) {
             Memory.rooms[room].populationGoal[18] = 0;
         }
-        //wall destroyer
+        //tower drainer
         if (Memory.rooms[room].populationGoal[19] == undefined) {
             Memory.rooms[room].populationGoal[19] = 0;
-        }
-        //war healer
-        if (Memory.rooms[room].populationGoal[20] == undefined) {
-            Memory.rooms[room].populationGoal[20] = 0;
-        }
-        //tower drainer
-        if (Memory.rooms[room].populationGoal[21] == undefined) {
-            Memory.rooms[room].populationGoal[21] = 0;
         }
     },
 
