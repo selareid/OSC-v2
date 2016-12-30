@@ -10,6 +10,8 @@ const labHandler = require ('labHandler');
 module.exports = {
     run: function (room) {
 
+        room.cacheThingsInRoom();
+
         try {
             if (Game.time % 7 == 0) {
                 if (Game.cpu.bucket > 2000) {
