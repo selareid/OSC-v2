@@ -484,15 +484,15 @@ module.exports = {
         }
         //builders
         if (Memory.rooms[room].populationGoal[4] == undefined) {
-            Memory.rooms[room].populationGoal[4] = 1;
+            Memory.rooms[room].populationGoal[4] = 0;
         }
-        //repairers
+        //caretakers
         if (Memory.rooms[room].populationGoal[5] == undefined) {
-            Memory.rooms[room].populationGoal[5] = 1;
+            Memory.rooms[room].populationGoal[5] = 0;
         }
         //defenceManagers
         if (Memory.rooms[room].populationGoal[6] == undefined) {
-            Memory.rooms[room].populationGoal[6] = 1;
+            Memory.rooms[room].populationGoal[6] = 0;
         }
         //landlords
         if (Memory.rooms[room].populationGoal[7] == undefined) {
