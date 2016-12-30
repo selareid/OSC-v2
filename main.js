@@ -57,6 +57,7 @@ if (Game.cpu.bucket > 300) module.exports.loop = function () {
         }
         //attack team flag stuff and global ends
 
+    //room stuff
         for (let room_it in Game.rooms) {
             var room = Game.rooms[room_it];
             var controller = room.controller;
@@ -82,4 +83,5 @@ if (Game.cpu.bucket > 300) module.exports.loop = function () {
         }
 
         // creep stuff here
+
 };
