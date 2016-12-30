@@ -153,6 +153,8 @@ module.exports = {
                     minimumNumberOfEnergyHelpers = 0;
                 }
 
+                minimumNumberOfDistributors = room.find(FIND_MY_SPAWNS).length;
+
                 //if there's no storage you don't need carriers
                 if (!room.storage) {
                     minimumNumberOfCarriers = 0;
