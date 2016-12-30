@@ -8,42 +8,53 @@ module.exports = {
         if (creep.memory.team) {
             var teamGlobal = global['warCache'][creep.memory.team];
             if (teamGlobal) {
-                var timeToAttack = teamGlobal.timeToAttack;
-                if (timeToAttack != undefined && timeToAttack != null) {
-                    if (Game.time >= timeToAttack) {
-                        var targetFlag = teamGlobal.flag;
-                        var targetRoom = teamGlobal.targetRoom;
-                        if (targetRoom) {
-
-                            if (creep.pos.roomName != targetRoom) {
-                                creep.moveTo(targetFlag)
-                            }
-                            else {
-                                var targetCreep = this.getTargetCreep(creep);
-                                if (targetCreep) {
-                                    var healCreepResult = creep.heal(targetCreep);
-
-                                    switch (healCreepResult) {
-                                        case -9: // returns ERR_NOT_IN_RANGE
-                                            creep.moveTo(targetCreep, {reusePath: 3, ignoreRoads: true});
-                                            break;
-                                        case 0: // returns OK
-                                            //creep.say something here using prototype.creepSpeech.js
-                                            break;
-                                        default:
-                                            console.log('Error with creep: ' + creep.name + '' + ' Attack Error: ' + healCreepResult);
-                                    }
-
-                                }
-                                else {
-                                    //maybe add a role changing mechanic here ?
-                                }
-                            }
-
-                        }
+                if (creep.memory.follow) {
+                    var creepToFollow = Game.creeps[creep.memory.follow];
+                    if (creepToFollow) {
+                        creep.moveTo(creepToFollow, {reusePath: 1, ignoreRoads:true});
                     }
                     else {
-                        creep.beforeRally(room, teamGlobal);
+                        delete creep.memory.follow;
+                    }
+                }
+                else {
+                    var timeToAttack = teamGlobal.timeToAttack;
+                    if (timeToAttack != undefined && timeToAttack != null) {
+                        if (Game.time >= timeToAttack) {
+                            var targetFlag = teamGlobal.flag;
+                            var targetRoom = teamGlobal.targetRoom;
+                            if (targetRoom) {
+
+                                if (creep.pos.roomName != targetRoom) {
+                                    creep.moveTo(targetFlag)
+                                }
+                                else {
+                                    var targetCreep = this.getTargetCreep(creep);
+                                    if (targetCreep) {
+                                        var healCreepResult = creep.heal(targetCreep);
+
+                                        switch (healCreepResult) {
+                                            case -9: // returns ERR_NOT_IN_RANGE
+                                                creep.moveTo(targetCreep, {reusePath: 3, ignoreRoads: true});
+                                                break;
+                                            case 0: // returns OK
+                                                //creep.say something here using prototype.creepSpeech.js
+                                                break;
+                                            default:
+                                                console.log('Error with creep: ' + creep.name + '' + ' Attack Error: ' + healCreepResult);
+                                        }
+
+                                    }
+                                    else {
+                                        //maybe add a role changing mechanic here ?
+                                    }
+                                }
+
+                            }
+                        }
+                        else {
+                            creep.beforeRally(room, teamGlobal);
+                        }
                     }
                 }
             }
