@@ -4,6 +4,7 @@ const roleHarvester = require ('role.harvester');
 const roleCarrier = require ('role.carrier');
 const roleDistributor = require ('role.distributor');
 const roleUpgrader = require ('role.upgrader');
+const roleCaretaker = require ('role.caretaker');
 const roleBuilder = require ('role.builder');
 const roleRepairer = require ('role.repairer');
 const roleDefenceManager = require ('role.defenceManager');
@@ -84,6 +85,9 @@ module.exports = {
                     break;
                 case 'builder':
                     roleBuilder.run(room, creep);
+                    break;
+                case 'caretaker':
+                    roleCaretaker.run(room, creep);
                     break;
                 case 'repairer':
                     roleRepairer.run(room, creep);
