@@ -21,8 +21,9 @@ module.exports = {
             if (creep.memory.working == true) {
                 this.dropEnergy(room, creep);
             }
-
-            this.harvest(room, creep);
+            else {
+                this.harvest(room, creep);
+            }
 
         }
 
