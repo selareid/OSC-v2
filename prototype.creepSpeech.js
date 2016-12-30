@@ -83,6 +83,18 @@ module.exports = function () {
                 case 'upgrading':
                     toSay = "The GCl Needs Pumped The RCl Needs Pumped LUN Needs Praise Cause It Is Great ...".split(' ');
                     break;
+                case 'repairing':
+                    toSay = "Repair Thy Structures ... Must Care Take ...".split(' ');
+                    break;
+                case 'building':
+                    toSay = "Build Thy Structures ...".split(' ');
+                    break;
+                case 'repairingDefence':
+                    toSay = "Defend Thy Room ...".split(' ');
+                    break;
+                case 'refillingTower':
+                    toSay = "Refill Thy Towers ...".split(' ');
+                    break;
                 default:
                     if (isFestive) {
                     toSay = isFestive;
