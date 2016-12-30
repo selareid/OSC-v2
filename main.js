@@ -1,4 +1,5 @@
 require('global');
+
 const roomHandler = require('roomHandler');
 const creepHandler = require('creepHandler');
 

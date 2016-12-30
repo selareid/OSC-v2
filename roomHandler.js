@@ -1,4 +1,4 @@
-require('prototype.room');
+require('prototype.room')();
 
 const spawnHandler = require('spawnerHandler');
 const linkHandler = require ('linkHandler');
