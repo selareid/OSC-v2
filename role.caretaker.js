@@ -103,7 +103,10 @@ module.exports = {
         var structure = Game.getObjectById(creep.memory.structureToRepair);
 
         if (structure) {
-            if (!structure.hits < structure.hitsMax) {
+            if (structure.hits < structure.hitsMax) {
+                return structure;
+            }
+            else {
                 structure = creep.pos.findClosestByRange(room.find(FIND_STRUCTURES, {
                     filter: (s) => s.structureType != STRUCTURE_WALL && s.structureType != STRUCTURE_RAMPART
                     && s.hits < (s.hitsMax * 0.5)
