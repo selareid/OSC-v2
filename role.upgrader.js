@@ -1,10 +1,11 @@
 require('global');
+require('prototype.creep')();
 require('prototype.creepSpeech')();
 require('prototype.roomPosition')();
 
 module.exports = {
     run: function (room, creep) {
-        if (creep.memory.working == true && creep.carry.energy == 0) {
+        if (creep.memory.working == true && creep.carry.energy < creep.getActiveBodyparts(WORK)) {
             creep.memory.working = false;
         }
         else if (creep.memory.working == false && creep.carry.energy == creep.carryCapacity) {
