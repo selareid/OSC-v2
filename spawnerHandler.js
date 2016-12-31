@@ -589,14 +589,10 @@ module.exports = {
             var whichQueue = 0; //0 is normal queue and 1 is priority 2 is war queue
             switch (role) {
                 case 'harvester':
-                    if (harvestersInPriorityQueue == 0) {
                         whichQueue = 1;
-                    }
                     break;
                 case 'distributor':
-                    if (distributorsInPriorityQueue == 0) {
                         whichQueue = 1;
-                    }
                     break;
                 case 'carrier':
                     if (carriersInPriorityQueue == 0) {
