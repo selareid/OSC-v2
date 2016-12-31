@@ -230,10 +230,15 @@ module.exports = {
                 }
 
 
-                var terminal = room.terminal;
-                var bucket = Game.cpu.bucket;
-                if (terminal && bucket > 2000) {
-                    minimumNumberOfMarketMovers = 1;
+                if (room.controller.level = 8) {
+                    var terminal = room.terminal;
+                    var bucket = Game.cpu.bucket;
+                    if (terminal && bucket > 2000) {
+                        minimumNumberOfMarketMovers = 1;
+                    }
+                    else {
+                        minimumNumberOfMarketMovers = 0;
+                    }
                 }
                 else {
                     minimumNumberOfMarketMovers = 0;
