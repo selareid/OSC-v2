@@ -184,17 +184,19 @@ module.exports = {
                 }
 
                 //set number of harvesters
-                var storage = room.storage;
-                if (storage && storage.store[RESOURCE_ENERGY] >= 350000) {
-                    minimumNumberOfHarvesters = 0;
+                if (global[room.name]['cachedMinimumNumberOfHarvesters'] == undefined) {
+                    if (room.controller.level <= 3) {
+                        minimumNumberOfHarvesters = 4;
+                    }
+                    else {
+                        var numberOfSources = room.find(FIND_SOURCES).length;
+                        minimumNumberOfHarvesters = numberOfSources;
+                    }
+
+                    global[room.name]['cachedMinimumNumberOfHarvesters'] = minimumNumberOfHarvesters;
                 }
                 else {
-                    var numberOfSources = room.find(FIND_SOURCES).length;
-                    var amountOfBigHarvesters = _.sum(Game.creeps, (c) => c.memory.role == 'harvester' && c.memory.room == room.name
-                    && c.getActiveBodyparts(WORK) >= 5);
-                    if (amountOfBigHarvesters >= numberOfSources) {
-                        minimumNumberOfHarvesters = 2;
-                    }
+                    minimumNumberOfHarvesters = global[room.name]['cachedMinimumNumberOfHarvesters'];
                 }
 
                 //set number of landlords
