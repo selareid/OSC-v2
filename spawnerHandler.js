@@ -582,7 +582,7 @@ module.exports = {
     },
 
     addCreepsAboutToDieToQueue: function (room, harvestersInPriorityQueue, distributorsInPriorityQueue, carriersInPriorityQueue) {
-        var creepAboutToDie = _.filter(Game.creeps, (c) => c.memory.room == room && c.ticksToLive <= 400 && c.memory.role)[0];
+        var creepAboutToDie = _.filter(Game.creeps, (c) => c.memory.room == room.name && c.ticksToLive <= 400 && c.memory.role)[0];
 
         if (creepAboutToDie) {
             let role = creepAboutToDie.memory.role;
@@ -620,6 +620,8 @@ module.exports = {
                     Memory.rooms[room].spawnQueue.war.push(role);
                     break;
             }
+
+            console.log('creep ' + creep.name + ' added to spawn queue ' + whichQueue);
 
         }
     },
