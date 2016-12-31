@@ -199,13 +199,14 @@ module.exports = {
                     minimumNumberOfHarvesters = global[room.name]['cachedMinimumNumberOfHarvesters'];
                 }
 
-                //set number of landlords
+                //set number of landlords starts
                 var numberOfClaimFlags = _.sum(Game.flags, (f) => f.memory.type == 'claimFlag' && f.memory.room == room.name);
                 var reserveFlags = _.filter(Game.flags, (f) => f.memory.type == 'reserveFlag' && f.memory.room == room.name);
                 var amountOfReservers = this.getAmountOfReservers(room, reserveFlags);
                 minimumNumberOfLandlords = numberOfClaimFlags + amountOfReservers;
+                //set number of landlords ends
 
-                //set number of remote creeps
+                //set number of remote creeps starts
                 var remoteCreepFlags = global[room.name].cachedRemoteCreepFlags;
                 var tempRemoteHarvesters = 0;
                 var tempRemoteHaulers = 0;
@@ -217,6 +218,7 @@ module.exports = {
 
                 minimumNumberOfRemoteHarvesters = tempRemoteHarvesters;
                 minimumNumberOfRemoteHaulers = tempRemoteHaulers;
+                //set number of remote creeps ends
 
                 if (room.find(FIND_MY_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_EXTRACTOR})[0]) {
                     var mineral = room.find(FIND_MINERALS)[0];
