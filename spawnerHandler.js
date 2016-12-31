@@ -303,7 +303,7 @@ module.exports = {
             }
 
             //add creeps close to death to queue
-            if (Game.time % 6 == 0) this.addCreepsAboutToDieToQueue(room, harvestersInPriorityQueue, distributorsInPriorityQueue, carriersInPriorityQueue);
+            //if (Game.time % 6 == 0) this.addCreepsAboutToDieToQueue(room, harvestersInPriorityQueue, distributorsInPriorityQueue, carriersInPriorityQueue);
 
             //add creep that needs to be added to queue to queue
             var creepToAddToQueue;
