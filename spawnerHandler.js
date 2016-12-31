@@ -617,7 +617,7 @@ module.exports = {
                     break;
             }
 
-            console.log('role ' + role + ' added to spawn queue ' + whichQueue);
+            console.log('role ' + role + ' added to spawn queue ' + whichQueue + ' room ' + room.name);
 
         }
     },
