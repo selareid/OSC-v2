@@ -544,7 +544,7 @@ module.exports = {
                         amountToReturn += 2;
                     }
                     else {
-                        var landlordsInRoom = flag.room.find(FIND_CREEPS, {filter: (c) => c.memory.role == 'landlord' && c.memory.flag == flag.name});
+                        var landlordsInRoom = flag.room.find(FIND_CREEPS, {filter: (c) => c.memory && c.memory.role == 'landlord' && c.memory.flag == flag.name});
                         if (landlordsInRoom == 0) {
                             amountToReturn += 1;
                         }
