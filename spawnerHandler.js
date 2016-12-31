@@ -310,9 +310,7 @@ module.exports = {
             var queueToAddTo = 0; // 0 is normal and 1 is priority 2 is war
 
             if (minimumNumberOfHarvesters > harvestersInQueue + numberOfHarvesters + harvestersInPriorityQueue) {
-                if (!harvestersInPriorityQueue > 0) {
-                    queueToAddTo = 1;
-                }
+                queueToAddTo = 1;
                 creepToAddToQueue = 'harvester';
             }
             else if (minimumNumberOfDistributors > distributorsInQueue + numberOfDistributors + distributorsInPriorityQueue) {
