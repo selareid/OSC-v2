@@ -200,24 +200,40 @@ module.exports = {
                 }
 
                 //set number of landlords starts
-                var numberOfClaimFlags = _.sum(Game.flags, (f) => f.memory.type == 'claimFlag' && f.memory.room == room.name);
-                var reserveFlags = _.filter(Game.flags, (f) => f.memory.type == 'reserveFlag' && f.memory.room == room.name);
-                var amountOfReservers = this.getAmountOfReservers(room, reserveFlags);
-                minimumNumberOfLandlords = numberOfClaimFlags + amountOfReservers;
+                if (Game.time % 6 == 0 || global[room.name]['cachedMinimumNumberOfLandlords'] == undefined) {
+                    var numberOfClaimFlags = _.sum(Game.flags, (f) => f.memory.type == 'claimFlag' && f.memory.room == room.name);
+                    var reserveFlags = _.filter(Game.flags, (f) => f.memory.type == 'reserveFlag' && f.memory.room == room.name);
+                    var amountOfReservers = this.getAmountOfReservers(room, reserveFlags);
+                    minimumNumberOfLandlords = numberOfClaimFlags + amountOfReservers;
+
+                    global[room.name]['cachedMinimumNumberOfLandlords'] = minimumNumberOfLandlords;
+                }
+                else {
+                    minimumNumberOfLandlords = global[room.name]['cachedMinimumNumberOfLandlords'];
+                }
                 //set number of landlords ends
 
                 //set number of remote creeps starts
-                var remoteCreepFlags = global[room.name].cachedRemoteCreepFlags;
-                var tempRemoteHarvesters = 0;
-                var tempRemoteHaulers = 0;
+                if (Game.time % 6 == 0 || global[room.name]['cachedMinimumNumberOfRemoteCreeps'] == undefined || global[room.name]['cachedMinimumNumberOfRemoteCreeps'].length < 2) {
+                    var remoteCreepFlags = global[room.name].cachedRemoteCreepFlags;
+                    var tempRemoteHarvesters = 0;
+                    var tempRemoteHaulers = 0;
 
-                for (let flag of remoteCreepFlags) {
-                    tempRemoteHarvesters += flag.memory.numberOfRemoteHarvesters;
-                    tempRemoteHaulers += flag.memory.numberOfRemoteHaulers;
+                    for (let flag of remoteCreepFlags) {
+                        tempRemoteHarvesters += flag.memory.numberOfRemoteHarvesters;
+                        tempRemoteHaulers += flag.memory.numberOfRemoteHaulers;
+                    }
+
+                    minimumNumberOfRemoteHarvesters = tempRemoteHarvesters;
+                    minimumNumberOfRemoteHaulers = tempRemoteHaulers;
+
+                    global[room.name]['cachedMinimumNumberOfRemoteCreeps'] = minimumNumberOfRemoteHarvesters + ',' + minimumNumberOfRemoteHaulers;
                 }
-
-                minimumNumberOfRemoteHarvesters = tempRemoteHarvesters;
-                minimumNumberOfRemoteHaulers = tempRemoteHaulers;
+                else {
+                    var foo = global[room.name]['cachedMinimumNumberOfRemoteCreeps'].split(',');
+                    minimumNumberOfRemoteHarvesters = foo[0];
+                    minimumNumberOfRemoteHaulers = foo[1];
+                }
                 //set number of remote creeps ends
 
                 if (room.find(FIND_MY_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_EXTRACTOR})[0]) {
