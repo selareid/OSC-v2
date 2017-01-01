@@ -628,7 +628,7 @@ module.exports = {
 
         if (spawn) {
 
-            var energy = spawn.room.energyAvailable / spawns.length;
+            var energy = spawn.room.energyAvailable;
             var amountToSave = 0;//in percent
             var name = undefined;
             var queueUsed = 0; // 0 is normal and 1 is priority 2 is war
