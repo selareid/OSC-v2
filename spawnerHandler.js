@@ -154,7 +154,7 @@ module.exports = {
                 }
 
                 var distributorWitchLeastLife = _.min(_.filter(Game.creeps, (c) => c.memory.role == 'distributor' && c.memory.room == room.name), '.ticksToLive');
-                if (distributorWitchLeastLife && distributorWitchLeastLife.ticksToLive <= 200) {
+                if (distributorWitchLeastLife && distributorWitchLeastLife.ticksToLive <= 400) {
                         minimumNumberOfDistributors = 2;
                 }
                 else minimumNumberOfDistributors = 1;
