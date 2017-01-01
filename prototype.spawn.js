@@ -134,9 +134,9 @@ module.exports = function () {
                         working: false
                     });
                 case 'upgrader':
-                    numberOfParts = Math.floor(((energy - (energy * amountToSave)) - 100) / 250);
+                    numberOfParts = Math.floor(((energy - (energy * amountToSave)) - 150) / 250);
                     if (numberOfParts > 1) {
-                        if (numberOfParts > 16) numberOfParts = 16;
+                        if (numberOfParts > 15) numberOfParts = 15;
 
                         for (let i = 0; i < numberOfParts; i++) {
                             body.push(MOVE);
@@ -144,6 +144,7 @@ module.exports = function () {
                             body.push(WORK);
                         }
                         body.push(MOVE);
+                        body.push(CARRY);
                         body.push(CARRY);
                     }
                     else {
