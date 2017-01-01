@@ -68,8 +68,8 @@ module.exports = function () {
                     numberOfParts = Math.floor((energy - (energy * amountToSave)) / 150);
                     if (numberOfParts > 0) {
 
-                        if (numberOfParts > Memory.rooms[room].partsForCarrier) {
-                            numberOfParts = Memory.rooms[room].partsForCarrier;
+                        if (numberOfParts > 16) {
+                            numberOfParts = 16;
                         }
 
                         for (let i = 0; i < numberOfParts; i++) {
