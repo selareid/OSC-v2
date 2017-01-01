@@ -34,7 +34,7 @@ module.exports = {
                     var towerToRefill = this.getTowerToRefill(room);
                     if (towerToRefill) {
                         creep.creepSpeech(room, 'refillingTower');
-                        if (creep.build(towerToRefill) == ERR_NOT_IN_RANGE) {
+                        if (creep.transfer(towerToRefill, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                             creep.moveTo(towerToRefill, {reusePath: 10});
                         }
                     }
