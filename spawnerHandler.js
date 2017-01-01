@@ -158,12 +158,6 @@ module.exports = {
                 //if there's no storage you don't need carriers
                 if (!room.storage) {
                     minimumNumberOfCarriers = 0;
-
-                    let maxDropEn = _.max(room.find(FIND_DROPPED_ENERGY), '.amount').amount;
-
-                    if (maxDropEn) {
-                        minimumNumberOfUpgraders = 2;
-                    }
                 }
                 else {
                     if (global[room.name].links[0]) {
@@ -272,8 +266,11 @@ module.exports = {
                 if (room.controller.level < 5) {
                     minimumNumberOfUpgraders = 3;
                 }
-                else {
+                else if (room.controller.level < 7) {
                     minimumNumberOfUpgraders = 5;
+                }
+                else {
+                    minimumNumberOfUpgraders = 2;
                 }
             }
             else {
