@@ -250,7 +250,7 @@ module.exports = {
                 }
 
 
-                if (room.controller.level = 8) {
+                if (room.controller.level == 8) {
                     var terminal = room.terminal;
                     var bucket = Game.cpu.bucket;
                     if (terminal && bucket > 2000) {
