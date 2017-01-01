@@ -245,15 +245,28 @@ module.exports = function () {
                     }
                     return this.createCreep(sortedParts(body), creepName(roleName), {role: roleName, room: room.name, working: false});
                 case 'miner':
-                    numberOfParts = Math.floor(((energy - (energy * amountToSave)) - 50) / 250);
+                    numberOfParts = Math.floor(((energy - (energy * amountToSave)) - 50) / 350);
 
-                    if (numberOfParts > 0) {
-                        if (numberOfParts > 24) numberOfParts = 24;
+                    if (numberOfParts > 1) {
+                        if (numberOfParts > 16) numberOfParts = 16;
 
                         body.push(CARRY);
                         for (let i = 0; i < numberOfParts; i++) {
                             body.push(MOVE);
                             body.push(WORK);
+                            body.push(WORK);
+                        }
+                    }
+                    else {
+                        numberOfParts = Math.floor(((energy - (energy * amountToSave)) - 50) / 250);
+                        if (numberOfParts > 0) {
+                            if (numberOfParts > 24) numberOfParts = 24;
+
+                            body.push(CARRY);
+                            for (let i = 0; i < numberOfParts; i++) {
+                                body.push(MOVE);
+                                body.push(WORK);
+                            }
                         }
                     }
                     return this.createCreep(sortedParts(body), creepName(roleName), {role: roleName, room: room.name, working: false});
