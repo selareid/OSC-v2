@@ -153,7 +153,14 @@ module.exports = {
                     minimumNumberOfEnergyHelpers = 0;
                 }
 
-                minimumNumberOfDistributors = 1;
+                var distributorWitchLeastLife = _.min(_.filter(Game.creeps, (c) => c.memory.role == 'distributor' && c.memory.room == room.name), '.ticksToLive');
+                if (distributorWitchLeastLife) {
+                    if (distributorWitchLeastLife.ticksToLive <= 200) {
+                        minimumNumberOfDistributors = 2;
+                    }
+                    else minimumNumberOfDistributors = 1;
+                }
+                else minimumNumberOfDistributors = 1;
 
                 //if there's no storage you don't need carriers
                 if (!room.storage) {
