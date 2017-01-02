@@ -136,7 +136,12 @@ module.exports = function () {
                 case 'upgrader':
                     numberOfParts = Math.floor(((energy - (energy * amountToSave)) - 150) / 250);
                     if (numberOfParts > 1) {
-                        if (numberOfParts > 15) numberOfParts = 15;
+                        if (room.controller.level < 7) {
+                            if (numberOfParts > 15) numberOfParts = 15;
+                        }
+                        else {
+                            if (numberOfParts > 7) numberOfParts = 7;
+                        }
 
                         for (let i = 0; i < numberOfParts; i++) {
                             body.push(MOVE);
@@ -150,7 +155,10 @@ module.exports = function () {
                     else {
                         numberOfParts = Math.floor(((energy - (energy * amountToSave)) - 50) / 150);
                         if (numberOfParts > 0) {
-                            if (numberOfParts > 24) numberOfParts = 24;
+                            if (room.controller.level < 7) {
+                                if (numberOfParts > 24) numberOfParts = 24;
+                            }
+                            else if (numberOfParts > 12) numberOfParts = 12;
 
                             for (let i = 0; i < numberOfParts; i++) {
                                 body.push(MOVE);
