@@ -139,9 +139,7 @@ module.exports = function () {
                         if (room.controller.level < 7) {
                             if (numberOfParts > 15) numberOfParts = 15;
                         }
-                        else {
-                            if (numberOfParts > 7) numberOfParts = 7;
-                        }
+                        else if (numberOfParts > 7) numberOfParts = 7;
 
                         for (let i = 0; i < numberOfParts; i++) {
                             body.push(MOVE);
@@ -294,7 +292,10 @@ module.exports = function () {
                 case 'guard':
                     numberOfParts = Math.floor((energy - (energy * amountToSave)) / 340);
                     if (numberOfParts > 1) {
-                        if (numberOfParts > 10) numberOfParts = 10;
+                        if (Memory.rooms[room].isUnderAttack == true) {
+                            if (numberOfParts > 10) numberOfParts = 10;
+                        }
+                        else if (numberOfParts > 6) numberOfParts = 6;
 
                         for (let i = 0; i < numberOfParts; i++) {
                             body.push(RANGED_ATTACK);
