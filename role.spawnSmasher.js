@@ -38,7 +38,7 @@ module.exports = {
 
                                 }
                                 else {
-                                    creep.memory.role == 'creepHarasser';
+                                    creep.memory.role = 'creepHarasser';
                                 }
                             }
 
