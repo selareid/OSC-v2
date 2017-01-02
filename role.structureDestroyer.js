@@ -58,7 +58,8 @@ module.exports = {
     },
 
     getTargetStructure: function (creep) {
-        return creep.pos.findClosestByRange(FIND_STRUCTURES);
+        return creep.pos.findClosestByRange(FIND_STRUCTURES, {filter: (s) => s.structureType != STRUCTURE_ROAD
+        && s.structureType != STRUCTURE_RAMPART && s.structureType != STRUCTURE_WALL && s.structureType != STRUCTURE_CONTROLLER});
     }
 };
 
