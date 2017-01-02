@@ -25,7 +25,7 @@ module.exports = {
 
                                     switch (attackSpawnResult) {
                                         case -9: // returns ERR_NOT_IN_RANGE
-                                            creep.moveTo(targetSpawn, {reusePath: 3, ignoreRoads: true});
+                                            creep.moveTo(targetSpawn, {reusePath: 3, ignoreRoads: true, ignoreDestructibleStructures: true});
                                             break;
                                         case 0: // returns OK
                                             //creep.say something here using prototype.creepSpeech.js
