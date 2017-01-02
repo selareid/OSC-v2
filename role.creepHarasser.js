@@ -38,7 +38,7 @@ module.exports = {
 
                                 }
                                 else {
-                                    creep.memory.role = 'structureDestroyer';
+                                    //role cahing here
                                 }
                             }
 
