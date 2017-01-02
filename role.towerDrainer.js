@@ -14,19 +14,19 @@ module.exports = {
                         var targetFlag = teamGlobal.flag;
                         var targetRoom = teamGlobal.targetRoom;
                         if (targetRoom) {
-                            creep.heal(creep);
+                                creep.heal(creep);
 
-                            if (creep.pos.roomName != targetRoom){
-                                creep.moveTo(teamGlobal.flag);
-                            }
-                            else {
-                                if (creep.pos.y == 0 || creep.pos.y == 49 || creep.pos.x == 0 || creep.pos.x == 49) {
-                                    //is on edge
+                                if (creep.pos.roomName != targetRoom) {
+                                    creep.moveTo(teamGlobal.flag);
                                 }
                                 else {
-                                    creep.moveTo(creep.room.find(FIND_HOSTILE_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_TOWER})[0]);
+                                    if (creep.pos.y == 0 || creep.pos.y == 49 || creep.pos.x == 0 || creep.pos.x == 49) {
+                                        //is on edge
+                                    }
+                                    else {
+                                        creep.moveTo(creep.room.find(FIND_HOSTILE_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_TOWER})[0]);
+                                    }
                                 }
-                            }
                         }
                     }
                     else {
