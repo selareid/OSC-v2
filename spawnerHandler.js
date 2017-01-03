@@ -247,8 +247,7 @@ module.exports = {
                     minimumNumberOfMiners = 0;
                 }
 
-
-                if (room.controller.level == 8) {
+                
                     var terminal = room.terminal;
                     var bucket = Game.cpu.bucket;
                     if (terminal && bucket > 2000) {
@@ -258,10 +257,7 @@ module.exports = {
                         minimumNumberOfMarketMovers = 0;
                     }
                 }
-                else {
-                    minimumNumberOfMarketMovers = 0;
-                }
-            }
+           
 
             minimumNumberOfGuards = 1;
 
