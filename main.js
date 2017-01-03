@@ -70,7 +70,7 @@ if (Game.cpu.bucket > 300) module.exports.loop = function () {
         for (let room_it in Game.rooms) {
             var room = Game.rooms[room_it];
             var controller = room.controller;
-            if (controller && controller.my) {
+            if (controller && controller.my && room.find(FIND_MY_SPAWNS)[0]) {
                 try {
                     if (Memory.rooms) {
                         if (!Memory.rooms[room]) {
@@ -87,7 +87,16 @@ if (Game.cpu.bucket > 300) module.exports.loop = function () {
                         console.log("Error in Memory.room logic: \n" + err + "\n" + err.stack);
                     }
                 }
-                roomHandler.run(room);
+
+                try {
+                    roomHandler.run(room);
+                }
+                catch (err) {
+                    if (err !== null && err !== undefined) {
+                        Game.notify("Error in room logic: \n" + err + "\n " + err.stack);
+                        console.log("Error in room logic: \n" + err + "\n" + err.stack);
+                    }
+                }
             }
         }
 
