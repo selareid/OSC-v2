@@ -70,7 +70,7 @@ if (Game.cpu.bucket > 300) module.exports.loop = function () {
         for (let room_it in Game.rooms) {
             var room = Game.rooms[room_it];
             var controller = room.controller;
-            if (controller && controller.my && room.find(FIND_MY_SPAWNS)[0]) {
+            if (controller && controller.my) {
                 try {
                     if (Memory.rooms) {
                         if (!Memory.rooms[room]) {
@@ -89,7 +89,12 @@ if (Game.cpu.bucket > 300) module.exports.loop = function () {
                 }
 
                 try {
-                    roomHandler.run(room);
+                    if (room.find(FIND_MY_SPAWNS)[0]) {
+                        roomHandler.run(room);
+                    }
+                    else {
+                        //put automatic otherRoomCreep flag placer here
+                    }
                 }
                 catch (err) {
                     if (err !== null && err !== undefined) {
