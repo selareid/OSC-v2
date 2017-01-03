@@ -439,11 +439,11 @@ module.exports = {
         //add more cause that's not all
 
         var normalSpawnQueue = Memory.rooms[room].spawnQueue.normal;
-        Memory.stats['room.' + room.name + '.spawnQueues' + '.normal'] = normalSpawnQueue.length;
+        //Memory.stats['room.' + room.name + '.spawnQueues' + '.normal'] = normalSpawnQueue.length;
         var prioritySpawnQueue = Memory.rooms[room].spawnQueue.priority;
-        Memory.stats['room.' + room.name + '.spawnQueues' + '.priority'] = prioritySpawnQueue.length;
+        //Memory.stats['room.' + room.name + '.spawnQueues' + '.priority'] = prioritySpawnQueue.length;
         var warSpawnQueue = Memory.rooms[room].spawnQueue.war;
-        Memory.stats['room.' + room.name + '.spawnQueues' + '.war'] = warSpawnQueue.length;
+        //Memory.stats['room.' + room.name + '.spawnQueues' + '.war'] = warSpawnQueue.length;
 
     },
 
