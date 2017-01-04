@@ -278,13 +278,13 @@ module.exports = {
                     minimumNumberOfUpgraders = 3;
                     break;
                 case 3:
-                    minimumNumberOfUpgraders = 4;
+                    minimumNumberOfUpgraders = 10;
                     break;
                 case 2:
-                    minimumNumberOfUpgraders = 5;
+                    minimumNumberOfUpgraders = 10;
                     break;
                 case 1:
-                    minimumNumberOfUpgraders = 5;
+                    minimumNumberOfUpgraders = 7;
                     break;
             }
 
