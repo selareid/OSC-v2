@@ -261,20 +261,31 @@ module.exports = {
 
             minimumNumberOfGuards = 1;
 
-
-            if (room.controller.level < 8) {
-                if (room.controller.level < 5) {
-                    minimumNumberOfUpgraders = 3;
-                }
-                else if (room.controller.level < 7) {
-                    minimumNumberOfUpgraders = 5;
-                }
-                else {
+            switch (room.controller.level) {
+                case 8:
                     minimumNumberOfUpgraders = 1;
-                }
-            }
-            else {
-                minimumNumberOfUpgraders = 1;
+                    break;
+                case 7:
+                    minimumNumberOfUpgraders = 3;
+                    break;
+                case 6:
+                    minimumNumberOfUpgraders = 5;
+                    break;
+                case 5:
+                    minimumNumberOfUpgraders = 3;
+                    break;
+                case 4:
+                    minimumNumberOfUpgraders = 3;
+                    break;
+                case 3:
+                    minimumNumberOfUpgraders = 4;
+                    break;
+                case 2:
+                    minimumNumberOfUpgraders = 5;
+                    break;
+                case 1:
+                    minimumNumberOfUpgraders = 5;
+                    break;
             }
 
             var isUnderAttack = Memory.rooms[room].isUnderAttack;
@@ -421,7 +432,7 @@ module.exports = {
         Memory.rooms[room].populationGoal[17] = minimumNumberOfWallBreakers;
         Memory.rooms[room].populationGoal[18] = minimumNumberOfWarHealers;
         Memory.rooms[room].populationGoal[19] = minimumNumberOfTowerDrainers;
-
+s
         //grafana population stats stuff
         // Memory.stats['room.' + room.name + '.creeps' + '.numberOfHarvesters'] = numberOfHarvesters;
         // Memory.stats['room.' + room.name + '.creeps' + '.numberOfCarriers'] = numberOfCarriers;
