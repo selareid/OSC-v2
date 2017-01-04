@@ -432,7 +432,7 @@ module.exports = {
         Memory.rooms[room].populationGoal[17] = minimumNumberOfWallBreakers;
         Memory.rooms[room].populationGoal[18] = minimumNumberOfWarHealers;
         Memory.rooms[room].populationGoal[19] = minimumNumberOfTowerDrainers;
-s
+
         //grafana population stats stuff
         // Memory.stats['room.' + room.name + '.creeps' + '.numberOfHarvesters'] = numberOfHarvesters;
         // Memory.stats['room.' + room.name + '.creeps' + '.numberOfCarriers'] = numberOfCarriers;
