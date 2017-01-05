@@ -333,11 +333,11 @@ module.exports = {
                 }
                 creepToAddToQueue = 'carrier';
             }
-            else if (minimumNumberOfUpgraders > upgradersInQueue + numberOfUpgraders) {
-                creepToAddToQueue = 'upgrader';
-            }
             else if (minimumNumberOfCaretakers > caretakersInQueue + numberOfCaretakers) {
                 creepToAddToQueue = 'caretaker';
+            }
+            else if (minimumNumberOfUpgraders > upgradersInQueue + numberOfUpgraders) {
+                creepToAddToQueue = 'upgrader';
             }
             else if (minimumNumberOfEnergyThiefs > energyThiefsInQueue + numberOfEnergyThiefs) {
                 creepToAddToQueue = 'energyThief';
