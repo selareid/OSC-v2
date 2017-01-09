@@ -29,19 +29,26 @@ module.exports = function () {
 
             switch (roleName) {
                 case 'harvester':
-                    numberOfParts = Math.floor(((energy - (energy * amountToSave)) - 200) / 100);
-
-                    if (numberOfParts > 0) {
-                        if (numberOfParts > 6) {
-                            numberOfParts = 6;
+                    if (energy > 300) {
+                        numberOfParts = Math.floor(((energy - (energy * amountToSave)) - 200) / 100);
+                        if (numberOfParts > 0) {
+                            if (numberOfParts > 6) {
+                                numberOfParts = 6;
+                            }
+                            body.push(MOVE);
+                            body.push(MOVE);
+                            body.push(MOVE);
+                            body.push(CARRY);
+                            for (let i = 0; i < numberOfParts; i++) {
+                                body.push(WORK);
+                            }
                         }
-                        body.push(MOVE);
-                        body.push(MOVE);
-                        body.push(MOVE);
-                        body.push(CARRY);
-                        for (let i = 0; i < numberOfParts; i++) {
+                    }
+                    else {
+                            body.push(MOVE);
+                            body.push(CARRY);
                             body.push(WORK);
-                        }
+                            body.push(WORK);
                     }
                     return this.createCreep(sortedParts(body), creepName(roleName), {
                         role: roleName,
