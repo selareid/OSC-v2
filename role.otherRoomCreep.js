@@ -11,6 +11,10 @@ module.exports = {
 
         if (otherRoomFlag) {
 
+            if (otherRoomFlag.room && otherRoomFlag.room.find(FIND_MY_SPAWNS)[0]) {
+                otherRoomFlag.remove();
+            }
+
             if (creep.pos.roomName != otherRoomFlag.pos.roomName) {
                 creep.moveTo(otherRoomFlag, {reusePath: 13});
             }
