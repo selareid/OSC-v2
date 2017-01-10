@@ -183,13 +183,9 @@ module.exports = {
 
                 //set number of harvesters
                 if (global[room.name]['cachedMinimumNumberOfHarvesters'] == undefined) {
-                    if (room.controller.level <= 3) {
-                        minimumNumberOfHarvesters = 4;
-                    }
-                    else {
+
                         var numberOfSources = room.find(FIND_SOURCES).length;
                         minimumNumberOfHarvesters = numberOfSources;
-                    }
 
                     global[room.name]['cachedMinimumNumberOfHarvesters'] = minimumNumberOfHarvesters;
                 }
