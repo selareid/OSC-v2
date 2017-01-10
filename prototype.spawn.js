@@ -29,8 +29,8 @@ module.exports = function () {
 
             switch (roleName) {
                 case 'harvester':
-                    if (energy > 300) {
-                        numberOfParts = Math.floor(((energy - (energy * amountToSave)) - 200) / 100);
+                    numberOfParts = Math.floor(((energy - (energy * amountToSave)) - 200) / 100);
+                    if (numberOfParts > 4) {
                         if (numberOfParts > 0) {
                             if (numberOfParts > 6) {
                                 numberOfParts = 6;
