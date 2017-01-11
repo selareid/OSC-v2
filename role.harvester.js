@@ -120,6 +120,10 @@ module.exports = {
                             creep.repair(container);
                         }
                     }
+                    else {
+                        var containerWithEnergy = _.filter(containers, (c) => c.store[RESOURCE_ENERGY] > 0);
+                        creep.withdraw(containerWithEnergy, RESOURCE_ENERGY, (creep.carryCapacity-1));
+                    }
                     break;
                 case OK:
                     creep.creepSpeech(room, 'harvesting');
