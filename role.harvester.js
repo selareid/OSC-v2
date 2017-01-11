@@ -121,7 +121,7 @@ module.exports = {
                         }
                     }
                     else {
-                        var containerWithEnergy = _.filter(containers, (c) => c.store[RESOURCE_ENERGY] > 0);
+                        var containerWithEnergy = _.filter(containers, (c) => c.store[RESOURCE_ENERGY] > 0)[0];
                         creep.withdraw(containerWithEnergy, RESOURCE_ENERGY, (creep.carryCapacity-1));
                     }
                     break;
