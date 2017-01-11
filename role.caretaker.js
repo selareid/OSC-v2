@@ -43,7 +43,7 @@ module.exports = {
                         if (defenseToRepair) {
                             creep.creepSpeech(room, 'repairingDefence');
                             if (creep.repair(defenseToRepair) == ERR_NOT_IN_RANGE) {
-                                this.moveToWithCostMatrix(room, creep, defenseToRepair);
+                                creep.moveTo(defenseToRepair);
                             }
                         }
                     }
