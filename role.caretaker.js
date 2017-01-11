@@ -167,7 +167,7 @@ module.exports = {
 
     moveToWithCostMatrix: function (room, creep, target) {
         creep.moveTo(target, {
-            reusePath: 7, plainCost: 1, swampCost: 4,
+            reusePath: 7, plainCost: 1, swampCost: 3,
             costCallback: function (roomName) {
                 if (roomName == room.name) {
                     let room = Game.rooms[roomName];
@@ -178,7 +178,7 @@ module.exports = {
                     room.find(FIND_STRUCTURES).forEach(function (structure) {
                         if (structure.structureType === STRUCTURE_ROAD) {
                             // Avoid Roads
-                            costs.set(structure.pos.x, structure.pos.y, 5);
+                            costs.set(structure.pos.x, structure.pos.y, 4);
                         } else if (structure.structureType !== STRUCTURE_CONTAINER &&
                             (structure.structureType !== STRUCTURE_RAMPART || !structure.my)) {
                             // Can't walk through non-walkable buildings
