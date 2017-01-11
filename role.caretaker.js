@@ -27,7 +27,7 @@ module.exports = {
                 if (structureToBuild) {
                     creep.creepSpeech(room, 'building');
                     if (creep.build(structureToBuild) == ERR_NOT_IN_RANGE) {
-                        this.moveToWithCostMatrix(room, creep, structureToBuild);
+                        creep.moveTo(structureToBuild);
                     }
                 }
                 else {
