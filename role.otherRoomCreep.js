@@ -60,7 +60,10 @@ module.exports = {
 
         }
         else {
-            creep.memory.role = 'upgrader';
+            creep.memory.role = 'harvester';
+            if (Game.rooms[creep.pos.roomName].find(FIND_MY_SPAWNS)[0]) {
+                creep.memory.room = creep.pos.roomName;
+            }
         }
     }
 };
