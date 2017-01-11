@@ -257,33 +257,6 @@ module.exports = {
 
             minimumNumberOfGuards = 1;
 
-            switch (room.controller.level) {
-                case 8:
-                    minimumNumberOfUpgraders = 1;
-                    break;
-                case 7:
-                    minimumNumberOfUpgraders = 3;
-                    break;
-                case 6:
-                    minimumNumberOfUpgraders = 5;
-                    break;
-                case 5:
-                    minimumNumberOfUpgraders = 3;
-                    break;
-                case 4:
-                    minimumNumberOfUpgraders = 3;
-                    break;
-                case 3:
-                    minimumNumberOfUpgraders = 3;
-                    break;
-                case 2:
-                    minimumNumberOfUpgraders = 3;
-                    break;
-                case 1:
-                    minimumNumberOfUpgraders = 2;
-                    break;
-            }
-
             var isUnderAttack = Memory.rooms[room].isUnderAttack;
             //if under attack over ride everything
             if (isUnderAttack === true) {
@@ -303,7 +276,47 @@ module.exports = {
                 minimumNumberOfMiners = 0;
             }
             else {
+                switch (room.controller.level) {
+                case 8:
+                        
                 minimumNumberOfCaretakers = 1;
+                    minimumNumberOfUpgraders = 1;
+                    break;
+                case 7:
+                        
+                minimumNumberOfCaretakers = 1;
+                    minimumNumberOfUpgraders = 3;
+                    break;
+                case 6:
+                        
+                minimumNumberOfCaretakers = 1;
+                    minimumNumberOfUpgraders = 5;
+                    break;
+                case 5:
+                        
+                minimumNumberOfCaretakers = 1;
+                    minimumNumberOfUpgraders = 3;
+                    break;
+                case 4:
+                        
+                minimumNumberOfCaretakers = 1;
+                    minimumNumberOfUpgraders = 3;
+                    break;
+                case 3:
+                minimumNumberOfCaretakers = 1;
+                    minimumNumberOfUpgraders = 3;
+                    break;
+                case 2:
+                        
+                minimumNumberOfCaretakers = 3;
+                    minimumNumberOfUpgraders = 3;
+                    break;
+                case 1:
+                        
+                minimumNumberOfCaretakers = 1;
+                    minimumNumberOfUpgraders = 2;
+                    break;
+            }
             }
 
             //add creeps close to death to queue
