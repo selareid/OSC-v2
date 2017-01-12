@@ -7,12 +7,12 @@ module.exports = {
 
         creep.creepSpeech(room);
 
-        if (!creep.memory.roomsBeenIn) {
-            creep.memory.roomsBeenIn = [];
+        if (!Memory.rooms[room].signerRoomsBeenIn) {
+            Memory.rooms[room].signerRoomsBeenIn = [];
         }
 
-        if (!creep.memory.roomsBeenIn.includes(creep.pos.roomName)) {
-            creep.memory.roomsBeenIn.push(creep.pos.roomName);
+        if (!Memory.rooms[room].signerRoomsBeenIn.includes(creep.pos.roomName)) {
+            Memory.rooms[room].signerRoomsBeenIn.push(creep.pos.roomName);
         }
 
         if (!creep.memory.directionWays) {
@@ -43,7 +43,7 @@ module.exports = {
     },
     
     getRoomToGoTo: function (room, creep) {
-        var exits = _.filter(Game.map.describeExits(creep.pos.roomName), (e) => !creep.memory.roomsBeenIn.includes(e) && !Game.rooms[e]);
+        var exits = _.filter(Game.map.describeExits(creep.pos.roomName), (e) => !Memory.rooms[room].signerRoomsBeenIn.includes(e) && !Game.rooms[e]);
         var exit = exits[0];
 
         return exit;
