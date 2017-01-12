@@ -30,7 +30,7 @@ module.exports = {
     },
     
     signController: function (creep, controller) {
-        var result = creep.signController(controller, "Don't Spawn Here!");
+        var result = creep.signController(controller, '“◯”');
         if (result == -9) {
             creep.moveTo(controller);
         }
