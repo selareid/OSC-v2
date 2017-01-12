@@ -649,16 +649,10 @@ module.exports = {
             var amountToSave = 0;//in percent
             var name = undefined;
             var queueUsed = 0; // 0 is normal and 1 is priority 2 is war
+            var roleToSpawn;
 
             if (room.energyAvailable >= 400) {
-
-                if (Memory.rooms[room].energyMode == 'saving') {
-                    amountToSave = 0.35;
-                }
-                else if (Memory.rooms[room].energyMode == 'ok') {
-                    amountToSave = 0.25;
-                }
-                else if ((numberOfHarvesters >= minimumNumberOfHarvesters)
+                if ((numberOfHarvesters >= minimumNumberOfHarvesters)
                     && (numberOfDistributors >= minimumNumberOfDistributors)
                     && (numberOfCarriers > 0)) {
                     amountToSave = 0.15;
@@ -673,16 +667,22 @@ module.exports = {
 
                 if (!Memory.rooms[room].spawnQueue.war || !Memory.rooms[room].spawnQueue.war.length > 0 || Game.time % 5 == 0 || Game.time % 5 == 1) {
                     if (!Memory.rooms[room].spawnQueue.priority.length > 0 || Game.time % 3 == 0 || Game.time % 3 == 1) {
-                        name = spawn.createCustomCreep(room, energy, Memory.rooms[room].spawnQueue.normal[0], amountToSave);
+                        roleToSpawn = Memory.rooms[room].spawnQueue.normal[0];
+                        if (roleToSpawn == 'harvester') amountToSave = 0;
+                        name = spawn.createCustomCreep(room, energy, roleToSpawn, amountToSave);
                     }
                     else {
+                        roleToSpawn = Memory.rooms[room].spawnQueue.priority[0];
+                        if (roleToSpawn == 'harvester') amountToSave = 0;
                         queueUsed = 1;
-                        name = spawn.createCustomCreep(room, energy, Memory.rooms[room].spawnQueue.priority[0], amountToSave);
+                        name = spawn.createCustomCreep(room, energy, roleToSpawn, amountToSave);
                     }
                 }
                 else {
+                    roleToSpawn = Memory.rooms[room].spawnQueue.war[0];
+                    if (roleToSpawn == 'harvester') amountToSave = 0;
                     queueUsed = 2;
-                    name = spawn.createCustomCreep(room, energy, Memory.rooms[room].spawnQueue.war[0], amountToSave);
+                    name = spawn.createCustomCreep(room, energy, roleToSpawn, amountToSave);
                 }
 
                 if (Game.creeps[name]) {
