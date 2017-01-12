@@ -21,7 +21,7 @@ module.exports = {
 
         var currentRoom = creep.room;
         var roomController = currentRoom.controller;
-        if (!roomController || (roomController.sign && roomController.sign.username != creep.owner.username)) {
+        if (!roomController || (roomController.sign && roomController.sign.username == creep.owner.username)) {
             this.moveToOtherRoom(room, creep);
         }
         else {
