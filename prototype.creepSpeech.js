@@ -81,7 +81,8 @@ module.exports = function () {
                     toSay = "I Need To Get Some Energy To Do Some Things Around You See ...".split(' ');
                     break;
                 case 'upgrading':
-                    toSay = "The GCl Needs Pumped The RCl Needs Pumped " + global.allianceName + " Needs Praise Cause It Is Great ...".split(' ');
+                    let message = "The GCl Needs Pumped The RCl Needs Pumped " + global.allianceName + " Needs Praise Cause It Is Great ...";
+                    toSay = message.split(' ');
                     break;
                 case 'repairing':
                     toSay = "Repair Thy Structures ... Must Care Take ...".split(' ');
@@ -100,7 +101,8 @@ module.exports = function () {
                     toSay = isFestive;
                     }
                     else {
-                        toSay = "Praise " + global.allianceName + "Find It On SLACK and the LOAN Alliance Website ...".split(' ');
+                        let message = "Praise " + global.allianceName + "Find It On SLACK and the LOAN Alliance Website ...";
+                            toSay = message.split(' ');
                     }
                     break;
             }
