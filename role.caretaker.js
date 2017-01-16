@@ -167,7 +167,7 @@ module.exports = {
 
     moveToWithCostMatrix: function (room, creep, target) {
         creep.moveTo(target, {
-            reusePath: 7, plainCost: 1, swampCost: 3,
+            reusePath: 7, plainCost: 1, swampCost: 4,
             costCallback: function (roomName) {
                 if (roomName == room.name) {
                     let room = Game.rooms[roomName];
