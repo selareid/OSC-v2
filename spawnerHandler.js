@@ -166,7 +166,7 @@ module.exports = {
                 else { // there is a storage we need carriers
                     if (Game.time % 2 == 0) {
                         var containersWithEnergy = _.filter(global[room.name].containers, (s) => s.store && s.store[RESOURCE_ENERGY] && s.store[RESOURCE_ENERGY] > 0);
-                        var containersWithEnergyLeast = _.min(containersWithEnergy, '.store.energy').store.energy;
+                        var containersWithEnergyLeast = containersWithEnergy.length > 0 ? _.min(containersWithEnergy, '.store.energy').store.energy: 0;
                         if (containersWithEnergyLeast > 1800) {
                             minimumNumberOfCarriers = minimumNumberOfCarriers < 3 ? minimumNumberOfCarriers + 1 : minimumNumberOfCarriers;
                         }
