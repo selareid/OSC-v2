@@ -54,8 +54,8 @@ global.buildFromFlags = function (room) {
     let existing = {};
     if (sites.length == 0) {
         let groupedFlags =_.groupBy(Game.flags, 'pos.roomName');
-        let flagsInRoom = groupedFlags[room.name] || [];
-        for (let flagName of flagsInRoom) {
+        let flagsInRoom = groupedFlags[room.name];
+        for (let flagName of flagsInRoom) { console.log(flagName);
             let flag = Game.flags[flagName];
             if (flag.color == COLOR_WHITE || flag.color == COLOR_GREY) {
                 let object = undefined;
