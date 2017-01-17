@@ -288,7 +288,7 @@ module.exports = {
                         break;
                     default:
                         minimumNumberOfCaretakers = 1;
-
+                        if (minimumNumberOfUpgraders < 1) minimumNumberOfUpgraders = 1;
                         if (Game.time % 2 == 0) {
                             var storage = room.storage;
                             if (storage) {
