@@ -168,10 +168,10 @@ module.exports = {
                         var containersWithEnergy = _.filter(global[this.name].containers, (s) => s.store[RESOURCE_ENERGY] > 0);
                         var containersWithEnergyLeast = _.min(containersWithEnergy, '.store.energy').store.energy;
                         if (containersWithEnergyLeast > 1800) {
-                            minimumNumberOfCarriers += 1;
+                            minimumNumberOfCarriers = minimumNumberOfCarriers < 3 ? minimumNumberOfCarriers + 1 : minimumNumberOfCarriers;
                         }
                         else if (containersWithEnergyLeast < 25) {
-                            minimumNumberOfCarriers -= 1;
+                            minimumNumberOfCarriers = minimumNumberOfCarriers > 1 ? minimumNumberOfCarriers - 1 : minimumNumberOfCarriers;
                         }
                     }
                 }
