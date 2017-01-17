@@ -163,20 +163,15 @@ module.exports = {
                 if (!room.storage) {
                     minimumNumberOfCarriers = 0;
                 }
-                else {
-                    if (global[room.name].links[0]) {
-                        if (room.storage.store[RESOURCE_ENERGY] > 600000) {
-                            minimumNumberOfCarriers = 1;
+                else { // there is a storage we need carriers
+                    if (Game.time % 2 == 0) {
+                        var containersWithEnergy = _.filter(global[this.name].containers, (s) => s.store[RESOURCE_ENERGY] > 0);
+                        var containersWithEnergyLeast = _.min(containersWithEnergy, '.store.energy').store.energy;
+                        if (containersWithEnergyLeast > 1800) {
+                            minimumNumberOfCarriers += 1;
                         }
-                        else minimumNumberOfCarriers = 2;
-                    }
-                    else {
-                        var minContEng = _.max(room.find(FIND_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_CONTAINER}), '.store.energy');
-                        if (minContEng && minContEng.store && minContEng.store.energy > 1000) {
-                            minimumNumberOfCarriers = 3
-                        }
-                        else {
-                            minimumNumberOfCarriers = 2;
+                        else if (containersWithEnergyLeast < 25) {
+                            minimumNumberOfCarriers -= 1;
                         }
                     }
                 }
@@ -277,46 +272,35 @@ module.exports = {
             }
             else {
                 switch (room.controller.level) {
-                case 8:
-                        
-                minimumNumberOfCaretakers = 1;
-                    minimumNumberOfUpgraders = 1;
-                    break;
-                case 7:
-                        
-                minimumNumberOfCaretakers = 1;
-                    minimumNumberOfUpgraders = 3;
-                    break;
-                case 6:
-                        
-                minimumNumberOfCaretakers = 1;
-                    minimumNumberOfUpgraders = 5;
-                    break;
-                case 5:
-                        
-                minimumNumberOfCaretakers = 1;
-                    minimumNumberOfUpgraders = 3;
-                    break;
-                case 4:
-                        
-                minimumNumberOfCaretakers = 1;
-                    minimumNumberOfUpgraders = 3;
-                    break;
-                case 3:
-                minimumNumberOfCaretakers = 1;
-                    minimumNumberOfUpgraders = 3;
-                    break;
-                case 2:
-                        
-                minimumNumberOfCaretakers = 3;
-                    minimumNumberOfUpgraders = 3;
-                    break;
-                case 1:
-                        
-                minimumNumberOfCaretakers = 1;
-                    minimumNumberOfUpgraders = 2;
-                    break;
-            }
+                    case 3:
+                        minimumNumberOfCaretakers = 1;
+                        minimumNumberOfUpgraders = 3;
+                        break;
+                    case 2:
+
+                        minimumNumberOfCaretakers = 3;
+                        minimumNumberOfUpgraders = 3;
+                        break;
+                    case 1:
+
+                        minimumNumberOfCaretakers = 1;
+                        minimumNumberOfUpgraders = 2;
+                        break;
+                    default:
+                        minimumNumberOfCaretakers = 1;
+
+                        if (Game.time % 2 == 0) {
+                            var storage = room.storage;
+                            if (storage) {
+                                if (storage.store[RESOURCE_ENERGY] > 50000) {
+                                    minimumNumberOfUpgraders = minimumNumberOfUpgraders < 5 ? minimumNumberOfUpgraders + 1 : minimumNumberOfUpgraders;
+                                }
+                                else {
+                                    minimumNumberOfUpgraders = minimumNumberOfUpgraders > 1 ? minimumNumberOfUpgraders - 1 : minimumNumberOfUpgraders;
+                                }
+                            }
+                        }
+                }
             }
 
             //add creeps close to death to queue
