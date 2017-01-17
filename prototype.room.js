@@ -38,8 +38,8 @@ module.exports = function () {
 
         Room.prototype.getRemoteFlags =
             function () {
-                var Flags = _.filter(Game.flags, f => f.name.split(' ')[0] == 'remoteFlag' && f.memory.room == this.name
-                && f.memory.numberOfRemoteHarvesters != undefined && f.memory.numberOfRemoteHaulers != undefined);
+                var Flags = _.filter(Game.flags, f => f.name.split(' ')[0] == 'remoteFlag' && f.name.split(' ')[1] == this.name
+                && f.name.split(' ')[2] != undefined && f.memory.numberOfRemoteHaulers != undefined);
 
                 if (Flags.length > 0) {
                     return Flags;
