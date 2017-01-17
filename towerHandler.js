@@ -7,7 +7,7 @@ module.exports = {
             for (let tower of towers) {
                 if (tower.energy > 500) { // if energy in tower is greater than x
                     if (this.attackRun(room, tower) == 'no thing to heal') {
-                        this.repairRampart(room, tower); // tower repairs ramparts
+                        this.repairStuff(room, tower); // tower repairs ramparts
                     }
                 }
                 else if (Memory.rooms[room].isUnderAttack == true) {
@@ -51,8 +51,9 @@ module.exports = {
         }
     },
 
-    repairRampart: function (room, tower) {
-        var towerRepair = tower.pos.findClosestByRange(FIND_STRUCTURES, {filter: (s) => (s.structureType == STRUCTURE_RAMPART || s.structureType == STRUCTURE_WALL) && s.hits <= 1000});
+    repairStuff: function (room, tower) {
+        var towerRepair = tower.pos.findClosestByRange(FIND_STRUCTURES, {filter: (s) => (s.structureType == STRUCTURE_WALL && s.hits <= 1000)
+        || ((s.structureType == STRUCTURE_RAMPART || s.structureType == STRUCTURE_ROAD || s.structureType == STRUCTURE_CONTAINER) && s.hits <= global.STRUCTUREDECAY[s.structureType]+100)});
         if (towerRepair) {
             tower.repair(towerRepair)
         }

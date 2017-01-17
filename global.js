@@ -13,3 +13,9 @@ global.REVERSE_DIR = {
     [LEFT]            : RIGHT,
     [TOP_LEFT]        : BOTTOM_RIGHT
 };
+
+global.STRUCTUREDECAY = {
+    [STRUCTURE_ROAD] : 500,
+    [STRUCTURE_RAMPART] : 300,
+    [STRUCTURE_CONTAINER] : 5000
+};
