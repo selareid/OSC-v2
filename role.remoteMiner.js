@@ -96,7 +96,7 @@ module.exports = {
         else {
             var extractor = creep.room.find(FIND_MY_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_EXTRACTOR})[0];
             if (extractor) {
-                var mineral = room.find(FIND_MINERALS)[0];
+                var mineral = creep.room.find(FIND_MINERALS)[0];
                 if (creep.harvest(mineral) != OK) {
                     creep.moveTo(mineral);
                 }
