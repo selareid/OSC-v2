@@ -50,9 +50,9 @@ module.exports = {
         //lab stuff ends
 
         //guard station flag stuff starts
-            if (global[room.name].guardStationFlag == undefined) {
-                global[room.name].guardStationFlag = room.getGuardStationFlag(); // cache guard station flag
-            }
+        if (global[room.name].guardStationFlag == undefined) {
+            global[room.name].guardStationFlag = room.getGuardStationFlag(); // cache guard station flag
+        }
         //guard station flag stuff ends
 
         // otherRoomCreep stuff starts
@@ -88,17 +88,24 @@ module.exports = {
         //room to steal from stuff ends
 
         //remote flag stuff starts
-            if (Game.time % 23 == 0 || global[room.name].cachedRemoteCreepFlags == undefined) {
-                var newRemoteCreepFlags = room.getRemoteFlags(); // get remote flags
-                global[room.name].cachedRemoteCreepFlags = newRemoteCreepFlags; //cache remote flags
-            }
+        if (Game.time % 23 == 0 || global[room.name].cachedRemoteCreepFlags == undefined) {
+            var newRemoteCreepFlags = room.getRemoteFlags(); // get remote flags
+            global[room.name].cachedRemoteCreepFlags = newRemoteCreepFlags; //cache remote flags
+        }
         //remote flag stuff ends
+
+        //remote guard stuff starts here
+        if (Game.time % 23 == 0 || global[room.name].cachedRemoteGuardFlags == undefined) {
+            var newRemoteGuardCreepFlags = room.getRemoteGuardFlags(); // get remote flags
+            global[room.name].cachedRemoteGuardFlags = newRemoteGuardCreepFlags; //cache remote flags
+        }
+        //remote guard stuff ends here
 
         //energyHelperFlag stuff starts
         if (Game.cpu.bucket > 2000) {
-                if (Game.time % 7 == 0 || global[room.name].cachedEnergyHelperFlags == undefined) {
-                    global[room.name].cachedEnergyHelperFlags = room.getEnergyHelperFlags(); //cache remote flags
-                }
+            if (Game.time % 7 == 0 || global[room.name].cachedEnergyHelperFlags == undefined) {
+                global[room.name].cachedEnergyHelperFlags = room.getEnergyHelperFlags(); //cache remote flags
+            }
         }
         //energyHelperFlag stuff ends
 
