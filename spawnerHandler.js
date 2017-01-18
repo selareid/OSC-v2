@@ -361,6 +361,10 @@ module.exports = {
             else if (minimumNumberOfCaretakers > caretakersInQueue + numberOfCaretakers) {
                 creepToAddToQueue = 'caretaker';
             }
+            else if (minimumNumberOfGuards > guardsInQueue + guardsInWarQueue + numberOfGuards) {
+                queueToAddTo = 2;
+                creepToAddToQueue = 'guard';
+            }
             else if (minimumNumberOfUpgraders > upgradersInQueue + numberOfUpgraders) {
                 creepToAddToQueue = 'upgrader';
             }
@@ -370,6 +374,9 @@ module.exports = {
             else if (minimumNumberOfLandlords > landlordsInQueue + numberOfLandlords) {
                 creepToAddToQueue = 'landlord';
             }
+            else if (minimumNumberOfRemoteGuards > remoteGuardsInQueue + numberOfRemoteGuards) {
+                creepToAddToQueue = 'remoteGuard';
+            }
             else if (minimumNumberOfRemoteHarvesters > remoteHarvestersInQueue + numberOfRemoteHarvesters) {
                 creepToAddToQueue = 'remoteHarvester';
             }
@@ -378,9 +385,6 @@ module.exports = {
             }
             else if (minimumNumberOfRemoteMiners > remoteMinersInQueue + numberOfRemoteMiners) {
                 creepToAddToQueue = 'remoteMiner';
-            }
-            else if (minimumNumberOfRemoteGuards > remoteGuardsInQueue + numberOfRemoteGuards) {
-                creepToAddToQueue = 'remoteGuard';
             }
             else if (minimumNumberOfOtherRoomCreeps > otherRoomCreepsInQueue + numberOfOtherRoomCreeps) {
                 creepToAddToQueue = 'otherRoomCreep';
@@ -393,10 +397,6 @@ module.exports = {
             }
             else if (minimumNumberOfMarketMovers > marketMoversInQueue + numberOfMarketMovers) {
                 creepToAddToQueue = 'marketMover';
-            }
-            else if (minimumNumberOfGuards > guardsInQueue + guardsInWarQueue + numberOfGuards) {
-                    queueToAddTo = 2;
-                creepToAddToQueue = 'guard';
             }
             else if (minimumNumberOfCreepHarassers > creepHarassersInQueue + creepHarassersInWarQueue + numberOfCreepHarassers) {
                     queueToAddTo = 2;
