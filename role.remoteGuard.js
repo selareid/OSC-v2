@@ -88,10 +88,7 @@ module.exports = {
         if (targets.length > 0) {
             return creep.pos.findClosestByRange(targets);
         }
-        else {
-            Memory.rooms[room].isUnderAttack = false;
-            return;
-        }
+        else return;
     },
 
     kite: function (room, creep, target) {
