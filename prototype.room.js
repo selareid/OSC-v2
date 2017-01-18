@@ -10,7 +10,7 @@ module.exports = function () {
                 else {
                     return undefined;
                 }
-            },
+            };
 
         Room.prototype.findOtherRoomToGoTo =
             function () {
@@ -22,7 +22,7 @@ module.exports = function () {
                 else {
                     return undefined;
                 }
-            },
+            };
 
         Room.prototype.findRoomToStealFrom =
             function () {
@@ -34,7 +34,7 @@ module.exports = function () {
                 else {
                     return undefined;
                 }
-            },
+            };
 
         Room.prototype.getRemoteFlags =
             function () {
@@ -47,7 +47,7 @@ module.exports = function () {
                 else {
                     return [];
                 }
-            },
+            };
 
         Room.prototype.getEnergyHelperFlags =
             function () {
@@ -59,7 +59,7 @@ module.exports = function () {
                 else {
                     return [];
                 }
-            },
+            };
 
         Room.prototype.cacheThingsInRoom =
             function () {
