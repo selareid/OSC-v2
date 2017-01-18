@@ -33,13 +33,13 @@ module.exports = {
 
         var zeChosenFlag;
 
-                for (let flag of remoteCreepFlags) {
-                    var amountOfCreepsAssignedToThisFlag = _.filter(Game.creeps, (c) => c.memory.room == room.name && c.memory.role == 'remoteHauler' && c.memory.remoteFlag == flag.name).length;
-                    if (amountOfCreepsAssignedToThisFlag < flag.memory.numberOfRemoteHaulers) {
-                        zeChosenFlag = flag;
-                        break;
-                    }
-                }
+        for (let flag of remoteCreepFlags) {
+            var amountOfCreepsAssignedToThisFlag = _.filter(Game.creeps, (c) => c.memory.room == room.name && c.memory.role == 'remoteHauler' && c.memory.remoteFlag == flag.name).length;
+            if (amountOfCreepsAssignedToThisFlag < flag.memory.numberOfRemoteHaulers) {
+                zeChosenFlag = flag;
+                break;
+            }
+        }
 
 
         if (zeChosenFlag) {
@@ -102,23 +102,40 @@ module.exports = {
             }
             else {
 
-                var droppedEnergy = creep.findDroppedEnergy(remoteFlag.room);
-
-                if (droppedEnergy) {
-                    if (creep.pickup(droppedEnergy, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                        creep.moveTo(droppedEnergy, {reusePath: 10});
+                var droppedResource = creep.pos.findClosestByRange(FIND_DROPPED_RESOURCES);
+                if (droppedResource) {
+                    var pickupResult = creep.pickup(droppedResource);
+                    switch (pickupResult) {
+                        case 0:
+                            delete creep.memory.container;
+                            break;
+                        case -9:
+                            creep.moveTo(droppedResource, {reusePath: 7});
+                            break;
                     }
+
                 }
                 else {
-                    var container = creep.findContainer(remoteFlag.room);
+
+                    var container = creep.pos.findClosestByRange(FIND_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_CONTAINER && _.sum(s.store) > 0});
 
                     if (container) {
-                        if (creep.withdraw(container, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                            creep.moveTo(container, {reusePath: 10});
+                        var containerStore = _.sum(container.store);
+                        if (containerStore > 0) {
+                            if (container) {
+                                for (let resourceType in container.store) {
+                                    if (containerStore <= 0) {
+                                        break;
+                                    }
+                                    else if (creep.withdraw(container, resourceType) == ERR_NOT_IN_RANGE) {
+                                        creep.moveTo(container, {reusePath: 10});
+                                    }
+                                }
+                            }
                         }
-                    }
-                    else {
-                        creep.moveTo(remoteFlag.pos, {reusePath: 20});
+                        else {
+                            delete creep.memory.container;
+                        }
                     }
                 }
             }
