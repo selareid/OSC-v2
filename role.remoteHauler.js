@@ -68,6 +68,8 @@ module.exports = {
                     creep.build(constructionSitesInRange[0]);
                 }
                 else {
+                    var needingRepair = creep.pos.findInRange(FIND_STRUCTURES, 3, {filter: (s) => s.hits < s.hitsMax});
+                    creep.repair(needingRepair[0]);
                     creep.moveTo(Game.rooms[creep.memory.room].find(FIND_MY_SPAWNS)[0], {reusePath: 37});
                 }
             }
