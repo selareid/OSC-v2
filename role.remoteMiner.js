@@ -94,22 +94,15 @@ module.exports = {
             }
         }
         else {
-            var mineral = room.find(FIND_MINERALS)[0];
-
-            if (mineral) {
-                switch (creep.harvest(mineral)) {
-                    case ERR_NOT_IN_RANGE:
-                        creep.creepSpeech(room, 'movingToSource');
-                        PathFinder.use(true);
-                        creep.moveTo(mineral, {reusePath: 37});
-                        break;
-                    case OK:
-                        creep.creepSpeech(room, 'harvesting');
-                        break;
+            var extractor = creep.room.find(FIND_MY_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_EXTRACTOR})[0];
+            if (extractor) {
+                var mineral = room.find(FIND_MINERALS)[0];
+                if (creep.harvest(mineral) != OK) {
+                    creep.moveTo(mineral);
                 }
             }
             else {
-                //remove remoteMiner from flag
+                console.log('Creep ' + creep.name + "says there's no extractor in room " + creep.pos.roomName);
             }
         }
     }
