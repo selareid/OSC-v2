@@ -505,6 +505,7 @@ module.exports = function () {
                     }
                     return this.createCreep(sortedParts(body), creepName(roleName), {role: roleName, room: room.name, working: false});
                 default:
+                    console.log('Try to create creep ' + roleName + ' failed');
                     return undefined;
             }
             
