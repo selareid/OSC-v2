@@ -88,7 +88,7 @@ module.exports = {
                     }
                 }
                 else if (room.storage) {
-                    if (_.sum(room.storage.store) >= room.storage.store) {
+                    if (_.sum(room.storage.store) >= room.storage.storeCapacity) {
                         creep.drop(RESOURCE_ENERGY);
                     }
                     else if (creep.transfer(room.storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
