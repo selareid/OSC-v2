@@ -78,21 +78,20 @@ module.exports = {
                 var storage = room.storage;
 
                 var arrayOfBoth = links;
-                arrayOfBoth.push(storage);
+                if (storage && _.sum(storage.store) < storage.storeCapacity) arrayOfBoth.push(storage);
 
                 var closer = creep.pos.findClosestByPath(arrayOfBoth);
 
-                if (closer != storage) {
-                    if (creep.transfer(closer, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                        creep.moveTo(closer, {reusePath: 10})
+                if (closer) {
+                    for (let resourceType in creep.carry) {
+                        if (creep.transfer(closer, resourceType) == ERR_NOT_IN_RANGE) {
+                            creep.moveTo(closer, {reusePath: 19});
+                        }
                     }
                 }
-                else if (room.storage) {
-                    if (_.sum(room.storage.store) >= room.storage.storeCapacity) {
-                        creep.drop(RESOURCE_ENERGY);
-                    }
-                    else if (creep.transfer(room.storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                        creep.moveTo(room.storage);
+                else {
+                    for (let resourceType in creep.carry) {
+                        creep.drop(resourceType);
                     }
                 }
             }
