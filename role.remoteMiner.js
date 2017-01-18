@@ -94,16 +94,20 @@ module.exports = {
             }
         }
         else {
-            var extractor = creep.room.find(FIND_MY_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_EXTRACTOR})[0];
-            if (extractor) {
-                var mineral = creep.room.find(FIND_MINERALS)[0];
-                if (creep.harvest(mineral) != OK) {
-                    creep.moveTo(mineral);
+            var mineral = creep.room.find(FIND_MINERALS)[0];
+
+            if (mineral) {
+                switch (creep.harvest(mineral)) {
+                    case ERR_NOT_IN_RANGE:
+                        creep.creepSpeech(room, 'movingToSource');
+                        creep.moveTo(mineral, {reusePath: 37});
+                        break;
+                    case OK:
+                        creep.creepSpeech(room, 'harvesting');
+                        break;
                 }
             }
-            else {
-                console.log('Creep ' + creep.name + "says there's no extractor in room " + creep.pos.roomName);
-            }
+            else console.log('Creep ' + creep.name + "says there's no extractor in room " + creep.pos.roomName);
         }
     }
 };
