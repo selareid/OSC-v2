@@ -101,7 +101,7 @@ module.exports = {
                     case ERR_NOT_IN_RANGE:
                         creep.creepSpeech(room, 'movingToSource');
                         PathFinder.use(true);
-                        creep.moveTo(mineral, {reusePath: 37, maxRooms: 1});
+                        creep.moveTo(mineral, {reusePath: 37});
                         break;
                     case OK:
                         creep.creepSpeech(room, 'harvesting');
