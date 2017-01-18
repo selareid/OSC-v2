@@ -63,14 +63,22 @@ module.exports = {
 
         if (creep.memory.goingHome === true) {
             if (creep.pos.roomName != creep.memory.room) {
-                var constructionSitesInRange = creep.pos.findInRange(FIND_MY_CONSTRUCTION_SITES, 3);
-                if (constructionSitesInRange.length > 0) {
-                    creep.build(constructionSitesInRange[0]);
+                var constructionSite = creep.pos.findClosestByRange(FIND_MY_CONSTRUCTION_SITES);
+                if (constructionSite) {
+                    if (creep.build(constructionSite) == ERR_NOT_IN_RANGE) {
+                        creep.moveTo(constructionSite);
+                    }
                 }
                 else {
-                    var needingRepair = creep.pos.findInRange(FIND_STRUCTURES, 3, {filter: (s) => s.hits < s.hitsMax});
-                    creep.repair(needingRepair[0]);
-                    creep.moveTo(Game.rooms[creep.memory.room].find(FIND_MY_SPAWNS)[0], {reusePath: 37});
+                    var needingRepair = creep.pos.findClosestByRange(FIND_STRUCTURES, {filter: (s) => s.hits < s.hitsMax*0.75});
+                    if (needingRepair) {
+                        if (creep.repair(needingRepair) == ERR_NOT_IN_RANGE) {
+                            creep.moveTo(needingRepair);
+                        }
+                    }
+                    else {
+                        creep.moveTo(Game.rooms[creep.memory.room].find(FIND_MY_SPAWNS)[0], {reusePath: 37});
+                    }
                 }
             }
             else {
