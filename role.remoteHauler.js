@@ -70,7 +70,8 @@ module.exports = {
                     }
                 }
                 else {
-                    var needingRepair = creep.pos.findClosestByRange(FIND_STRUCTURES, {filter: (s) => s.hits < s.hitsMax*0.75});
+                    var needingRepair = creep.pos.findClosestByRange([creep.pos.findInRange(FIND_STRUCTURES, 3, {filter: (s) => s.hits < s.hitsMax}),
+                        creep.room.find(FIND_STRUCTURES, {filter: (s) => s.hits < s.hitsMax*0.1})]);
                     if (needingRepair) {
                         if (creep.repair(needingRepair) == ERR_NOT_IN_RANGE) {
                             creep.moveTo(needingRepair);
