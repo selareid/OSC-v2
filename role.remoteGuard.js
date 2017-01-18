@@ -56,7 +56,7 @@ module.exports = {
         }
     },
 
-    realRun: function (room, creep) {
+    realRun: function (room, creep, remoteFlag) {
         PathFinder.use(true);
 
         creep.creepSpeech(room);
