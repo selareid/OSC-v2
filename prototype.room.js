@@ -76,4 +76,6 @@ module.exports = function () {
                 global[this.name].containers = this.find(FIND_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_CONTAINER});
 
             };
+
+
 };

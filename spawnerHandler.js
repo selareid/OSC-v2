@@ -213,7 +213,7 @@ module.exports = {
                     for (let flag of remoteCreepFlags) {
                         tempRemoteHarvesters += flag.memory.numberOfRemoteHarvesters;
                         tempRemoteHaulers += flag.memory.numberOfRemoteHaulers;
-                        if (numberOfRemoteMiners !== undefined && numberOfRemoteMiners !== null) tempRemoteMiners += flag.memory.numberOfRemoteMiners;
+                        if (flag.memory.numberOfRemoteMiners !== undefined && flag.memory.numberOfRemoteMiners !== null) tempRemoteMiners += flag.memory.numberOfRemoteMiners;
                     }
 
                     minimumNumberOfRemoteHarvesters = tempRemoteHarvesters;
