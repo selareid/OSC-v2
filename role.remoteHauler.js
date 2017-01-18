@@ -102,7 +102,7 @@ module.exports = {
             }
             else {
 
-                var droppedResource = creep.pos.findClosestByRange(FIND_DROPPED_RESOURCES);
+                var droppedResource = _.max(creep.pos.findClosestByRange(FIND_DROPPED_RESOURCES), '.amount');
                 if (droppedResource) {
                     var pickupResult = creep.pickup(droppedResource);
                     switch (pickupResult) {
