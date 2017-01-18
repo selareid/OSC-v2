@@ -238,6 +238,32 @@ module.exports = function () {
                         }
                     }
                     return this.createCreep(sortedParts(body), creepName(roleName), {role: roleName, room: room.name, goingHome: false});
+                case 'remoteGuard':
+                    numberOfParts = Math.floor((energy - (energy * amountToSave)) / 340);
+                    if (numberOfParts > 1) {
+                            if (numberOfParts > 10) numberOfParts = 10;
+
+                        for (let i = 0; i < numberOfParts; i++) {
+                            body.push(RANGED_ATTACK);
+                            body.push(ATTACK);
+                            body.push(TOUGH);
+                            body.push(MOVE);
+                            body.push(MOVE);
+                        }
+
+                    }
+                    else {
+                        numberOfParts = Math.floor((energy - (energy * amountToSave)) / 280);
+                        if (numberOfParts > 16) numberOfParts = 16;
+
+                        for (let i = 0; i < numberOfParts; i++) {
+                            body.push(RANGED_ATTACK);
+                            body.push(ATTACK);
+                            body.push(MOVE);
+                        }
+
+                    }
+                    return this.createCreep(sortedParts(body), creepName(roleName), {role: roleName, room: room.name, working: false});
                 case 'otherRoomCreep':
                     numberOfParts = Math.floor((energy - (energy * amountToSave)) / 200);
                     if (numberOfParts > 0) {

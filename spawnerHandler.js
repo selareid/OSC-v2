@@ -32,6 +32,7 @@ module.exports = {
         var minimumNumberOfWarHealers = Memory.rooms[room].populationGoal[18];
         var minimumNumberOfTowerDrainers = Memory.rooms[room].populationGoal[19];
         var minimumNumberOfRemoteMiners = Memory.rooms[room].populationGoal[20];
+        var minimumNumberOfRemoteGuards = Memory.rooms[room].populationGoal[21];
 
         //get number of each creeps of each role
         var numberOfHarvesters = _.sum(Game.creeps, (c) => c.memory.role == 'harvester' && c.memory.room == room.name);
@@ -45,6 +46,7 @@ module.exports = {
         var numberOfRemoteHarvesters = _.sum(Game.creeps, (c) => c.memory.role == 'remoteHarvester' && c.memory.room == room.name);
         var numberOfRemoteHaulers = _.sum(Game.creeps, (c) => c.memory.role == 'remoteHauler' && c.memory.room == room.name);
         var numberOfRemoteMiners = _.sum(Game.creeps, (c) => c.memory.role == 'remoteMiner' && c.memory.room == room.name);
+        var numberOfRemoteGuards = _.sum(Game.creeps, (c) => c.memory.role == 'remoteGuard' && c.memory.room == room.name);
         var numberOfOtherRoomCreeps = _.sum(Game.creeps, (c) => c.memory.role == 'otherRoomCreep' && c.memory.room == room.name);
         var numberOfEnergyThiefs = _.sum(Game.creeps, (c) => c.memory.role == 'energyThief' && c.memory.room == room.name);
         var numberOfEnergyHelpers = _.sum(Game.creeps, (c) => c.memory.role == 'energyHelper' && c.memory.room == room.name);
@@ -105,6 +107,7 @@ module.exports = {
                 var remoteHarvestersInQueue = _.sum(Memory.rooms[room].spawnQueue.normal, (r) => r == 'remoteHarvester');
                 var remoteHaulersInQueue = _.sum(Memory.rooms[room].spawnQueue.normal, (r) => r == 'remoteHauler');
                 var remoteMinersInQueue = _.sum(Memory.rooms[room].spawnQueue.normal, (r) => r == 'remoteMiner');
+                var remoteGuardsInQueue = _.sum(Memory.rooms[room].spawnQueue.normal, (r) => r == 'remoteGuard');
                 var otherRoomCreepsInQueue = _.sum(Memory.rooms[room].spawnQueue.normal, (r) => r == 'otherRoomCreep');
                 var energyThiefsInQueue = _.sum(Memory.rooms[room].spawnQueue.normal, (r) => r == 'energyThief');
                 var energyHelpersInQueue = _.sum(Memory.rooms[room].spawnQueue.normal, (r) => r == 'energyHelper');
@@ -204,31 +207,53 @@ module.exports = {
                 //set number of landlords ends
 
                 //set number of remote creeps starts
-                if (Game.time % 6 == 0 || global[room.name]['cachedMinimumNumberOfRemoteCreeps'] == undefined || global[room.name]['cachedMinimumNumberOfRemoteCreeps'].length < 3) {
-                    var remoteCreepFlags = global[room.name].cachedRemoteCreepFlags;
-                    var tempRemoteHarvesters = 0;
-                    var tempRemoteHaulers = 0;
-                    var tempRemoteMiners = 0;
+                (function() {
+                    if (Game.time % 6 == 0 || global[room.name]['cachedMinimumNumberOfRemoteCreeps'] == undefined || global[room.name]['cachedMinimumNumberOfRemoteCreeps'].length < 3) {
+                        var remoteCreepFlags = global[room.name].cachedRemoteCreepFlags;
+                        var tempRemoteHarvesters = 0;
+                        var tempRemoteHaulers = 0;
+                        var tempRemoteMiners = 0;
 
-                    for (let flag of remoteCreepFlags) {
-                        tempRemoteHarvesters += flag.memory.numberOfRemoteHarvesters;
-                        tempRemoteHaulers += flag.memory.numberOfRemoteHaulers;
-                        if (flag.memory.numberOfRemoteMiners !== undefined && flag.memory.numberOfRemoteMiners !== null) tempRemoteMiners += flag.memory.numberOfRemoteMiners;
+                        for (let flag of remoteCreepFlags) {
+                            tempRemoteHarvesters += flag.memory.numberOfRemoteHarvesters;
+                            tempRemoteHaulers += flag.memory.numberOfRemoteHaulers;
+                            if (flag.memory.numberOfRemoteMiners !== undefined && flag.memory.numberOfRemoteMiners !== null) tempRemoteMiners += flag.memory.numberOfRemoteMiners;
+                        }
+
+                        minimumNumberOfRemoteHarvesters = tempRemoteHarvesters;
+                        minimumNumberOfRemoteHaulers = tempRemoteHaulers;
+                        minimumNumberOfRemoteMiners = tempRemoteMiners;
+
+                        global[room.name]['cachedMinimumNumberOfRemoteCreeps'] = minimumNumberOfRemoteHarvesters + ',' + minimumNumberOfRemoteHaulers + ',' + minimumNumberOfRemoteMiners;
                     }
-
-                    minimumNumberOfRemoteHarvesters = tempRemoteHarvesters;
-                    minimumNumberOfRemoteHaulers = tempRemoteHaulers;
-                    minimumNumberOfRemoteMiners = tempRemoteMiners;
-
-                    global[room.name]['cachedMinimumNumberOfRemoteCreeps'] = minimumNumberOfRemoteHarvesters + ',' + minimumNumberOfRemoteHaulers + ',' + minimumNumberOfRemoteMiners;
-                }
-                else {
-                    var foo = global[room.name]['cachedMinimumNumberOfRemoteCreeps'].split(',');
-                    minimumNumberOfRemoteHarvesters = foo[0];
-                    minimumNumberOfRemoteHaulers = foo[1];
-                    minimumNumberOfRemoteMiners = foo[2];
-                }
+                    else {
+                        var foo = global[room.name]['cachedMinimumNumberOfRemoteCreeps'].split(',');
+                        minimumNumberOfRemoteHarvesters = foo[0];
+                        minimumNumberOfRemoteHaulers = foo[1];
+                        minimumNumberOfRemoteMiners = foo[2];
+                    }
+                })();
                 //set number of remote creeps ends
+
+                //set number of remote guards starts
+                (function() {
+                    if (Game.time % 6 == 0 || global[room.name]['cachedMinimumNumberOfGuards'] == undefined) {
+                        var remoteGuardFlags = global[room.name].cachedRemoteGuardFlags;
+                        var tempRemoteGuards = 0;
+
+                        for (let flag of remoteGuardFlags) {
+                            tempRemoteGuards += flag.memory.numberOfGuards;
+                        }
+
+                        minimumNumberOfRemoteGuards = tempRemoteGuards;
+
+                        global[room.name]['cachedMinimumNumberOfGuards'] = minimumNumberOfRemoteGuards;
+                    }
+                    else {
+                        minimumNumberOfRemoteGuards = global[room.name]['cachedMinimumNumberOfGuards'];
+                    }
+                })();
+                //set number of remote guards ends
 
                 if (room.find(FIND_MY_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_EXTRACTOR})[0]) {
                     var mineral = room.find(FIND_MINERALS)[0];
@@ -272,6 +297,7 @@ module.exports = {
                 minimumNumberOfRemoteHarvesters = 0;
                 minimumNumberOfRemoteHaulers = 0;
                 minimumNumberOfRemoteMiners = 0;
+                minimumNumberOfRemoteGuards = 0;
                 minimumNumberOfOtherRoomCreeps = 0;
                 minimumNumberOfEnergyHelpers = 0;
                 minimumNumberOfMiners = 0;
@@ -352,6 +378,9 @@ module.exports = {
             }
             else if (minimumNumberOfRemoteMiners > remoteMinersInQueue + numberOfRemoteMiners) {
                 creepToAddToQueue = 'remoteMiner';
+            }
+            else if (minimumNumberOfRemoteGuards > remoteGuardsInQueue + numberOfRemoteGuards) {
+                creepToAddToQueue = 'remoteGuard';
             }
             else if (minimumNumberOfOtherRoomCreeps > otherRoomCreepsInQueue + numberOfOtherRoomCreeps) {
                 creepToAddToQueue = 'otherRoomCreep';
@@ -435,6 +464,7 @@ module.exports = {
         Memory.rooms[room].populationGoal[18] = minimumNumberOfWarHealers;
         Memory.rooms[room].populationGoal[19] = minimumNumberOfTowerDrainers;
         Memory.rooms[room].populationGoal[20] = minimumNumberOfRemoteMiners;
+        Memory.rooms[room].populationGoal[21] = minimumNumberOfRemoteGuards;
 
         //grafana population stats stuff
         // Memory.stats['room.' + room.name + '.creeps' + '.numberOfHarvesters'] = numberOfHarvesters;
@@ -563,6 +593,10 @@ module.exports = {
         //remote miner
         if (Memory.rooms[room].populationGoal[20] == undefined) {
             Memory.rooms[room].populationGoal[20] = 0;
+        }
+        //remote guard
+        if (Memory.rooms[room].populationGoal[21] == undefined) {
+            Memory.rooms[room].populationGoal[21] = 0;
         }
     },
 
