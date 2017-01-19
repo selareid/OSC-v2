@@ -12,6 +12,8 @@ module.exports = {
 
         room.cacheThingsInRoom();
 
+        linkHandler.run(room);
+
         try {
             if (Game.time % 7 == 0) {
                 if (Game.cpu.bucket > 2000) {
@@ -20,8 +22,6 @@ module.exports = {
                         marketDealer.run(room, terminal);
                     }
                 }
-
-                linkHandler.run(room);
             }
         }
         catch (err) {
