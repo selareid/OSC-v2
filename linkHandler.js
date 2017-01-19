@@ -56,7 +56,7 @@ module.exports = {
         var orderKey = Object.keys(global[room.name].linkQueue)[0];
         var order = global[room.name].linkQueue[orderKey];
         if (order && link) {
-            if (link.energy == link.energyCapacity) {
+            if (link.energy >= order.amount) {
                 link.transferEnergy(Game.getObjectById(orderKey), order.amount);
                 delete global[room.name].linkQueue[orderKey];
             }
@@ -69,7 +69,7 @@ module.exports = {
             if (link.energy < 100) {
                 global[room.name].linkQueue[link.id] = new this.order(link.energyCapacity - link.energy);
             }
-            else if (link.energy > link.energyCapacity * 0.75 && global[room.name].linkQueue[link.id]) {
+            else if (link.energy >= link.energyCapacity && global[room.name].linkQueue[link.id]) {
                 delete global[room.name].linkQueue[link.id];
             }
         }
