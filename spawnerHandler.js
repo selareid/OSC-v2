@@ -170,7 +170,7 @@ module.exports = {
                 else minimumNumberOfDistributors = 1;
 
                 var flagToGoTo = room.find(FIND_FLAGS, {filter: (f) => f.memory.type == 'storageDistributorGoTo' && f.pos.roomName == room.name})[0];
-                if (flagToGoTo && room.storage && global[this.name].links.length >= 2) {
+                if (flagToGoTo && room.storage && global[room.name].links.length >= 2) {
                     var storageDistributorWitchLeastLife = _.min(_.filter(Game.creeps, (c) => c.memory.role == 'storageDistributor' && c.memory.room == room.name), '.ticksToLive');
                     if (storageDistributorWitchLeastLife && storageDistributorWitchLeastLife.ticksToLive <= 200) {
                         minimumNumberOfStorageDistributors = 2;
