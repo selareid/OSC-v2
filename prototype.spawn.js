@@ -71,6 +71,22 @@ module.exports = function () {
                         room: room.name,
                         working: false
                     });
+                case 'storageDistributor':
+                    numberOfParts = Math.floor((energy - (energy * amountToSave)) / 150);
+                    if (numberOfParts > 0) {
+                        if (numberOfParts > 8) numberOfParts = 8;
+
+                        for (let i = 0; i < numberOfParts; i++) {
+                            body.push(CARRY);
+                            body.push(CARRY);
+                            body.push(MOVE);
+                        }
+                    }
+                    return this.createCreep(sortedParts(body), creepName(roleName), {
+                        role: roleName,
+                        room: room.name,
+                        working: false
+                    });
                 case 'carrier':
                     numberOfParts = Math.floor((energy - (energy * amountToSave)) / 150);
                     if (numberOfParts > 0) {

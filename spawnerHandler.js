@@ -33,11 +33,13 @@ module.exports = {
         var minimumNumberOfTowerDrainers = Memory.rooms[room].populationGoal[19];
         var minimumNumberOfRemoteMiners = Memory.rooms[room].populationGoal[20];
         var minimumNumberOfRemoteGuards = Memory.rooms[room].populationGoal[21];
+        var minimumNumberOfStorageDistributors = Memory.rooms[room].populationGoal[22];
 
         //get number of each creeps of each role
         var numberOfHarvesters = _.sum(Game.creeps, (c) => c.memory.role == 'harvester' && c.memory.room == room.name);
         var numberOfCarriers = _.sum(Game.creeps, (c) => c.memory.role == 'carrier' && c.memory.room == room.name);
         var numberOfDistributors = _.sum(Game.creeps, (c) => c.memory.role == 'distributor' && c.memory.room == room.name);
+        var numberOfStorageDistributors = _.sum(Game.creeps, (c) => c.memory.role == 'storageDistributor' && c.memory.room == room.name);
         var numberOfUpgraders = _.sum(Game.creeps, (c) => c.memory.role == 'upgrader' && c.memory.room == room.name);
         var numberOfBuilders = _.sum(Game.creeps, (c) => c.memory.role == 'builder' && c.memory.room == room.name);
         var numberOfCaretakers = _.sum(Game.creeps, (c) => c.memory.role == 'caretaker' && c.memory.room == room.name);
@@ -99,6 +101,7 @@ module.exports = {
                 var harvestersInQueue = _.sum(Memory.rooms[room].spawnQueue.normal, (r) => r == 'harvester');
                 var carriersInQueue = _.sum(Memory.rooms[room].spawnQueue.normal, (r) => r == 'carrier');
                 var distributorsInQueue = _.sum(Memory.rooms[room].spawnQueue.normal, (r) => r == 'distributor');
+                var storageDistributorsInQueue = _.sum(Memory.rooms[room].spawnQueue.normal, (r) => r == 'storageDistributor');
                 var upgradersInQueue = _.sum(Memory.rooms[room].spawnQueue.normal, (r) => r == 'upgrader');
                 var buildersInQueue = _.sum(Memory.rooms[room].spawnQueue.normal, (r) => r == 'builder');
                 var caretakersInQueue = _.sum(Memory.rooms[room].spawnQueue.normal, (r) => r == 'caretaker');
@@ -124,6 +127,7 @@ module.exports = {
                 //get number of each role in priority queue
                 var harvestersInPriorityQueue = _.sum(Memory.rooms[room].spawnQueue.priority, (r) => r == 'harvester');
                 var distributorsInPriorityQueue = _.sum(Memory.rooms[room].spawnQueue.priority, (r) => r == 'distributor');
+                var storageDistributorsInPriorityQueue = _.sum(Memory.rooms[room].spawnQueue.priority, (r) => r == 'storageDistributor');
                 var carriersInPriorityQueue = _.sum(Memory.rooms[room].spawnQueue.priority, (r) => r == 'carrier');
 
                 //get number of each role in war queue
@@ -164,6 +168,15 @@ module.exports = {
                         minimumNumberOfDistributors = 2;
                 }
                 else minimumNumberOfDistributors = 1;
+
+                var flagToGoTo = room.find(FIND_FLAGS, {filter: (f) => f.memory.type == 'storageDistributorGoTo' && f.pos.roomName == room.name})[0];
+                if (flagToGoTo && room.storage && global[this.name].links.length >= 2) {
+                    var storageDistributorWitchLeastLife = _.min(_.filter(Game.creeps, (c) => c.memory.role == 'storageDistributor' && c.memory.room == room.name), '.ticksToLive');
+                    if (storageDistributorWitchLeastLife && storageDistributorWitchLeastLife.ticksToLive <= 200) {
+                        minimumNumberOfStorageDistributors = 2;
+                    }
+                    else minimumNumberOfStorageDistributors = 1;
+                }
 
                 //if there's no storage you don't need carriers
                 if (!room.storage) {
@@ -352,6 +365,12 @@ module.exports = {
                 }
                 creepToAddToQueue = 'distributor';
             }
+            else if (minimumNumberOfStorageDistributors > storageDistributorsInQueue + numberOfStorageDistributors + storageDistributorsInPriorityQueue) {
+                if (!storageDistributorsInPriorityQueue > 0) {
+                    queueToAddTo = 1;
+                }
+                creepToAddToQueue = 'storageDistributor';
+            }
             else if (minimumNumberOfCarriers > carriersInQueue + numberOfCarriers + carriersInPriorityQueue) {
                 if (!carriersInPriorityQueue > 0) {
                     queueToAddTo = 1;
@@ -465,6 +484,7 @@ module.exports = {
         Memory.rooms[room].populationGoal[19] = minimumNumberOfTowerDrainers;
         Memory.rooms[room].populationGoal[20] = minimumNumberOfRemoteMiners;
         Memory.rooms[room].populationGoal[21] = minimumNumberOfRemoteGuards;
+        Memory.rooms[room].populationGoal[22] = minimumNumberOfStorageDistributors;
 
         //grafana population stats stuff
         // Memory.stats['room.' + room.name + '.creeps' + '.numberOfHarvesters'] = numberOfHarvesters;
@@ -598,6 +618,10 @@ module.exports = {
         if (Memory.rooms[room].populationGoal[21] == undefined) {
             Memory.rooms[room].populationGoal[21] = 0;
         }
+        //storage distributors
+        if (Memory.rooms[room].populationGoal[22] == undefined) {
+            Memory.rooms[room].populationGoal[22] = 0;
+        }
     },
 
     getAmountOfReservers: function (room, reserveFlags) {
@@ -628,47 +652,6 @@ module.exports = {
 
         return amountToReturn + _.sum(Game.creeps, (c) => c.memory.role == 'landlord' && c.memory.room == room && reserveFlags.includes(Game.flags[c.memory.flag]));
 
-    },
-
-    addCreepsAboutToDieToQueue: function (room, harvestersInPriorityQueue, distributorsInPriorityQueue, carriersInPriorityQueue) {
-        var creepAboutToDie = _.filter(Game.creeps, (c) => c.memory.room == room.name && c.ticksToLive <= 400 && c.memory.role)[0];
-
-        if (creepAboutToDie) {
-            let role = creepAboutToDie.memory.role;
-            var whichQueue = 0; //0 is normal queue and 1 is priority 2 is war queue
-            switch (role) {
-                case 'harvester':
-                        whichQueue = 1;
-                    break;
-                case 'distributor':
-                        whichQueue = 1;
-                    break;
-                case 'carrier':
-                    if (carriersInPriorityQueue == 0) {
-                        whichQueue = 1;
-                    }
-                    break;
-                case 'guard':
-                    whichQueue = 2;
-                    break;
-            }
-
-            switch (whichQueue) {
-                case 0:
-                    Memory.rooms[room].spawnQueue.normal.push(role);
-                    break;
-                case 1:
-                    // Memory.rooms[room].spawnQueue.priority.splice(role);
-                    Memory.rooms[room].spawnQueue.priority.splice(0, 0, role);
-                    break;
-                case 2:
-                    Memory.rooms[room].spawnQueue.war.push(role);
-                    break;
-            }
-
-            console.log('role ' + role + ' added to spawn queue ' + whichQueue + ' room ' + room.name);
-
-        }
     },
 
     spawn: function (room, numberOfHarvesters, minimumNumberOfHarvesters, numberOfDistributors, minimumNumberOfDistributors, numberOfCarriers) {
