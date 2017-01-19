@@ -57,7 +57,7 @@ module.exports = {
         var order = global[room.name].linkQueue[orderKey];
         if (order && link) {
             if (link.energy == link.energyCapacity) {
-                link.transferEnergy(orderKey, order.amount);
+                link.transferEnergy(Game.getObjectById(orderKey), order.amount);
                 delete global[room.name].linkQueue[orderKey];
             }
         }
