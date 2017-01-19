@@ -53,7 +53,7 @@ module.exports = {
     },
 
     giverRun: function (room, link) {
-        var orderKey = Objects.keys(global[room.name].linkQueue[link.id])[0];
+        var orderKey = Object.keys(global[room.name].linkQueue[link.id])[0];
         var order = global[room.name].linkQueue[link.id][orderKey];
         if (order && link) {
             if (link.energy == link.energyCapacity) {
