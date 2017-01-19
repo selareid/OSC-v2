@@ -53,12 +53,12 @@ module.exports = {
     },
 
     giverRun: function (room, link) {
-        var orderKey = Object.keys(global[room.name].linkQueue[link.id])[0];
-        var order = global[room.name].linkQueue[link.id][orderKey];
+        var orderKey = Object.keys(global[room.name].linkQueue)[0];
+        var order = global[room.name].linkQueue[orderKey];
         if (order && link) {
             if (link.energy == link.energyCapacity) {
                 link.transferEnergy(orderKey, order.amount);
-                delete global[room.name].linkQueue[link.id][orderKey];
+                delete global[room.name].linkQueue[orderKey];
             }
         }
     },
