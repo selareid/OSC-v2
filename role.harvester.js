@@ -13,7 +13,7 @@ module.exports = {
             if (creep.memory.working == true && _.sum(creep.carry) == 0) {
                 creep.memory.working = false;
             }
-            else if (creep.memory.working == false && _.sum(creep.carry) >= creep.carryCapacity) {
+            else if (creep.memory.working == false && _.sum(creep.carry) >= creep.carryCapacity - (creep.getActiveBodyparts(WORK) * 2)) {
                 creep.memory.working = true;
             }
 
