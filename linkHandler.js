@@ -56,7 +56,7 @@ module.exports = {
         var orderKey = Object.keys(global[room.name].linkQueue)[0];
         var order = global[room.name].linkQueue[orderKey];
         if (order && link) {
-            if (link.energy >= order.amount) {
+            if (link.energy == link.energyCapacity) {
                 link.transferEnergy(Game.getObjectById(orderKey), order.amount);
                 delete global[room.name].linkQueue[orderKey];
             }
