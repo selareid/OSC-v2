@@ -213,8 +213,8 @@ module.exports = function () {
                 case 'remoteMiner':
                     numberOfParts = Math.floor(((energy - (energy * amountToSave)) - 100) / 150);
                     if (numberOfParts > 0) {
-                        if (numberOfParts > 7) {
-                            numberOfParts = 7;
+                        if (numberOfParts > 24) {
+                            numberOfParts = 24;
                         }
                         body.push(CARRY);
                         body.push(MOVE);
