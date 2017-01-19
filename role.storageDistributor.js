@@ -1,0 +1,85 @@
+require('global');
+require('prototype.creep')();
+require('prototype.creepSpeech')();
+
+module.exports = {
+    run: function (room, creep) {
+
+        creep.creepSpeech(room);
+
+        var flagToGoTo = room.find(FIND_FLAGS, {filter: (f) => f.memory.type == 'distributorGoTo' && f.memory.room == creep.room.name})[0];
+        if (flagToGoTo) {
+            creep.moveTo(flagToGoTo);
+        }
+
+        if (creep.memory.working == true && creep.carry.energy == 0) {
+            creep.memory.working = false;
+        }
+        else if (creep.memory.working == false && creep.carry.energy == creep.carryCapacity) {
+            creep.memory.working = true;
+        }
+
+        if (creep.memory.working == true) {
+
+
+        }
+        else {
+
+            var storage = room.storage;
+            var droppedEnergy = creep.findDroppedEnergy(room);
+            var container;
+
+            if (!storage) {
+
+                if (!droppedEnergy) {
+                    droppedEnergy = [];
+                }
+
+                if (droppedEnergy.amount == undefined || droppedEnergy.amount < 1010) {
+                    if (storage && storage.store[RESOURCE_ENERGY] > 1000) {
+                        if (creep.withdraw(storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                            creep.moveTo(storage, {reusePath: 10})
+                        }
+                    }
+                    else {
+                        container = creep.findContainer(room);
+                        if (container) {
+                            if (creep.withdraw(container, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                                creep.moveTo(container)
+                            }
+                        }
+                        else {
+                            if (creep.pickup(droppedEnergy) == ERR_NOT_IN_RANGE) {
+                                creep.moveTo(container)
+                            }
+                        }
+                    }
+                }
+                else {
+                    if (creep.pickup(droppedEnergy) == ERR_NOT_IN_RANGE) {
+                        creep.moveTo(droppedEnergy);
+                    }
+                }
+            }
+            else {
+
+
+
+            }
+        }
+    },
+
+    findSpawnExtension: function (room, creep) {
+        var spawns = room.find(FIND_MY_SPAWNS, {filter: (s) => s.energy < s.energyCapacity});
+        var extensions = room.find(FIND_MY_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_EXTENSION && s.energy < s.energyCapacity});
+        return creep.pos.findClosestByRange(spawns.concat(extensions));
+    },
+
+    findTower: function (room, energyOfTowers) {
+        var tower = room.find(FIND_MY_STRUCTURES, {
+            filter: (s) => s.structureType == STRUCTURE_TOWER
+            && s.energy <= energyOfTowers && s.energy != s.energyCapacity
+        })[0];
+        return tower;
+    }
+};

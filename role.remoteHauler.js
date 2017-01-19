@@ -110,8 +110,8 @@ module.exports = {
                 creep.moveTo(remoteFlag.pos, {reusePath: 37});
             }
             else {
-
-                var droppedResource = _.max(creep.room.find(FIND_DROPPED_RESOURCES), '.amount');
+                let allDroppedResources = _.max(creep.room.find(FIND_DROPPED_RESOURCES), '.amount');
+                var droppedResource = allDroppedResources !== Number.POSITIVE_INFINITY && allDroppedResources !== Number.NEGATIVE_INFINITY ? allDroppedResources : undefined;
                 if (droppedResource) {
                     var pickupResult = creep.pickup(droppedResource);
                     switch (pickupResult) {
