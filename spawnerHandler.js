@@ -680,36 +680,25 @@ module.exports = {
                     energy = room.energyAvailable;
                 }
 
-                if (!Memory.rooms[room].spawnQueue.war || !Memory.rooms[room].spawnQueue.war.length > 0 || Game.time % 5 == 0 || Game.time % 5 == 1) {
-                    if (!Memory.rooms[room].spawnQueue.priority.length > 0 || Game.time % 3 == 0 || Game.time % 3 == 1) {
-                        roleToSpawn = Memory.rooms[room].spawnQueue.normal[0];
-                        if (roleToSpawn == 'harvester') amountToSave = 0;
-                        name = spawn.createCustomCreep(room, energy, roleToSpawn, amountToSave);
-                    }
-                    else {
-                        roleToSpawn = Memory.rooms[room].spawnQueue.priority[0];
-                        if (roleToSpawn == 'harvester') amountToSave = 0;
-                        queueUsed = 1;
-                        name = spawn.createCustomCreep(room, energy, roleToSpawn, amountToSave);
-                    }
-                }
-                else {
-                    roleToSpawn = Memory.rooms[room].spawnQueue.war[0];
+                var queuesWithCreeps = _.filter(Memory.rooms[room].spawnQueue, (q) => q.length > 0);
+                var queueToUse = queuesWithCreeps[(Game.time % queuesWithCreeps.length)];
+
+                if (queueToUse) {
+                    roleToSpawn = queueToUse[0];
                     if (roleToSpawn == 'harvester') amountToSave = 0;
-                    queueUsed = 2;
                     name = spawn.createCustomCreep(room, energy, roleToSpawn, amountToSave);
                 }
 
                 if (Game.creeps[name]) {
 
                     switch (queueUsed) {
-                        case 0:
+                        case Memory.rooms[room].spawnQueue.normal:
                             Memory.rooms[room].spawnQueue.normal.splice(0, 1);
                             break;
-                        case 1:
+                        case Memory.rooms[room].spawnQueue.priority:
                             Memory.rooms[room].spawnQueue.priority.splice(0, 1);
                             break;
-                        case 2:
+                        case Memory.rooms[room].spawnQueue.war:
                             Memory.rooms[room].spawnQueue.war.splice(0, 1);
                             break;
                     }
