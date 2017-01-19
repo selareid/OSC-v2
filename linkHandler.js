@@ -66,7 +66,7 @@ module.exports = {
     takerRun: function (room, link) {
 
         if (link) {
-            if (link.energy < 100) {
+            if (link.energy < link.energyCapacity) {
                 global[room.name].linkQueue[link.id] = new this.order(link.energyCapacity - link.energy);
             }
             else if (link.energy >= link.energyCapacity && global[room.name].linkQueue[link.id]) {
