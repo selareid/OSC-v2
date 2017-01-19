@@ -67,7 +67,7 @@ module.exports = {
 
         if (link) {
             if (link.energy < link.energyCapacity) {
-                global[room.name].linkQueue[link.id] = new this.order((link.energyCapacity - link.energy) + 1);
+                global[room.name].linkQueue[link.id] = new this.order(link.energyCapacity);
             }
             else if (link.energy >= link.energyCapacity && global[room.name].linkQueue[link.id]) {
                 delete global[room.name].linkQueue[link.id];
