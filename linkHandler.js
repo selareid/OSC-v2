@@ -6,6 +6,9 @@ module.exports = {
         if (!global[room.name].linkQueue) {
             global[room.name].linkQueue = {};
         }
+        if (!global['linkRole']) {
+            global['linkRole'] = {};
+        }
 
         var links = _.filter(global[room.name].links, (l) => l.cooldown == 0);
 
