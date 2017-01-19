@@ -8,7 +8,8 @@ module.exports = {
         creep.creepSpeech(room);
 
         var flagToGoTo = room.find(FIND_FLAGS, {filter: (f) => f.memory.type == 'storageDistributorGoTo' && f.pos.roomName == creep.room.name})[0];
-        if (flagToGoTo && creep.pos.isEqualTo(flagToGoTo.pos)) {
+        if (!flagToGoTo) console.log('Error no storage distribution flag in room ' + room.name); return;
+        if (!creep.pos.isEqualTo(flagToGoTo.pos)) {
             creep.moveTo(flagToGoTo);
         }
         else {
