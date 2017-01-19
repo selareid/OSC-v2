@@ -89,25 +89,9 @@ module.exports = {
                     }
                 }
                 else {
-
-                    var link = creep.pos.findClosestByRange(_.filter(global[room.name].links, (l) => l.energy > 0));
-
-                    if (link) {
-                        var withdrawResult = creep.withdraw(link, RESOURCE_ENERGY);
-                        switch (withdrawResult) {
-                            case 0:
-                                delete creep.memory.container;
-                                break;
-                            case -9:
-                                creep.moveTo(droppedResource, {reusePath: 9});
-                                break;
-                        }
-                    }
-                    else {
-                        var flagToGoTo = room.find(FIND_FLAGS, {filter: (f) => f.memory.type == 'distributorGoTo' && f.memory.room == creep.room.name})[0];
-                        if (flagToGoTo) {
-                            creep.moveTo(flagToGoTo);
-                        }
+                    var flagToGoTo = room.find(FIND_FLAGS, {filter: (f) => f.memory.type == 'distributorGoTo' && f.memory.room == creep.room.name})[0];
+                    if (flagToGoTo) {
+                        creep.moveTo(flagToGoTo);
                     }
                 }
             }
