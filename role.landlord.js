@@ -15,7 +15,7 @@ module.exports = {
             
             if (creep.pos.roomName == flag.pos.roomName) {
                 if (flag.memory.type == 'claimFlag') {
-                    if (flag.room && flag.room.controller && flag.room.controller.my === false) {
+                    if (flag.room && flag.room.controller && flag.room.controller.my != false) {
                         switch (creep.claimController(creep.room.controller)) {
                             case ERR_NOT_IN_RANGE:
                                 creep.moveTo(creep.room.controller);
