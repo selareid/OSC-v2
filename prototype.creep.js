@@ -121,7 +121,7 @@ module.exports = function () {
             var lookConstructionSite = this.pos.lookFor(LOOK_CONSTRUCTION_SITES);
             if (!lookRoads.length > 0 && !lookConstructionSite.length > 0) {
                 var entryInMemory = _.filter(Memory.rooms[room].roadSites, (s) => s.split(',')[0] == this.pos.roomName
-                && s.split(',')[1] == this.pos.x && s.split(',')[2]);
+                && s.split(',')[1] == this.pos.x && s.split(',')[2])[0];
 
                 if (entryInMemory) {
                     var level = entryInMemory.split(',')[3];
