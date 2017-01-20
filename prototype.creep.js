@@ -55,7 +55,7 @@ module.exports = function () {
 
     Creep.prototype.runInSquares =
         function () {
-        var creep = this;
+            var creep = this;
             switch (creep.memory.lastMove) {
                 case TOP:
                     creep.memory.lastMove = LEFT;
@@ -109,4 +109,16 @@ module.exports = function () {
         }
         return false;
     };
+
+    /**
+     * Places road construction site under creep if there is none
+     */
+    Creep.prototype.placeRoadUnderCreep =
+        function () {
+            var lookRoads = _.filter(this.pos.lookFor(LOOK_STRUCTURES), (s) => s.structureType == STRUCTURE_ROAD);
+            var lookConstructionSite = this.pos.lookFor(LOOK_CONSTRUCTION_SITES);
+            if (!lookRoads.length > 0 && !lookConstructionSite.length > 0) {
+                return this.room.createConstructionSite(this.pos, STRUCTURE_ROAD);
+            }
+        }
 };
