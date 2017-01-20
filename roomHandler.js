@@ -31,6 +31,9 @@ module.exports = {
             }
         }
 
+        if (!Memory.rooms[room].roadSites) {
+            Memory.rooms[room].roadSites = [];
+        }
 
         //lab stuff starts
         try {
