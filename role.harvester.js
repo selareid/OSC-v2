@@ -9,25 +9,15 @@ module.exports = {
             roleEmergencyHarvester.run(room, creep);
         }
         else {
-            //changes state
-            if (creep.memory.working == true && _.sum(creep.carry) == 0) {
-                creep.memory.working = false;
-            }
-            else if (creep.memory.working == false && _.sum(creep.carry) >= creep.carryCapacity - (creep.getActiveBodyparts(WORK) * 2)) {
-                creep.memory.working = true;
-            }
-
             var containers = creep.pos.findInRange(FIND_STRUCTURES, 1, {
                 filter: (s) => s.structureType == STRUCTURE_CONTAINER
             });
 
             // if working if true do stuff or else mine
-            if (creep.memory.working == true) {
-                this.dropEnergy(room, creep, containers);
-            }
-            else {
-                this.harvest(room, creep, containers);
-            }
+
+            if (creep.carry.energy >= (creep.carryCapacity - 2*creep.getActiveBodyparts(WORK))) this.dropEnergy(room, creep, containers);
+
+            this.harvest(room, creep);
 
         }
 
@@ -77,7 +67,7 @@ module.exports = {
         }
     },
 
-    harvest: function (room, creep, containers) {
+    harvest: function (room, creep) {
         if (!creep.memory.source) {
             var harvesters = _.filter(Game.creeps, c => c.memory.role == 'harvester' && c.memory.room == room.name && c.spawning == false && c.name != creep.name);
 
@@ -113,18 +103,6 @@ module.exports = {
                     creep.creepSpeech(room, 'movingToSource');
                     creep.moveTo(source, {reusePath: 10});
                     creep.placeRoadUnderCreep();
-                    break;
-                case ERR_NOT_ENOUGH_ENERGY:
-                    if (creep.carry[RESOURCE_ENERGY] > 0) {
-                        var container = _.filter(containers, (s) => s.hits < s.hitsMax)[0];
-                        if (container) {
-                            creep.repair(container);
-                        }
-                    }
-                    else {
-                        var containerWithEnergy = _.filter(containers, (c) => c.store[RESOURCE_ENERGY] > 0)[0];
-                        creep.withdraw(containerWithEnergy, RESOURCE_ENERGY, (creep.carryCapacity-1));
-                    }
                     break;
                 case OK:
                     creep.creepSpeech(room, 'harvesting');
