@@ -31,7 +31,7 @@ module.exports = {
             }
         }
 
-        if (!Memory.rooms[room].roadSites) {
+        if (!Memory.rooms[room].roadSites || Game.time % 34 == 0) {
             Memory.rooms[room].roadSites = [];
         }
 
