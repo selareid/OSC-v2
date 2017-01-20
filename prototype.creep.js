@@ -124,8 +124,9 @@ module.exports = function () {
                 && s.split(',')[1] == this.pos.x && s.split(',')[2])[0];
 
                 if (entryInMemory) {
+                    var numberOfStepsNeeded = 7;
                     var level = entryInMemory.split(',')[3];
-                    if (level < 10) entryInMemory.level += 1;
+                    if (level < numberOfStepsNeeded) entryInMemory.level += 1;
                     else {
                         return this.room.createConstructionSite(this.pos, STRUCTURE_ROAD);
                     }
