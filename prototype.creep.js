@@ -124,7 +124,7 @@ module.exports = function () {
                 && s.split(',')[1] == this.pos.x && s.split(',')[2])[0];
 
                 if (entryInMemory) {
-                    var numberOfStepsNeeded = 13;
+                    var numberOfStepsNeeded = 7;
                     var level = parseInt(entryInMemory.split(',')[3]);
                     if (level < numberOfStepsNeeded) Memory.rooms[room].roadSites[Memory.rooms[room].roadSites.indexOf(entryInMemory)]
                         = this.pos.roomName + ',' + this.pos.x + ',' + this.pos.y + ',' + (level + 1);
