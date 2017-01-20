@@ -338,7 +338,7 @@ module.exports = {
                             var storage = room.storage;
                             if (storage) {
                                 if (storage.store[RESOURCE_ENERGY] > 50000) {
-                                    minimumNumberOfUpgraders = minimumNumberOfUpgraders < 5 ? minimumNumberOfUpgraders + 1 : minimumNumberOfUpgraders;
+                                    minimumNumberOfUpgraders = minimumNumberOfUpgraders < 8 ? minimumNumberOfUpgraders + 1 : minimumNumberOfUpgraders;
                                 }
                                 else {
                                     minimumNumberOfUpgraders = minimumNumberOfUpgraders > 1 ? minimumNumberOfUpgraders - 1 : minimumNumberOfUpgraders;
