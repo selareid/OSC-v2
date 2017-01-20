@@ -129,7 +129,8 @@ module.exports = function () {
                     if (level < numberOfStepsNeeded) Memory.rooms[room].roadSites[Memory.rooms[room].roadSites.indexOf(entryInMemory)]
                         = this.pos.roomName + ',' + this.pos.x + ',' + this.pos.y + ',' + (level + 1);
                     else {
-                        return this.room.createConstructionSite(this.pos, STRUCTURE_ROAD);
+                        var result = this.room.createConstructionSite(this.pos, STRUCTURE_ROAD);
+                        console.log('Created construction site for a road at ' + this.pos + ' result is ' + result);
                     }
                 }
                 else Memory.rooms[room].roadSites.push(this.pos.roomName + ',' + this.pos.x + ',' + this.pos.y + ',' + 1);
