@@ -48,6 +48,7 @@ module.exports = {
     },
 
     creepActions: function (room, creep) {
+        if (!room) {creep.suicide()}
         if (creep.memory.room == room.name && creep.spawning === false) {
             var energyOfTowers = this.getEnergyOfTower(room);
             if (!global[creep.name]) {
