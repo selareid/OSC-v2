@@ -31,10 +31,9 @@ module.exports = {
         try {
             for (let name in Game.creeps) {
                 let creep = Game.creeps[name];
-                let room = Game.rooms[creep.memory.room];
 
 
-                this.creepActions(room, creep);
+                this.creepActions(undefined, creep);
 
             }
         }
@@ -47,9 +46,11 @@ module.exports = {
 
     },
 
-    creepActions: function (room, creep) {
-        if (!room) {creep.suicide()}
-        if (creep.memory.room == room.name && creep.spawning === false) {
+    creepActions: function (room = Game.rooms[creep.memory.room], creep) {
+        if (!room) {
+            creep.suicide()
+        }
+        else if (creep.spawning === false) {
             var energyOfTowers = this.getEnergyOfTower(room);
             if (!global[creep.name]) {
                 global[creep.name] = {};
