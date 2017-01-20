@@ -115,10 +115,24 @@ module.exports = function () {
      */
     Creep.prototype.placeRoadUnderCreep =
         function () {
-            var lookRoads = _.filter(this.pos.lookFor(LOOK_STRUCTURES), (s) => s.structureType == STRUCTURE_ROAD);
-            var lookConstructionSite = this.pos.lookFor(LOOK_CONSTRUCTION_SITES);
-            if (!lookRoads.length > 0 && !lookConstructionSite.length > 0) {
-                return this.room.createConstructionSite(this.pos, STRUCTURE_ROAD);
+            var flagNextColor = {
+                [COLOR_YELLOW]            : COLOR_GREEN,
+                [COLOR_GREEN]             : 'placeSite'
+            };
+
+
+
+            var flagAtPos = _.filter(this.pos.lookFor(LOOK_FLAGS), (f) => f.color == COLOR_YELLOW || f.color == COLOR_GREEN)[0];
+            if (flagAtPos) {
+                var toSet = flagNextColor[flagAtPos.color];
+                if (toSet !== 'placeSite') flagAtPos.setColor(toSet);
+                else {
+                    var lookRoads = _.filter(this.pos.lookFor(LOOK_STRUCTURES), (s) => s.structureType == STRUCTURE_ROAD);
+                    var lookConstructionSite = this.pos.lookFor(LOOK_CONSTRUCTION_SITES);
+                    if (!lookRoads.length > 0 && !lookConstructionSite.length > 0) {
+                        return this.room.createConstructionSite(this.pos, STRUCTURE_ROAD);
+                    }
+                }
             }
         }
 };
