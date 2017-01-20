@@ -120,12 +120,14 @@ module.exports = function () {
             if (!lookRoads.length > 0 && !lookConstructionSite.length > 0) {
 
                 var flagNextColor = {
-                    [COLOR_YELLOW]: COLOR_GREEN,
+                    [COLOR_YELLOW]: COLOR_ORANGE,
+                    [COLOR_ORANGE]: COLOR_BROWN,
+                    [COLOR_BROWN]: COLOR_GREEN,
                     [COLOR_GREEN]: 'placeSite'
                 };
 
 
-                var flagAtPos = _.filter(this.pos.lookFor(LOOK_FLAGS), (f) => f.color == COLOR_YELLOW || f.color == COLOR_GREEN)[0];
+                var flagAtPos = _.filter(this.pos.lookFor(LOOK_FLAGS), (f) => f.color == COLOR_YELLOW || f.color == COLOR_ORANGE || f.color == COLOR_BROWN || f.color == COLOR_GREEN)[0];
                 if (flagAtPos) {
                     var toSet = flagNextColor[flagAtPos.color];
                     if (toSet !== 'placeSite') flagAtPos.setColor(toSet);
