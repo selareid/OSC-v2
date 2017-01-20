@@ -112,30 +112,27 @@ module.exports = function () {
 
     /**
      * Places road construction site under creep if there is none
+     * they're stored as follows
+     * roomName,x,y,level
      */
     Creep.prototype.placeRoadUnderCreep =
-        function () {
+        function (room = this.room) {
             var lookRoads = _.filter(this.pos.lookFor(LOOK_STRUCTURES), (s) => s.structureType == STRUCTURE_ROAD);
             var lookConstructionSite = this.pos.lookFor(LOOK_CONSTRUCTION_SITES);
             if (!lookRoads.length > 0 && !lookConstructionSite.length > 0) {
+                var entryInMemory = _.filter(Memory.rooms[room].roadSites, (s) => s.split(',')[0] == this.pos.roomName
+                && s.split(',')[1] == this.pos.x && s.split(',')[2]);
 
-                var flagNextColor = {
-                    [COLOR_YELLOW]: COLOR_ORANGE,
-                    [COLOR_ORANGE]: COLOR_BROWN,
-                    [COLOR_BROWN]: COLOR_GREEN,
-                    [COLOR_GREEN]: 'placeSite'
-                };
-
-
-                var flagAtPos = _.filter(this.pos.lookFor(LOOK_FLAGS), (f) => f.color == COLOR_YELLOW || f.color == COLOR_ORANGE || f.color == COLOR_BROWN || f.color == COLOR_GREEN)[0];
-                if (flagAtPos) {
-                    var toSet = flagNextColor[flagAtPos.color];
-                    if (toSet !== 'placeSite') flagAtPos.setColor(toSet);
+                if (entryInMemory) {
+                    var level = entryInMemory.split(',')[3];
+                    if (level < 10) entryInMemory.level += 1;
                     else {
                         return this.room.createConstructionSite(this.pos, STRUCTURE_ROAD);
                     }
                 }
-                else this.room.createFlag(this.pos, undefined, COLOR_YELLOW);
+                else Memory.rooms[room].roadSites.push(this.pos.roomName + ',' + this.pos.x + ',' + this.pos.y + ',' + 1);
+
+                Memory.rooms[room].roadSites[Memory.rooms[room].roadSites.indexOf(entryInMemory)] = entryInMemory;
             }
         }
 };
