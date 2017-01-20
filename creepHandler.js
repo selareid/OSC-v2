@@ -33,7 +33,7 @@ module.exports = {
                 let creep = Game.creeps[name];
 
 
-                this.creepActions(undefined, creep);
+                this.creepActions(creep, undefined);
 
             }
         }
@@ -46,7 +46,7 @@ module.exports = {
 
     },
 
-    creepActions: function (room = Game.rooms[creep.memory.room], creep) {
+    creepActions: function (creep, room = Game.rooms[creep.memory.room]) {
         if (!room) {
             creep.suicide()
         }
