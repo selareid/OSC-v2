@@ -126,14 +126,13 @@ module.exports = function () {
                 if (entryInMemory) {
                     var numberOfStepsNeeded = 7;
                     var level = entryInMemory.split(',')[3];
-                    if (level < numberOfStepsNeeded) entryInMemory.level += 1;
+                    if (level < numberOfStepsNeeded) Memory.rooms[room].roadSites[Memory.rooms[room].roadSites.indexOf(entryInMemory)]
+                        = this.pos.roomName + ',' + this.pos.x + ',' + this.pos.y + ',' + (level + 1);
                     else {
                         return this.room.createConstructionSite(this.pos, STRUCTURE_ROAD);
                     }
                 }
                 else Memory.rooms[room].roadSites.push(this.pos.roomName + ',' + this.pos.x + ',' + this.pos.y + ',' + 1);
-
-                Memory.rooms[room].roadSites[Memory.rooms[room].roadSites.indexOf(entryInMemory)] = entryInMemory;
             }
         }
 };
