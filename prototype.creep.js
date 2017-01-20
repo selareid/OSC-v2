@@ -125,7 +125,7 @@ module.exports = function () {
                 };
 
 
-                var flagAtPos = _.filter(this.pos.lookFor(LOOK_FLAGS), (f) => Object.key(flagNextColor).includes(f.color))[0];
+                var flagAtPos = _.filter(this.pos.lookFor(LOOK_FLAGS), (f) => Object.keys(flagNextColor).includes(f.color))[0];
                 if (flagAtPos) {
                     var toSet = flagNextColor[flagAtPos.color];
                     if (toSet !== 'placeSite') flagAtPos.setColor(toSet);
