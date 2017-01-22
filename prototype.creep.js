@@ -116,7 +116,7 @@ module.exports = function () {
      * roomName,x,y,level
      */
     Creep.prototype.placeRoadUnderCreep =
-        function (room = this.room) {
+        function (room = this.memory.room) {
             var lookRoads = _.filter(this.pos.lookFor(LOOK_STRUCTURES), (s) => s.structureType == STRUCTURE_ROAD);
             var lookConstructionSite = this.pos.lookFor(LOOK_CONSTRUCTION_SITES);
             if (!lookRoads.length > 0 && !lookConstructionSite.length > 0) {
