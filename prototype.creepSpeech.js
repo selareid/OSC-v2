@@ -6,6 +6,7 @@ global.MY_BIRTHDAY = "It's My BirthDay".split(' ');
 
 module.exports = function () {
     Creep.prototype.creepSpeech = function (room, doingWhat) {
+        if (Game.cpu.bucket < 2000) return;
 
         if (Game.cpu.bucket > 3000) {
 
