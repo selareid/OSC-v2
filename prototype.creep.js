@@ -117,23 +117,25 @@ module.exports = function () {
      */
     Creep.prototype.placeRoadUnderCreep =
         function (room = Game.rooms[this.memory.room]) {
-            var lookRoads = _.filter(this.pos.lookFor(LOOK_STRUCTURES), (s) => s.structureType == STRUCTURE_ROAD);
-            var lookConstructionSite = this.pos.lookFor(LOOK_CONSTRUCTION_SITES);
-            if (!lookRoads.length > 0 && !lookConstructionSite.length > 0) {
-                var entryInMemory = _.filter(Memory.rooms[room].roadSites, (s) => s.split(',')[0] == this.pos.roomName
-                && s.split(',')[1] == this.pos.x && s.split(',')[2])[0];
+            if (this.pos.roomName == room.name && room.storage) {
+                var lookRoads = _.filter(this.pos.lookFor(LOOK_STRUCTURES), (s) => s.structureType == STRUCTURE_ROAD);
+                var lookConstructionSite = this.pos.lookFor(LOOK_CONSTRUCTION_SITES);
+                if (!lookRoads.length > 0 && !lookConstructionSite.length > 0) {
+                    var entryInMemory = _.filter(Memory.rooms[room].roadSites, (s) => s.split(',')[0] == this.pos.roomName
+                    && s.split(',')[1] == this.pos.x && s.split(',')[2])[0];
 
-                if (entryInMemory) {
-                    var numberOfStepsNeeded = 7;
-                    var level = parseInt(entryInMemory.split(',')[3]);
-                    if (level < numberOfStepsNeeded) Memory.rooms[room].roadSites[Memory.rooms[room].roadSites.indexOf(entryInMemory)]
-                        = this.pos.roomName + ',' + this.pos.x + ',' + this.pos.y + ',' + (level + 1);
-                    else {
-                        var result = this.room.createConstructionSite(this.pos, STRUCTURE_ROAD);
-                        console.log('Created construction site for a road at ' + this.pos + ' result is ' + result);
+                    if (entryInMemory) {
+                        var numberOfStepsNeeded = 7;
+                        var level = parseInt(entryInMemory.split(',')[3]);
+                        if (level < numberOfStepsNeeded) Memory.rooms[room].roadSites[Memory.rooms[room].roadSites.indexOf(entryInMemory)]
+                            = this.pos.roomName + ',' + this.pos.x + ',' + this.pos.y + ',' + (level + 1);
+                        else {
+                            var result = this.room.createConstructionSite(this.pos, STRUCTURE_ROAD);
+                            console.log('Created construction site for a road at ' + this.pos + ' result is ' + result);
+                        }
                     }
+                    else Memory.rooms[room].roadSites.push(this.pos.roomName + ',' + this.pos.x + ',' + this.pos.y + ',' + 1);
                 }
-                else Memory.rooms[room].roadSites.push(this.pos.roomName + ',' + this.pos.x + ',' + this.pos.y + ',' + 1);
             }
         }
 };
