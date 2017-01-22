@@ -47,7 +47,8 @@ module.exports = {
 
                                     }
                                     else {
-                                        //maybe add a role changing mechanic here ?
+                                        var closestMine = creep.pos.findClosestByRange(FIND_MY_CREEPS);
+                                        creep.moveTo(closestMine);
                                     }
                                 }
 
@@ -69,7 +70,7 @@ module.exports = {
     getTargetCreep: function (creep) {
         var targetCreep = creep.pos.findClosestByRange(FIND_CREEPS, {filter: (c) => (global.Allies.includes(c.owner.username) || c.owner.username == creep.owner.username)
         && c.hits < c.hitsMax && c.hasActiveBodyparts(HEAL) == false});
-        if (!targetCreep) targetCreep = creep;
+        if (!targetCreep) targetCreep = creep.hits < creep.hitsMax ? creep : undefined;
         return targetCreep;
     }
 };
