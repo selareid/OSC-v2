@@ -24,7 +24,6 @@ module.exports = {
 
             if (controller.pos.getRangeTo(creep.pos) > 1) {
                 creep.moveTo(controller);
-                creep.placeRoadUnderCreep();
             }
 
         }
