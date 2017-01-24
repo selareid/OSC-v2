@@ -94,7 +94,7 @@ module.exports = function () {
 
     global.createPathToController =
         function (room = this) {
-            _.forEach(global[this.name].sources, (source) => {
+            _.forEach(global[room.name].sources, (source) => {
                 let path = room.findPath(source.pos, room.controller.pos, {ignoreCreeps: true, ignoreRoads: true, plainCost: 1, swampCost: 1}) || [];
                 _.forEach(path, (pathData) => {room.createConstructionSite(pathData.x, pathData.y, STRUCTURE_ROAD);
                     console.log('Created Construction Site At ' + pathData.x + ' ' + pathData.y + ' ' + room.name);});
