@@ -92,7 +92,7 @@ module.exports = function () {
 
         };
 
-    Room.prototype.createPathToController =
+    global.createPathToController =
         function (room = this) {
             _.forEach(global[this.name].sources, (source) => {
                 let path = room.findPath(source.pos, room.controller.pos, {ignoreCreeps: true, ignoreRoads: true, plainCost: 1, swampCost: 1}) || [];
