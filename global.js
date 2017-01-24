@@ -1,4 +1,5 @@
 'use strict';
+const roomProto = require('prototype.room');
 
 global.allianceName = 'INT_MAX';
 global.Allies = ['Lur', 'starwar15432', 'Leonyx'];
@@ -19,6 +20,8 @@ global.STRUCTUREDECAY = {
     [STRUCTURE_RAMPART] : 300,
     [STRUCTURE_CONTAINER] : 5000
 };
+
+global.createPathToController = function (roomName) {roomProto.createPathToController(Game.rooms[roomName])};
 
 global.buildFromFlags = function (room) {
     /*
