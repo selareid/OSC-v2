@@ -136,6 +136,23 @@ module.exports = {
             }
         }
 
+        //remote room guard stuff starts
+        if (Game.time % 4 == 0 || global[room.name].cachedAreRemotesUnderAttack == undefined) {
+            var remoteRoomsUnderAttackFlags = [];
+            _.forEach(global[room.name].cachedRemoteCreepFlags, (flag) => {
+                if (Game.rooms[flag.pos.roomName]) {
+                    var enemiesInRemoteRoom = Game.rooms[flag.pos.roomName].find(FIND_HOSTILE_CREEPS, {filter: (c) => !global.Allies.includes(c.owner.username)});
+                    if (enemiesInRemoteRoom.length > 0) {
+                        remoteRoomsUnderAttackFlags.push(flag);
+                    }
+                }
+            });
+
+            if (remoteRoomsUnderAttackFlags.length > 0) global[room.name].cachedAreRemotesUnderAttack = true;
+            global[room.name].cachedRemoteRoomsUnderAttackFlags = remoteRoomsUnderAttackFlags[0] || [];
+
+        }
+        //remote room guard stuff ends
 
         var areWeUnderAttack = Memory.rooms[room].isUnderAttack;
         //check if we're under attack ends
