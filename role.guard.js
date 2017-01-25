@@ -8,27 +8,57 @@ module.exports = {
         creep.creepSpeech(room);
 
         if (Memory.rooms[room].isUnderAttack == true) {
-            var target = this.getTarget(room, creep);
-            if (target) {
-                var attackResult = creep.rangedAttack(target);
+            if (creep.pos.roomName != room.name) {
+                creep.moveTo(room.controller, {reusePath: 7, ignoreRoads: true});
+            }
+            else {
+                var target = this.getTarget(room, creep);
+                if (target) {
+                    var attackResult = creep.rangedAttack(target);
 
-                switch (attackResult) {
-                    case -9: // returns ERR_NOT_IN_RANGE
-                        creep.moveTo(target, {reusePath: 3, ignoreRoads: true});
-                        break;
-                    case 0: // returns OK
-                        this.kite(room, creep, target);
-                        //creep.say something here using prototype.creepSpeech.js
-                        break;
-                    default:
-                        console.log('Error with creep: ' + creep.name + '' + ' Attack Error: ' + attackResult);
+                    switch (attackResult) {
+                        case -9: // returns ERR_NOT_IN_RANGE
+                            creep.moveTo(target, {reusePath: 3, ignoreRoads: true});
+                            break;
+                        case 0: // returns OK
+                            this.kite(room, creep, target);
+                            //creep.say something here using prototype.creepSpeech.js
+                            break;
+                        default:
+                            console.log('Error with creep: ' + creep.name + '' + ' Attack Error: ' + attackResult);
+                    }
+
                 }
-
             }
         }
         else {
             if (global[room.name].cachedAreRemotesUnderAttack == true) {
+                var remoteFlag = global[room.name].cachedRemoteRoomsUnderAttackFlags;
+                if (remoteFlag) {
+                    if (creep.pos.roomName != remoteFlag.pos.roomName) {
+                        creep.moveTo(remoteFlag, {reusePath: 11, ignoreRoads: true})
+                    }
+                    else {
+                        var target = this.getTarget(creep.room, creep);
+                        if (target) {
+                            var attackResult = creep.rangedAttack(target);
 
+                            switch (attackResult) {
+                                case -9: // returns ERR_NOT_IN_RANGE
+                                    creep.moveTo(target, {reusePath: 3, ignoreRoads: true});
+                                    break;
+                                case 0: // returns OK
+                                    this.kite(creep.room, creep, target);
+                                    //creep.say something here using prototype.creepSpeech.js
+                                    break;
+                                default:
+                                    console.log('Error with creep: ' + creep.name + '' + ' Attack Error: ' + attackResult);
+                            }
+
+                        }
+                    }
+                }
+                else creep.moveTo(global[room.name].guardStationFlag);
             }
             else creep.moveTo(global[room.name].guardStationFlag);
         }
