@@ -27,7 +27,10 @@ module.exports = {
             }
         }
         else {
-            creep.moveTo(global[room.name].guardStationFlag);
+            if (global[room.name].cachedAreRemotesUnderAttack == true) {
+
+            }
+            else creep.moveTo(global[room.name].guardStationFlag);
         }
 
     },

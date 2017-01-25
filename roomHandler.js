@@ -148,7 +148,7 @@ module.exports = {
                 }
             });
 
-            if (remoteRoomsUnderAttackFlags.length > 0) global[room.name].cachedAreRemotesUnderAttack = true;
+            global[room.name].cachedAreRemotesUnderAttack = remoteRoomsUnderAttackFlags.length > 0;
             global[room.name].cachedRemoteRoomsUnderAttackFlags = remoteRoomsUnderAttackFlags[0] || [];
 
         }
