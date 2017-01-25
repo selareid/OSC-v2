@@ -183,13 +183,18 @@ module.exports = {
                     minimumNumberOfCarriers = 0;
                 }
                 else { // there is a storage we need carriers
-                    var containersWithEnergy = _.filter(global[room.name].containers, (s) => s.store && s.store[RESOURCE_ENERGY] && s.store[RESOURCE_ENERGY] > 0);
-                    var containersWithEnergyLeast = containersWithEnergy.length > 0 ? _.min(containersWithEnergy, '.store.energy').store.energy : 0;
-                    if (containersWithEnergyLeast > 1800) {
-                        minimumNumberOfCarriers = minimumNumberOfCarriers < 5 ? minimumNumberOfCarriers + 1 : minimumNumberOfCarriers;
+                    if (global[room.name].containers.length > 2) {
+                        var containersWithEnergy = _.filter(global[room.name].containers, (s) => s.store && s.store[RESOURCE_ENERGY] && s.store[RESOURCE_ENERGY] > 0);
+                        var containersWithEnergyLeast = containersWithEnergy.length > 0 ? _.min(containersWithEnergy, '.store.energy').store.energy : 0;
+                        if (containersWithEnergyLeast > 1800) {
+                            minimumNumberOfCarriers = minimumNumberOfCarriers < 5 ? minimumNumberOfCarriers + 1 : minimumNumberOfCarriers;
+                        }
+                        else if (containersWithEnergyLeast < 25) {
+                            minimumNumberOfCarriers = minimumNumberOfCarriers > 1 ? minimumNumberOfCarriers - 1 : minimumNumberOfCarriers;
+                        }
                     }
-                    else if (containersWithEnergyLeast < 25) {
-                        minimumNumberOfCarriers = minimumNumberOfCarriers > 1 ? minimumNumberOfCarriers - 1 : minimumNumberOfCarriers;
+                    else {
+                        minimumNumberOfCarriers = 1;
                     }
                 }
 
@@ -606,7 +611,7 @@ module.exports = {
         if (Memory.rooms[room].populationGoal[18] == undefined) {
             Memory.rooms[room].populationGoal[18] = 0;
         }
-        //tower drainer
+         //tower drainer
         if (Memory.rooms[room].populationGoal[19] == undefined) {
             Memory.rooms[room].populationGoal[19] = 0;
         }
