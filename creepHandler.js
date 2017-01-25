@@ -14,7 +14,6 @@ const roleRemoteMiner = require ('role.remoteMiner');
 const roleRemoteGuard = require ('role.remoteGuard');
 const roleEnergyHelper = require ('role.energyOtherRoomHelper');
 const roleMiner = require ('role.miner');
-const roleMarketMover = require ('role.marketMover');
 const roleGuard = require ('role.guard');
 const roleSigner = require ('role.signer');
 const roleCreepHarasser = require ('role.creepHarasser');
@@ -120,9 +119,6 @@ module.exports = {
                     break;
                 case 'miner':
                     if (Game.cpu.bucket > 500) roleMiner.run(room, creep);
-                    break;
-                case 'marketMover':
-                    if (Game.cpu.bucket > 2000) roleMarketMover.run(room, creep);
                     break;
                 case 'guard':
                     roleGuard.run(room, creep);

@@ -340,18 +340,6 @@ module.exports = function () {
                         }
                     }
                     return this.createCreep(sortedParts(body), creepName(roleName), {role: roleName, room: room.name, working: false});
-                case 'marketMover':
-                    numberOfParts = Math.floor((energy - (energy * amountToSave)) / 150);
-                    if (numberOfParts > 0) {
-                        if (numberOfParts > 16) numberOfParts = 16;
-
-                        for (let i = 0; i < numberOfParts; i++) {
-                            body.push(CARRY);
-                            body.push(CARRY);
-                            body.push(MOVE);
-                        }
-                    }
-                    return this.createCreep(sortedParts(body), creepName(roleName), {role: roleName, room: room.name, working: false});
                 case 'guard':
                     numberOfParts = Math.floor((energy - (energy * amountToSave)) / 340);
                     if (numberOfParts > 1) {
