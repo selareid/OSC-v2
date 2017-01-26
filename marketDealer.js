@@ -15,7 +15,7 @@ module.exports = {
                 for (let order of Game.market.getAllOrders({resourceType: resourceType})) {
                     let orderRoom = order.roomName;
                     let orderPrice = order.price;
-                    let energyCostToSend = global.energyCostToSend(orderRoom);
+                    let energyCostToSend = global.energyCostToSend(room, orderRoom);
                     let priceOverAll = global.priceOverAll(orderPrice, energyCostToSend);
                     if (priceOverAll > bestOrder.priceOverAll) bestOrder = {orderId: order.id, priceOverAll: priceOverAll, energyCostToSend: energyCostToSend, amount: order.amount};
                 }

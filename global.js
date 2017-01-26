@@ -21,7 +21,7 @@ global.STRUCTUREDECAY = {
 };
 
 global.energyValue = 0.05;
-global.energyCostToSend = function (roomName2) {return Game.market.calcTransactionCost(1000, room.name, roomName2)/1000;};
+global.energyCostToSend = function (room, roomName2) {return Game.market.calcTransactionCost(1000, room.name, roomName2)/1000;};
 global.priceOverAll =  function (price, energyCostPerMineral, energyCreditCost = global.energyValue) {return price - energyCostPerMineral * energyCreditCost;};
 
 global.storageData = {};
