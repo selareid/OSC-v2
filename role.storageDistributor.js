@@ -69,7 +69,7 @@ module.exports = {
 
     putExcessInTerminal: function (room, creep) {
         if (creep.memory.working == true) {//if carry is full
-            var terminal = creep.pos.findInRange(FIND_MY_STRUCTURES, 1, {filter: (s) => s.structureType == STRUCTURE_TERMINAL})[0];
+            var terminal = Creep.pos.isNearTo(creep.room.terminal);
             if (terminal) {
                 if (_.sum(terminal.store) < terminal.storeCapacity) {
                     for (let resourceType in creep.carry) {
@@ -83,7 +83,12 @@ module.exports = {
                     return 'terminal full'
                 }
             }
-            else return 'no structure';
+            else {
+                for (let resourceType in creep.carry) {
+                    creep.transfer(room.storage, resourceType);
+                }
+                return 'no structure';
+            }
         }
         else {//if carry is empty
             var theResourceType;
