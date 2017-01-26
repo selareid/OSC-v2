@@ -326,18 +326,21 @@ module.exports = {
                         break;
                     default:
                         minimumNumberOfCaretakers = 1;
-                        if (minimumNumberOfUpgraders < 1) minimumNumberOfUpgraders = 1;
-                        if (Game.time % 2 == 0) {
-                            var storage = room.storage;
-                            if (storage) {
-                                if (storage.store[RESOURCE_ENERGY] > 150000) {
-                                    minimumNumberOfUpgraders = minimumNumberOfUpgraders < 8 ? minimumNumberOfUpgraders + 1 : minimumNumberOfUpgraders;
-                                }
-                                else {
-                                    minimumNumberOfUpgraders = minimumNumberOfUpgraders > 1 ? minimumNumberOfUpgraders - 1 : minimumNumberOfUpgraders;
+                        if (room.controller.level < 8) {
+                            if (minimumNumberOfUpgraders < 1) minimumNumberOfUpgraders = 1;
+                            if (Game.time % 2 == 0) {
+                                var storage = room.storage;
+                                if (storage) {
+                                    if (storage.store[RESOURCE_ENERGY] > 149000) {
+                                        minimumNumberOfUpgraders = minimumNumberOfUpgraders < 8 ? minimumNumberOfUpgraders + 1 : minimumNumberOfUpgraders;
+                                    }
+                                    else {
+                                        minimumNumberOfUpgraders = minimumNumberOfUpgraders > 1 ? minimumNumberOfUpgraders - 1 : minimumNumberOfUpgraders;
+                                    }
                                 }
                             }
                         }
+                        else minimumNumberOfUpgraders = 1;
                 }
             }
 
