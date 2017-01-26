@@ -97,12 +97,15 @@ module.exports = function () {
                 case 'refillingTower':
                     toSay = "Refill Thy Towers ...".split(' ');
                     break;
+                case 'bored':
+                    toSay = "I'm Sooo Bored ... Boring Boring Boring ... Nothing To Do ...".split(' ');
+                    break;
                 default:
                     if (isFestive) {
                     toSay = isFestive;
                     }
                     else {
-                        let message = "Praise " + global.allianceName + "Find It On SLACK and the LOAN Alliance Website ...";
+                        let message = "Praise " + global.allianceName + " Find It On SLACK and the LOAN Alliance Website ...";
                             toSay = message.split(' ');
                     }
                     break;
