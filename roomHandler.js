@@ -39,8 +39,8 @@ module.exports = {
         }
         catch (err) {
             if (err !== null && err !== undefined) {
-                Game.notify("Error in every 7 tick room logic: \n" + err + "\n " + err.stack);
-                console.log("Error in every 7 tick room logic: \n" + err + "\n" + err.stack + " room: " + room.name);
+                Game.notify("Error in market logic: \n" + err + "\n " + err.stack);
+                console.log("Error in market logic: \n" + err + "\n" + err.stack + " room: " + room.name);
             }
         }
 
