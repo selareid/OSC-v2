@@ -59,7 +59,7 @@ module.exports = {
             }
 
             if (droppedEnergy.amount == undefined || droppedEnergy.amount < 1010) {
-                var links = _.filter(global[room.name].links, (l) => l.energy > 0);
+                var links = creep.findLinksEnergy();
                 var storage = room.storage;
 
                 var arrayOfBoth = links;
