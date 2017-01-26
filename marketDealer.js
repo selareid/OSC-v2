@@ -12,7 +12,7 @@ module.exports = {
             if (resource > 1000) {
                 let bestOrder = {orderId: undefined, priceOverAll: 0, energyCostToSend: 0, amount: 0};
 
-                for (let order of Game.market.getAllOrders({resourceType: resourceType})) {
+                for (let order of Game.market.getAllOrders({resourceType: resourceType, type: ORDER_BUY})) {
                     let orderRoom = order.roomName;
                     let orderPrice = order.price;
                     let energyCostToSend = global.energyCostToSend(room, orderRoom);
@@ -23,7 +23,7 @@ module.exports = {
                 if (bestOrder.orderId) {
                     let amountToDeal = Math.floor((terminal.store[RESOURCE_ENERGY]-10)/bestOrder.energyCostToSend);
                     Game.market.deal(bestOrder.orderId, amountToDeal, room.name);
-                    console.log('Order ' + bestOrder.orderId + ' dealt, amount ' + amountToDeal + ' room' + room.name);
+                    console.log('Order ' + bestOrder.orderId + ' dealt, amount ' + amountToDeal + ' room ' + room.name);
                     return;
                 }
             }
