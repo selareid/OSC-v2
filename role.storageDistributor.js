@@ -71,7 +71,7 @@ module.exports = {
         if (creep.memory.working == true) {//if carry is full
             var terminal = creep.pos.findInRange(FIND_MY_STRUCTURES, 1, {filter: (s) => s.structureType == STRUCTURE_TERMINAL});
             if (terminal) {
-                if (_.sum(terminal.store) >= terminal.storeCapacity) {
+                if (_.sum(terminal.store) < terminal.storeCapacity) {
                     for (let resourceType in creep.carry) {
                         creep.transfer(terminal, resourceType);
                     }
