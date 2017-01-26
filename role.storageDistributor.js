@@ -16,7 +16,7 @@ module.exports = {
         if (!creep.pos.isEqualTo(flagToGoTo.pos)) {
             creep.moveTo(flagToGoTo);
         }
-        else {
+        else { // do stuff
 
             if (creep.memory.working == true && _.sum(creep.carry) == 0) {
                 creep.memory.working = false;
@@ -25,16 +25,21 @@ module.exports = {
                 creep.memory.working = true;
             }
 
-            if (creep.memory.working == true) {
-                //if carry is full
-                var storage = room.storage;
-                creep.transfer(storage, RESOURCE_ENERGY);
-            }
-            else {
-                //if carry is empty
-                var linkWithEnergy = creep.pos.findInRange(global[room.name].links, 1, {filter: (s) => s.energy > 0})[0];
-                creep.withdraw(linkWithEnergy, RESOURCE_ENERGY);
-            }
+            this.linkToStorage(room, creep);
+
+        }
+    },
+    
+    linkToStorage: function (room, creep) {
+        if (creep.memory.working == true) {
+            //if carry is full
+            var storage = room.storage;
+            creep.transfer(storage, RESOURCE_ENERGY);
+        }
+        else {
+            //if carry is empty
+            var linkWithEnergy = creep.pos.findInRange(global[room.name].links, 1, {filter: (s) => s.energy > 0})[0];
+            creep.withdraw(linkWithEnergy, RESOURCE_ENERGY);
         }
     }
 };
