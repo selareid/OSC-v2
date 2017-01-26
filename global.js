@@ -22,7 +22,7 @@ global.STRUCTUREDECAY = {
 
 global.storageData = {};
 
-global.storageData[RESOURCE_ENERGY] = 150000;
+global.storageData[RESOURCE_ENERGY] = 100000;
 global.storageData[RESOURCE_HYDROGEN] = 6000;
 global.storageData[RESOURCE_OXYGEN] = 6000;
 global.storageData[RESOURCE_UTRIUM] = 6000;

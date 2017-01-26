@@ -331,7 +331,7 @@ module.exports = {
                             if (Game.time % 2 == 0) {
                                 var storage = room.storage;
                                 if (storage) {
-                                    if (storage.store[RESOURCE_ENERGY] > 149000) {
+                                    if (storage.store[RESOURCE_ENERGY] > 90000) {
                                         minimumNumberOfUpgraders = minimumNumberOfUpgraders < 8 ? minimumNumberOfUpgraders + 1 : minimumNumberOfUpgraders;
                                     }
                                     else {
