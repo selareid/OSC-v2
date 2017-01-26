@@ -137,5 +137,10 @@ module.exports = function () {
                     else Memory.rooms[room].roadSites.push(this.pos.roomName + ',' + this.pos.x + ',' + this.pos.y + ',' + 1);
                 }
             }
-        }
+        };
+        
+        Creep.prototype.findLinksEnergy =
+            function (room = Game.rooms[this.memory.room]) {
+                return _.filter(global[room.name].links, (link) => link.energy > 0 && global['linkRole'][link.id] == 'taker');
+            };
 };
