@@ -100,7 +100,7 @@ module.exports = {
                 }
             }
             if (theResourceType) {
-                creep.withdraw(room.storage, theResourceType);
+                creep.withdraw(room.storage, theResourceType, room.storage.store[theResourceType]-global.storageData[theResourceType]);
                 creep.memory.working = true;
                 return OK;
             }
