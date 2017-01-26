@@ -58,7 +58,11 @@ module.exports = {
         else {
             //if carry is empty
             var linkWithEnergy = creep.pos.findInRange(global[room.name].links, 1, {filter: (s) => s.energy > 0})[0];
-            if (linkWithEnergy) return creep.withdraw(linkWithEnergy, RESOURCE_ENERGY);
+            if (linkWithEnergy) {
+                creep.memory.working = true;
+                creep.withdraw(linkWithEnergy, RESOURCE_ENERGY);
+                return OK;
+            }
             else return 'no structure'
         }
     },
