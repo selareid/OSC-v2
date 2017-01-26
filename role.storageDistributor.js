@@ -69,7 +69,7 @@ module.exports = {
 
     putExcessInTerminal: function (room, creep) {
         if (creep.memory.working == true) {//if carry is full
-            var terminal = Creep.pos.isNearTo(creep.room.terminal);
+            var terminal = creep.pos.isNearTo(creep.room.terminal);
             if (terminal) {
                 if (_.sum(terminal.store) < terminal.storeCapacity) {
                     for (let resourceType in creep.carry) {
