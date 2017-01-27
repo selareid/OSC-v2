@@ -116,7 +116,7 @@ module.exports = function () {
      * roomName,x,y,level
      */
     Creep.prototype.placeRoadUnderCreep =
-        function (room = Game.rooms[this.memory.room]) {
+        function (room = Game.rooms[this.memory.room], numberOfStepsNeeded = 7) {
             if (this.pos.roomName == room.name && room.storage) {
                 var lookRoads = _.filter(this.pos.lookFor(LOOK_STRUCTURES), (s) => s.structureType == STRUCTURE_ROAD);
                 var lookConstructionSite = this.pos.lookFor(LOOK_CONSTRUCTION_SITES);
@@ -125,7 +125,7 @@ module.exports = function () {
                     && s.split(',')[1] == this.pos.x && s.split(',')[2])[0];
 
                     if (entryInMemory) {
-                        var numberOfStepsNeeded = 7;
+                        // var numberOfStepsNeeded = 7;
                         var level = parseInt(entryInMemory.split(',')[3]);
                         if (level < numberOfStepsNeeded) Memory.rooms[room].roadSites[Memory.rooms[room].roadSites.indexOf(entryInMemory)]
                             = this.pos.roomName + ',' + this.pos.x + ',' + this.pos.y + ',' + (level + 1);
