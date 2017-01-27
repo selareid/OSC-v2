@@ -102,7 +102,7 @@ module.exports = {
                 case ERR_NOT_IN_RANGE:
                     creep.creepSpeech(room, 'movingToSource');
                     creep.moveTo(source, {reusePath: 10});
-                    creep.placeRoadUnderCreep();
+                    creep.placeRoadUnderCreep(room, 1);
                     break;
                 case OK:
                     creep.creepSpeech(room, 'harvesting');
