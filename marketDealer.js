@@ -10,7 +10,7 @@ module.exports = {
             if (resourceType == RESOURCE_ENERGY) continue;
             let resource = terminal.store[resourceType];
             if (resource > 1000) {
-                let bestOrder = {orderId: undefined, priceOverAll: 0, energyCostToSend: 0, amount: 0};
+                let bestOrder = {orderId: undefined, priceOverAll: global.energyValue, energyCostToSend: 0, amount: 0};
 
                 for (let order of Game.market.getAllOrders({resourceType: resourceType, type: ORDER_BUY})) {
                     let orderRoom = order.roomName;
