@@ -73,7 +73,7 @@ module.exports = {
             return creep.pos.findClosestByRange(targets);
         }
         else {
-            Memory.rooms[room].isUnderAttack = false;
+            if (Memory.rooms[room]) Memory.rooms[room].isUnderAttack = false;
             return;
         }
     },
