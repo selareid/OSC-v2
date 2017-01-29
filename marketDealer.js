@@ -3,7 +3,7 @@
 require('global');
 
 module.exports = {
-    run: function (room, terminal) {
+    run: function (room, terminal) {return;
         if (terminal.store[RESOURCE_ENERGY] < 1000) return;
 
         for (let resourceType in terminal.store) {
