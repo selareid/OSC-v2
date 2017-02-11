@@ -103,7 +103,7 @@ module.exports = {
                 var result = creep.withdraw(room.storage, theResourceType);
                 creep.memory.working = true;
                 //console.log(result);
-                if (creep.carry[theResourceType]) return OK;
+                if (result == OK) return OK;
                 else return 'failed';
             }
             else {
