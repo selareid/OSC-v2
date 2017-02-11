@@ -94,15 +94,17 @@ module.exports = {
             var theResourceType;
             for (let resourceType in room.storage.store) {
                 if (!global.storageData[resourceType]) continue;
-                if (room.storage.store[resourceType] > global.storageData[resourceType]) {
+                if (room.storage.store[resourceType] > global.storageData[resourceType]+creep.carryCapacity) {
                     theResourceType = resourceType;
                     break;
                 }
             }
             if (theResourceType) {
-                creep.withdraw(room.storage, theResourceType, room.storage.store[theResourceType]-global.storageData[theResourceType]);
+                var result = creep.withdraw(room.storage, theResourceType);
                 creep.memory.working = true;
-                return OK;
+                //console.log(result);
+                if (creep.carry[theResourceType]) return OK;
+                else return 'failed';
             }
             else {
                 return 'nothing to do'
