@@ -91,9 +91,13 @@ module.exports = {
             }
         }
         else {//if carry is empty
+         var terminal = creep.pos.isNearTo(room.terminal) ? room.terminal : undefined;
+         if (!terminal) return 'error no terminal';
             var theResourceType;
             for (let resourceType in room.storage.store) {
                 if (!global.storageData[resourceType]) continue;
+                if (resourceType == RESOURCE_ENERGY && terminal.store[resourceType] > 100000) continue;
+                
                 if (room.storage.store[resourceType] > global.storageData[resourceType]+creep.carryCapacity) {
                     theResourceType = resourceType;
                     break;
