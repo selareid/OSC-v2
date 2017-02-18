@@ -13,11 +13,21 @@ module.exports = {
                     let orderPrice = order.price;
                     let energyCostToSend = global.energyCostToSend(room, orderRoom);
                     let priceOverAll = global.priceOverAll(orderPrice, energyCostToSend);
-                    if (priceOverAll > bestOrder.priceOverAll) bestOrder = {orderId: order.id, priceOverAll: priceOverAll, energyCostToSend: energyCostToSend, amount: order.amount};
+                    if (priceOverAll > bestOrder.priceOverAll) bestOrder = {
+                        orderId: order.id,
+                        priceOverAll: priceOverAll,
+                        energyCostToSend: energyCostToSend,
+                        amount: order.amount
+                    };
 
                 }
                 if (bestOrder.orderId) {
-                    let amountToDeal = Math.floor((terminal.store[RESOURCE_ENERGY]-10)/bestOrder.energyCostToSend) > terminal.store[Game.market.getOrderById(bestOrder.orderId).resourceType] ? terminal.store[Game.market.getOrderById(bestOrder.orderId).resourceType] : Math.floor((terminal.store[RESOURCE_ENERGY]-10)/bestOrder.energyCostToSend);
+                    let amountToDeal = Math.floor((terminal.store[RESOURCE_ENERGY] - 10) / bestOrder.energyCostToSend) > terminal.store[Game.market.getOrderById(bestOrder.orderId).resourceType] ? terminal.store[Game.market.getOrderById(bestOrder.orderId).resourceType] : Math.floor((terminal.store[RESOURCE_ENERGY] - 10) / bestOrder.energyCostToSend);
                     Game.market.deal(bestOrder.orderId, amountToDeal, room.name);
                     console.log('Order ' + bestOrder.orderId + ' dealt, amount ' + amountToDeal + ' room ' + room.name);
-                    return; } } } } };
+                    return;
+                }
+            }
+        }
+    }
+};
