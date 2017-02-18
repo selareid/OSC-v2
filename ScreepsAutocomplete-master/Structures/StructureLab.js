@@ -2,8 +2,6 @@
  *
  * @class
  * @extends {OwnedStructure}
- *
- * @see {@link http://support.screeps.com/hc/en-us/articles/208436195-StructureLab}
  */
 StructureLab = function() { };
 
@@ -12,16 +10,12 @@ StructureLab.prototype =
     /**
      * The amount of game ticks the lab has to wait until the next reaction is possible.
      *
-     * @see {@link http://support.screeps.com/hc/en-us/articles/208436195-StructureLab#cooldown}
-     *
      * @type {number}
      */
     cooldown: 0,
 
     /**
      * The amount of energy containing in the lab. Energy is used for boosting creeps.
-     *
-     * @see {@link http://support.screeps.com/hc/en-us/articles/208436195-StructureLab#energy}
      *
      * @type {number}
      */
@@ -30,16 +24,12 @@ StructureLab.prototype =
     /**
      * The total amount of energy the lab can contain.
      *
-     * @see {@link http://support.screeps.com/hc/en-us/articles/208436195-StructureLab#energyCapacity}
-     *
      * @type {number}
      */
     energyCapacity: 0,
 
     /**
      * The amount of mineral resources containing in the lab.
-     *
-     * @see {@link http://support.screeps.com/hc/en-us/articles/208436195-StructureLab#mineralAmount}
      *
      * @type {number}
      */
@@ -49,16 +39,12 @@ StructureLab.prototype =
      * The type of minerals containing in the lab.
      * Labs can contain only one mineral type at the same time.
      *
-     * @see {@link http://support.screeps.com/hc/en-us/articles/208436195-StructureLab#mineralType}
-     *
      * @type {string}
      */
     mineralType: "",
 
     /**
      * The total amount of minerals the lab can contain.
-     *
-     * @see {@link http://support.screeps.com/hc/en-us/articles/208436195-StructureLab#mineralCapacity}
      *
      * @type {number}
      */
@@ -67,8 +53,6 @@ StructureLab.prototype =
     /**
      * Boosts creep body part using the containing mineral compound.
      * The creep has to be at adjacent square to the lab.
-     *
-     * @see {@link http://support.screeps.com/hc/en-us/articles/208436195-StructureLab#boostCreep}
      *
      * @type {function}
      *
@@ -82,8 +66,6 @@ StructureLab.prototype =
     /**
      * Produce mineral compounds using reagents from two another labs.
      * The same input labs can be used by many output labs.
-     *
-     * @see {@link http://support.screeps.com/hc/en-us/articles/208436195-StructureLab#runReaction}
      *
      * @type {function}
      *
@@ -100,8 +82,6 @@ StructureLab.prototype =
      * Transfer resource from this structure to a creep.
      * The target has to be at adjacent square.
      * You can transfer resources to your creeps from hostile structures as well.
-     *
-     * @see {@link http://support.screeps.com/hc/en-us/articles/208436195-StructureLab#transfer}
      *
      * @type {function}
      *

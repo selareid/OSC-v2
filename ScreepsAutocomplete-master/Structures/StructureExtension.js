@@ -4,8 +4,6 @@
  *
  * @class
  * @extends {OwnedStructure}
- *
- * @see {@link http://support.screeps.com/hc/en-us/articles/207711949-StructureExtension}
  */
 StructureExtension = function() { };
 
@@ -14,16 +12,12 @@ StructureExtension.prototype =
     /**
      * The amount of energy containing in the extension.
      *
-     * @see {@link http://support.screeps.com/hc/en-us/articles/207711949-StructureExtension#energy}
-     *
      * @type {number}
      */
     energy: 0,
 
     /**
      * The total amount of energy the extension can contain.
-     *
-     * @see {@link http://support.screeps.com/hc/en-us/articles/207711949-StructureExtension#energyCapacity}
      *
      * @type {number}
      */
@@ -34,8 +28,6 @@ StructureExtension.prototype =
      *
      * Transfer the energy from the extension to a creep.
      * You can transfer resources to your creeps from hostile structures as well.
-     *
-     * @see {@link http://support.screeps.com/hc/en-us/articles/207711949-StructureExtension#transferEnergy}
      *
      * @type {function}
      *

@@ -33,7 +33,7 @@ module.exports = {
             if (storage) {
                 if (_.sum(room.storage.store) < room.storage.storeCapacity) {
                     for (let resourceType in creep.carry) {
-                        var thingToTranferTo = resourceType != RESOURCE_ENERGY ? storage : room.terminal;
+                        var thingToTranferTo = storage;
                         if (creep.transfer(thingToTranferTo, resourceType) == ERR_NOT_IN_RANGE) {
                             creep.moveTo(thingToTranferTo, {reusePath: 19});
                             break;
@@ -117,7 +117,7 @@ module.exports = {
             if (storage) {
                 if (_.sum(room.storage.store) < room.storage.storeCapacity) {
                     for (let resourceType in creep.carry) {
-                        var thingToTranferTo = resourceType != RESOURCE_ENERGY ? storage : room.terminal;
+                        var thingToTranferTo = storage;
                         if (creep.transfer(thingToTranferTo, resourceType) == ERR_NOT_IN_RANGE) {
                             creep.moveTo(thingToTranferTo, {reusePath: 19});
                         }

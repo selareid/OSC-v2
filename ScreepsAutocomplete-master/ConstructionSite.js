@@ -5,8 +5,6 @@
  *
  * @class
  * @extends {RoomObject}
- *
- * @see {@link http://support.screeps.com/hc/en-us/articles/203016342-ConstructionSite}
  */
 ConstructionSite = function() { };
 
@@ -16,8 +14,6 @@ ConstructionSite.prototype =
      * A unique object identificator.
      * You can use Game.getObjectById method to retrieve an object instance by its id.
      *
-     * @see {@link http://support.screeps.com/hc/en-us/articles/203016342-ConstructionSite#id}
-     *
      * @type {string}
      */
     id: "",
@@ -25,16 +21,12 @@ ConstructionSite.prototype =
     /**
      * Whether this is your own construction site.
      *
-     * @see {@link http://support.screeps.com/hc/en-us/articles/203016342-ConstructionSite#my}
-     *
      * @type {boolean}
      */
     my: true,
 
     /**
      * An object with the structure’s owner info
-     *
-     * @see {@link http://support.screeps.com/hc/en-us/articles/203016342-ConstructionSite#owner}
      *
      * @type {{username: ""}}
      */
@@ -46,16 +38,12 @@ ConstructionSite.prototype =
     /**
      * The current construction progress.
      *
-     * @see {@link http://support.screeps.com/hc/en-us/articles/203016342-ConstructionSite#progress}
-     *
      * @type {number}
      */
     progress: 0,
 
     /**
      * The total construction progress needed for the structure to be built.
-     *
-     * @see {@link http://support.screeps.com/hc/en-us/articles/203016342-ConstructionSite#progressTotal}
      *
      * @type {number}
      */
@@ -64,16 +52,12 @@ ConstructionSite.prototype =
     /**
      * One of the STRUCTURE_* constants.
      *
-     * @see {@link http://support.screeps.com/hc/en-us/articles/203016342-ConstructionSite#structureType}
-     *
      * @type {string}
      */
     structureType: "",
 
     /**
      * Remove the construction site.
-     *
-     * @see {@link http://support.screeps.com/hc/en-us/articles/203016342-ConstructionSite#remove}
      *
      * @type {function}
      *

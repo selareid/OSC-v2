@@ -28,7 +28,7 @@ module.exports = {
         }
 
         try {
-            if (Game.time % 101 == 0) {
+            if (Game.time % 301 == 0) {
                 if (Game.cpu.bucket > 2000) {
                     var terminal = room.terminal;
                     if (terminal) {

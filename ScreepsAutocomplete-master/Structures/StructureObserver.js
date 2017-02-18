@@ -3,8 +3,6 @@
  *
  * @class
  * @extends {OwnedStructure}
- *
- * @see {@link http://support.screeps.com/hc/en-us/articles/208436365-StructureObserver}
  */
 StructureObserver = function() { };
 
@@ -13,8 +11,6 @@ StructureObserver.prototype =
     /**
      * Provide visibility into a distant room from your script.
      * The target room object will be available on the next tick.
-     *
-     * @see {@link http://support.screeps.com/hc/en-us/articles/208436365-StructureObserver#observeRoom}
      *
      * @type {function}
      *

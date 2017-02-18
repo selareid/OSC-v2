@@ -35,6 +35,7 @@ module.exports = {
                         break;
                     default:
                         console.log('ERROR in storageDistributor logic, creep.memory.doing is undefined');
+                        creep.memory.doing = 'link';
                 }
             }
             else {
@@ -44,7 +45,10 @@ module.exports = {
                 else if (this.putExcessInTerminal(room, creep) == OK) {
                     creep.memory.doing = 'terminal';
                 }
-                else creep.creepSpeech(undefined, 'bored');
+                else {
+                    creep.creepSpeech(undefined, 'bored');
+                    if (room.storage.store.energy < 50000 && room.terminal && room.terminal.store.energy > 100) {creep.withdraw(room.terminal, RESOURCE_ENERGY);}
+                }
             }
         }
     },
@@ -91,18 +95,24 @@ module.exports = {
             }
         }
         else {//if carry is empty
+         var terminal = creep.pos.isNearTo(room.terminal) ? room.terminal : undefined;
+         if (!terminal) return 'error no terminal';
             var theResourceType;
             for (let resourceType in room.storage.store) {
                 if (!global.storageData[resourceType]) continue;
-                if (room.storage.store[resourceType] > global.storageData[resourceType]) {
+                if (resourceType == RESOURCE_ENERGY && terminal.store[resourceType] > 100000) continue;
+                
+                if (room.storage.store[resourceType] > global.storageData[resourceType]+creep.carryCapacity) {
                     theResourceType = resourceType;
                     break;
                 }
             }
             if (theResourceType) {
-                creep.withdraw(room.storage, theResourceType, room.storage.store[theResourceType]-global.storageData[theResourceType]);
+                var result = creep.withdraw(room.storage, theResourceType);
                 creep.memory.working = true;
-                return OK;
+                //console.log(result);
+                if (result == OK) return OK;
+                else return 'failed';
             }
             else {
                 return 'nothing to do'

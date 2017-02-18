@@ -3,8 +3,6 @@
  *
  * @class
  * @extends {OwnedStructure}
- *
- * @see {@link http://support.screeps.com/hc/en-us/articles/208436275-StructureLink}
  */
 StructureLink = function() { };
 
@@ -13,8 +11,6 @@ StructureLink.prototype =
     /**
      * The amount of game ticks the link has to wait until the next transfer is possible.
      *
-     * @see {@link http://support.screeps.com/hc/en-us/articles/208436275-StructureLink#cooldown}
-     *
      * @type {number}
      */
     cooldown: 0,
@@ -22,16 +18,12 @@ StructureLink.prototype =
     /**
      * The amount of energy containing in the link.
      *
-     * @see {@link http://support.screeps.com/hc/en-us/articles/208436275-StructureLink#energy}
-     *
      * @type {number}
      */
     energy: 0,
 
     /**
      * The total amount of energy the link can contain.
-     *
-     * @see {@link http://support.screeps.com/hc/en-us/articles/208436275-StructureLink#energyCapacity}
      *
      * @type {number}
      */
@@ -41,8 +33,6 @@ StructureLink.prototype =
      * Transfer energy from the link to another link or a creep.
      * If the target is a creep, it has to be at adjacent square to the link.
      * If the target is a link, it can be at any location in the same room.
-     *
-     * @see {@link http://support.screeps.com/hc/en-us/articles/208436275-StructureLink#transferEnergy}
      *
      * @type {function}
      *
