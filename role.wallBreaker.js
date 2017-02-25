@@ -20,7 +20,7 @@ module.exports = {
                             }
                             else {
                                 var targetStructure = this.getTargetStructure(creep);
-                                var targetSpawn = targetFlag.room.find(FIND_HOSTILE_SPAWNS)[0];
+                                var targetSpawn = creep.room.find(FIND_HOSTILE_SPAWNS)[0];
                                 if (targetSpawn) {
                                     var attackStructureResult = creep.attack(targetSpawn);
 
