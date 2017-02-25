@@ -5,7 +5,7 @@ module.exports = function () {
         function (room) {
             console.log(this.memory.role + ' creep ' + this.name + ' At pos ' + this.pos + ' needs a team');
 
-            if (this.memory.team == undefined) this.memory.team = this.memory.room == 'E64S41' ? 'team2' : 'team1';
+            if (this.memory.team == undefined) this.memory.team = this.memory.room == 'E64S41' || this.memory.room == 'E65S47' || this.memory.room == 'E63S47' ? 'team2' : 'team1';
 
             this.moveTo(global[room.name].guardStationFlag);
         };
