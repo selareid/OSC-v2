@@ -474,8 +474,20 @@ module.exports = function () {
                     }
                     return this.createCreep(sortedParts(body), creepName(roleName), {role: roleName, room: room.name, working: false});
                 case 'warHealer':
-                    numberOfParts = Math.floor((energy - (energy * amountToSave)) / 300);
-                    if (numberOfParts > 0) {
+                    numberOfParts = Math.floor((energy - (energy * amountToSave)) / 360);
+                    if (numberOfParts > 1) {
+                        if (numberOfParts > 16) numberOfParts = 16;
+
+                        for (let i = 0; i < numberOfParts; i++) {
+                            body.push(TOUGH);
+                            body.push(HEAL);
+                            body.push(MOVE);
+                            body.push(MOVE);
+                        }
+
+                    }
+                    else {
+                        numberOfParts = Math.floor((energy - (energy * amountToSave)) / 280);
                         if (numberOfParts > 25) numberOfParts = 25;
 
                         for (let i = 0; i < numberOfParts; i++) {
