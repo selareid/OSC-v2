@@ -486,13 +486,14 @@ module.exports = function () {
                     }
                     return this.createCreep(sortedParts(body), creepName(roleName), {role: roleName, room: room.name, working: false});
                 case 'towerDrainer':
-                    numberOfParts = Math.floor((energy - (energy * amountToSave)) / 310);
+                    numberOfParts = Math.floor((energy - (energy * amountToSave)) / 360);
                     if (numberOfParts > 1) {
                         if (numberOfParts > 16) numberOfParts = 16;
 
                         for (let i = 0; i < numberOfParts; i++) {
                             body.push(TOUGH);
                             body.push(HEAL);
+                            body.push(MOVE);
                             body.push(MOVE);
                         }
 
