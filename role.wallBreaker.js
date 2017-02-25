@@ -39,7 +39,7 @@ module.exports = {
 
                                 }
                                 else {
-                                    //maybe add a role changing mechanic here ?
+                                    creep.memory.role = 'structureDestroyer';
                                 }
                             }
 
