@@ -173,7 +173,7 @@ module.exports = {
 
     roomPositionSaving: function (room, creep) {
         if (creep.pos.roomName != room.name) return;
-        if (!Memory.steppedPos) return Memory.steppedPos = creep.pos.roomName + ',' + creep.pos.x + ',' + creep.pos.y + ',' + Game.time % 10000 + ':';
+        if (!Memory.steppedPos) {Memory.steppedPos = creep.pos.roomName + ',' + creep.pos.x + ',' + creep.pos.y + ',' + Game.time % 10000 + ':'; return;}
 
         var splitPoses = Memory.steppedPos.split(':');
 
