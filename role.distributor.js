@@ -23,7 +23,7 @@ module.exports = {
                 if (creep.transfer(spawnExtension, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(spawnExtension, {visualizePathStyle: {
                         fill: 'transparent',
-                        stroke: '#fff',
+                        stroke: '#f46464',
                         lineStyle: 'dashed',
                         strokeWidth: .15,
                         opacity: .1}});
@@ -35,7 +35,7 @@ module.exports = {
                     if (creep.transfer(tower, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                         creep.moveTo(tower, {visualizePathStyle: {
                             fill: 'transparent',
-                            stroke: '#fff',
+                            stroke: '#f46464',
                             lineStyle: 'dashed',
                             strokeWidth: .15,
                             opacity: .1}});
