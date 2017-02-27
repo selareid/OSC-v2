@@ -21,14 +21,24 @@ module.exports = {
 
             if (spawnExtension) {
                 if (creep.transfer(spawnExtension, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(spawnExtension);
+                    creep.moveTo(spawnExtension, {visualizePathStyle: {
+                        fill: 'transparent',
+                        stroke: '#fff',
+                        lineStyle: 'dashed',
+                        strokeWidth: .15,
+                        opacity: .1}});
                 }
             }
             else {
                 var tower = this.findTower(room, energyOfTowers);
                 if (tower) {
                     if (creep.transfer(tower, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                        creep.moveTo(tower);
+                        creep.moveTo(tower, {visualizePathStyle: {
+                            fill: 'transparent',
+                            stroke: '#fff',
+                            lineStyle: 'dashed',
+                            strokeWidth: .15,
+                            opacity: .1}});
                     }
                 }
                 else {
