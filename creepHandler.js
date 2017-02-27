@@ -189,7 +189,7 @@ module.exports = {
 
         var posInString = str.indexOf(posToFind);
 
-        if (posInString == 0) {
+        if (str.search(posToFind) == -1) {
             Memory.steppedPos = Memory.steppedPos + creep.pos.roomName + ',' + creep.pos.x + ',' + creep.pos.y + ',' + Game.time % 10000 + ':';
             return;
         }
