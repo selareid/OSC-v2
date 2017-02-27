@@ -494,11 +494,11 @@ module.exports = {
         // Memory.stats['room.' + room.name + '.creeps' + '.numberOfEnergyHelpers'] = numberOfEnergyHelpers;
         //add more cause that's not all
 
-        var normalSpawnQueue = Memory.rooms[room].spawnQueue.normal;
+        //var normalSpawnQueue = Memory.rooms[room].spawnQueue.normal;
         //Memory.stats['room.' + room.name + '.spawnQueues' + '.normal'] = normalSpawnQueue.length;
-        var prioritySpawnQueue = Memory.rooms[room].spawnQueue.priority;
+        //var prioritySpawnQueue = Memory.rooms[room].spawnQueue.priority;
         //Memory.stats['room.' + room.name + '.spawnQueues' + '.priority'] = prioritySpawnQueue.length;
-        var warSpawnQueue = Memory.rooms[room].spawnQueue.war;
+        //var warSpawnQueue = Memory.rooms[room].spawnQueue.war;
         //Memory.stats['room.' + room.name + '.spawnQueues' + '.war'] = warSpawnQueue.length;
 
     },
