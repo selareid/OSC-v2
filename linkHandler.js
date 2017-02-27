@@ -38,11 +38,12 @@ module.exports = {
 
         if (!global['linkRole'][link.id]) {
             var role;
+            var extensions = global[room.name].extensions;
 
-            var closest = link.pos.findClosestByRange([room.storage, room.controller, global[room.name].sources[0], global[room.name].sources[1]]);
+            var closest = link.pos.findClosestByRange(extensions.concat([room.storage, room.controller, global[room.name].sources[0], global[room.name].sources[1]]));
 
             if (closest && link.pos.getRangeTo(closest) <= 2) {
-                role = [room.storage, room.controller].includes(closest) ? 'taker' : 'giver';
+                role = extensions.concat([room.storage, room.controller]).includes(closest) ? 'taker' : 'giver';
             }
 
             global['linkRole'][link.id] = role || 'giver'; //either taker or giver
