@@ -188,6 +188,12 @@ module.exports = {
         var posToFind = creep.pos.roomName + ',' + creep.pos.x + ',' + creep.pos.y;
 
         var posInString = str.indexOf(posToFind);
+
+        if (!posInString) {
+            Memory.steppedPos = Memory.steppedPos + creep.pos.roomName + ',' + creep.pos.x + ',' + creep.pos.y + ',' + Game.time % 10000 + ':';
+            return;
+        }
+
         var newTime = Game.time % 10000;
 
         var splitStr = splitValue(str, posInString).split(':,')[1].split(':')[0].split(',');
