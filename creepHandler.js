@@ -34,7 +34,7 @@ module.exports = {
 
                 this.creepActions(creep, undefined);
 
-                //if (Game.cpu.bucket > 3000) this.roomPositionSaving(Game.rooms[creep.memory.room], creep);
+                if (Game.cpu.bucket > 3000) this.roomPositionSaving(Game.rooms[creep.memory.room], creep);
             }
         }
         catch (err) {
@@ -173,46 +173,25 @@ module.exports = {
 
     roomPositionSaving: function (room, creep) {
         if (creep.pos.roomName != room.name) return;
-        if (!Memory.steppedPos) {Memory.steppedPos = creep.pos.roomName + ',' + creep.pos.x + ',' + creep.pos.y + ',' + Game.time % 10000 + ':'; return;}
-
-        var splitPoses = Memory.steppedPos.split(':');
-
-        var roomPoses = {};
-
-        for (let pos_unsplit of splitPoses) {
-            let pos_split = pos_unsplit.split(',');
-
-            let pos_room = pos_split[0];
-
-            let pos_x = pos_split[1];
-            let pos_y = pos_split[2];
-            let pos_time = pos_split[3];
-
-            let title = pos_x + ' ' + pos_y;
-            roomPoses[title] = {
-                x: pos_x,
-                y: pos_y,
-                room: pos_room,
-                time: pos_time
-            };
+        if (!Memory.steppedPos) {
+            Memory.steppedPos = creep.pos.roomName + ',' + creep.pos.x + ',' + creep.pos.y + ',' + Game.time % 10000 + ':';
+            return;
         }
 
-        var titleForEntry = creep.pos.x + ' ' + creep.pos.y;
-        roomPoses[titleForEntry] = {
-            x: creep.pos.x,
-            y: creep.pos.y,
-            room: creep.pos.roomName,
-            time: Game.time % 10000
-        };
 
-
-        var stringOfAll = '';
-
-        for (let pos_it in roomPoses) {
-            let pos = roomPoses[pos_it];
-            stringOfAll = stringOfAll + pos.room + ',' + pos.x + ',' + pos.y + ',' + pos.time + ':'
+        function splitValue(value, index) {
+            return value.substring(0, index) + "," + value.substring(index);
         }
 
-        Memory.steppedPos = stringOfAll;
+
+        var posToFind = creep.pos.roomName + ',' + creep.pos.x + ',' + creep.pos.y;
+
+        var posInString = Memory.steppedPos.indexOf(posToFind);
+        var newTime = Game.time % 10000;
+
+        var splitStr = splitValue(Memory.steppedPos, posInString).split(':,')[1].split(':')[0].split(',');
+
+        Memory.steppedPos = Memory.steppedPos.replace(splitStr, posToFind + newTime);
+
     }
 };
