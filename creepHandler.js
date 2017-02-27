@@ -183,15 +183,16 @@ module.exports = {
             return value.substring(0, index) + "," + value.substring(index);
         }
 
+        var str = Memory.steppedPos;
 
         var posToFind = creep.pos.roomName + ',' + creep.pos.x + ',' + creep.pos.y;
 
-        var posInString = Memory.steppedPos.indexOf(posToFind);
+        var posInString = str.indexOf(posToFind);
         var newTime = Game.time % 10000;
 
-        var splitStr = splitValue(Memory.steppedPos, posInString).split(':,')[1].split(':')[0].split(',');
+        var splitStr = splitValue(str, posInString).split(':,')[1].split(':')[0].split(',');
 
-        Memory.steppedPos = Memory.steppedPos.replace(splitStr, posToFind + newTime);
+        Memory.steppedPos = str.replace(splitStr, posToFind + newTime);
 
     }
 };
