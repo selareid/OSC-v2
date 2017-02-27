@@ -44,7 +44,12 @@ module.exports = {
                 else {
                     var flagToGoTo = room.find(FIND_FLAGS, {filter: (f) => f.memory.type == 'distributorGoTo' && f.memory.room == creep.room.name})[0];
                     if (flagToGoTo) {
-                        creep.moveTo(flagToGoTo);
+                        creep.moveTo(flagToGoTo, {visualizePathStyle: {
+                            fill: 'transparent',
+                            stroke: '#f46464',
+                            lineStyle: 'dashed',
+                            strokeWidth: .2,
+                            opacity: .5}});
                     }
                 }
             }
@@ -64,26 +69,46 @@ module.exports = {
                 if (droppedEnergy.amount == undefined || droppedEnergy.amount < 1010) {
                     if (storage && storage.store[RESOURCE_ENERGY] > 1000) {
                         if (creep.withdraw(storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                            creep.moveTo(storage, {reusePath: 10})
+                            creep.moveTo(storage, {reusePath: 10, visualizePathStyle: {
+                                fill: 'transparent',
+                                stroke: '#f46464',
+                                lineStyle: 'dashed',
+                                strokeWidth: .2,
+                                opacity: .5}})
                         }
                     }
                     else {
                         container = creep.findContainer(room);
                         if (container) {
                             if (creep.withdraw(container, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                                creep.moveTo(container)
+                                creep.moveTo(container, {visualizePathStyle: {
+                                    fill: 'transparent',
+                                    stroke: '#f46464',
+                                    lineStyle: 'dashed',
+                                    strokeWidth: .2,
+                                    opacity: .5}});
                             }
                         }
                         else {
                             if (creep.pickup(droppedEnergy) == ERR_NOT_IN_RANGE) {
-                                creep.moveTo(container)
+                                creep.moveTo(container, {visualizePathStyle: {
+                                    fill: 'transparent',
+                                    stroke: '#f46464',
+                                    lineStyle: 'dashed',
+                                    strokeWidth: .2,
+                                    opacity: .5}});
                             }
                         }
                     }
                 }
                 else {
                     if (creep.pickup(droppedEnergy) == ERR_NOT_IN_RANGE) {
-                        creep.moveTo(droppedEnergy);
+                        creep.moveTo(droppedEnergy, {visualizePathStyle: {
+                            fill: 'transparent',
+                            stroke: '#f46464',
+                            lineStyle: 'dashed',
+                            strokeWidth: .2,
+                            opacity: .5}});
                     }
                 }
             }
@@ -98,25 +123,45 @@ module.exports = {
 
                 if (closer != storage) {
                     if (creep.withdraw(closer, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                        creep.moveTo(closer, {reusePath: 10})
+                        creep.moveTo(closer, {reusePath: 10, visualizePathStyle: {
+                            fill: 'transparent',
+                            stroke: '#f46464',
+                            lineStyle: 'dashed',
+                            strokeWidth: .2,
+                            opacity: .5}})
                     }
                 }
                 else if (storage.store[RESOURCE_ENERGY] > 50) {
                     if (creep.withdraw(storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                        creep.moveTo(storage);
+                        creep.moveTo(storage, {visualizePathStyle: {
+                            fill: 'transparent',
+                            stroke: '#f46464',
+                            lineStyle: 'dashed',
+                            strokeWidth: .2,
+                            opacity: .5}});
                     }
                 }
                 else {
                     container = creep.findContainer(room);
                     if (container) {
                         if (creep.withdraw(container, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                            creep.moveTo(container);
+                            creep.moveTo(container, {visualizePathStyle: {
+                                fill: 'transparent',
+                                stroke: '#f46464',
+                                lineStyle: 'dashed',
+                                strokeWidth: .2,
+                                opacity: .5}});
                         }
                     }
                     else {
                         if (droppedEnergy) {
                             if (creep.pickup(droppedEnergy, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                                creep.moveTo(droppedEnergy);
+                                creep.moveTo(droppedEnergy, {visualizePathStyle: {
+                                    fill: 'transparent',
+                                    stroke: '#f46464',
+                                    lineStyle: 'dashed',
+                                    strokeWidth: .2,
+                                    opacity: .5}});
                             }
                         }
                     }
