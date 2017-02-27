@@ -208,7 +208,8 @@ module.exports = {
 
         var stringOfAll = '';
 
-        for (let pos of roomPoses) {
+        for (let pos_it in roomPoses) {
+            let pos = roomPoses[pos_it];
             stringOfAll = stringOfAll + pos.room + ',' + pos.x + ',' + pos.y + ',' + pos.time + ':'
         }
 
