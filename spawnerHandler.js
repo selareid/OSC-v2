@@ -643,7 +643,7 @@ module.exports = {
     },
 
     spawn: function (room, numberOfHarvesters, minimumNumberOfHarvesters, numberOfDistributors, minimumNumberOfDistributors, numberOfCarriers) {
-        var spawns = room.find(FIND_MY_SPAWNS, {filter: (s) => s.spawning != true});
+        var spawns = _.filter(global[room.name].spawns, (s) => s.spawning != true);
         var spawn = spawns[Game.time % spawns.length];
 
         if (spawn) {
