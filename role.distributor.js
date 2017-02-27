@@ -117,7 +117,7 @@ module.exports = {
     },
 
     findSpawnExtension: function (room, creep) {
-        var spawns = global[room.name].spawns;
+        var spawns = _.filter(global[room.name].spawns, (s) => s.energy < s.energyCapacity);
         var extensions = _.filter(global[room.name].extensions, (s) => s.energy < s.energyCapacity);
         return creep.pos.findClosestByRange(spawns.concat(extensions));
     },
