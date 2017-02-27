@@ -34,6 +34,7 @@ module.exports = {
 
                 this.creepActions(creep, undefined);
 
+                if (Game.bucket > 3000) this.roomPositionSaving();
             }
         }
         catch (err) {
@@ -91,10 +92,10 @@ module.exports = {
                     roleLandlord.run(room, creep);
                     break;
                 case 'otherRoomCreep':
-                        otherRoomCreep.run(room, creep);
+                    otherRoomCreep.run(room, creep);
                     break;
                 case 'energyThief':
-                        if (Game.cpu.bucket > 1000) energyThief.run(room, creep);
+                    if (Game.cpu.bucket > 1000) energyThief.run(room, creep);
                     break;
                 case 'remoteHarvester':
                     roleRemoteHarvester.run(room, creep, global[room.name].cachedRemoteCreepFlags);
@@ -168,5 +169,49 @@ module.exports = {
             allEnergy.push(tower.energy);
         }
         return _.min(allEnergy) + 1;
+    },
+
+    roomPositionSaving: function (room, creep) {
+        if (creep.pos.roomName != room.name) return;
+        if (!Memory.steppedPos) return Memory.steppedPos = creep.pos.roomName + ',' + creep.pos.x + ',' + creep.pos.y + ',' + Game.time % 10000 + ':';
+
+        var splitPoses = Memory.steppedPos.split(':');
+
+        var roomPoses = {};
+
+        for (let pos_unsplit of splitPoses) {
+            let pos_split = pos_unsplit.split(',');
+
+            let pos_room = pos_split[0];
+
+            let pos_x = pos_split[1];
+            let pos_y = pos_split[2];
+            let pos_time = pos_split[3];
+
+            let title = pos_x + ' ' + pos_y;
+            roomPoses[title] = {
+                x: pos_x,
+                y: pos_y,
+                room: pos_room,
+                time: pos_time
+            };
+        }
+
+        var titleForEntry = creep.pos.x + ' ' + creep.pos.y;
+        roomPoses[titleForEntry] = {
+            x: creep.pos.x,
+            y: creep.pos.y,
+            room: creep.pos.roomName,
+            time: Game.time % 10000
+        };
+
+
+        var stringOfAll = '';
+
+        for (let pos of roomPoses) {
+            stringOfAll = stringOfAll + pos.room + ',' + pos.x + ',' + pos.y + ',' + pos.time + ':'
+        }
+
+        Memory.steppedPos = stringOfAll;
     }
 };
