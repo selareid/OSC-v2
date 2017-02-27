@@ -25,8 +25,8 @@ module.exports = {
                         fill: 'transparent',
                         stroke: '#f46464',
                         lineStyle: 'dashed',
-                        strokeWidth: .15,
-                        opacity: .1}});
+                        strokeWidth: .2,
+                        opacity: .5}});
                 }
             }
             else {
@@ -37,8 +37,8 @@ module.exports = {
                             fill: 'transparent',
                             stroke: '#f46464',
                             lineStyle: 'dashed',
-                            strokeWidth: .15,
-                            opacity: .1}});
+                            strokeWidth: .2,
+                            opacity: .5}});
                     }
                 }
                 else {
