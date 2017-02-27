@@ -34,7 +34,7 @@ module.exports = {
 
                 this.creepActions(creep, undefined);
 
-                if (Game.bucket > 3000) this.roomPositionSaving();
+                if (Game.cpu.bucket > 3000) this.roomPositionSaving();
             }
         }
         catch (err) {
