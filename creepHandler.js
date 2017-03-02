@@ -196,8 +196,13 @@ module.exports = {
 
         var newTime = Game.time % 10000;
 
-        var splitStr = splitValue(str, posInString).split(':,')[1].split(':')[0].split(',');
+        var splitStr;
+        var split_it = splitValue(str, posInString).split(':,');
 
+        if (!split_it) return;
+        else if (!split_it[1]) splitStr = split_it[1].split(':')[0].split(',');
+        else splitStr = split_it[1].split(':')[0].split(',');
+        
         Memory.steppedPos = str.replace(splitStr, posToFind + newTime);
 
     }
