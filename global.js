@@ -1,7 +1,7 @@
 'use strict';
 
 global.allianceName = 'INT_MAX';
-global.Allies = ['Lur', 'starwar15432', 'Leonyx'];
+global.Allies = ['Lur', 'starwar15432', 'Leonyx', 'theKraken'];
 
 global.REVERSE_DIR = {
     [TOP]            : BOTTOM,
