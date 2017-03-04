@@ -333,19 +333,25 @@ module.exports = {
                             if (!storage) break;
 
                             if (room.controller.level >= 6) {
-                                var terminalEnergy = room.terminal ? room.terminal.energy : 0;
-                                minimumNumberOfUpgraders = Math.floor(((storage.store.energy + terminalEnergy) - 20000) / 20000) > 1?
-                                    Math.floor(((storage.store.energy + terminalEnergy) - 20000) / 20000) : 1;
+                                if (!global[room.name].minUpgraders || Game.time % 45 == 0) {
+                                    var terminalEnergy = room.terminal ? room.terminal.energy : 0;
+                                    global[room.name].minUpgraders = Math.floor(((storage.store.energy + terminalEnergy) - 20000) / 20000) > 1 ?
+                                        Math.floor(((storage.store.energy + terminalEnergy) - 20000) / 20000) : 1;
+                                }
+
+                                minimumNumberOfUpgraders = global[room.name].minUpgraders;
                             }
                             else {
-                                if (Game.time % 2 == 0) {
+                                if (!global[room.name].minUpgraders || Game.time % 27 == 0) {
                                     if (storage.store[RESOURCE_ENERGY] > 90000) {
-                                        minimumNumberOfUpgraders = minimumNumberOfUpgraders < 8 ? minimumNumberOfUpgraders + 1 : minimumNumberOfUpgraders;
+                                        global[room.name].minUpgraders = minimumNumberOfUpgraders < 8 ? minimumNumberOfUpgraders + 1 : minimumNumberOfUpgraders;
                                     }
                                     else {
-                                        minimumNumberOfUpgraders = minimumNumberOfUpgraders > 1 ? minimumNumberOfUpgraders - 1 : minimumNumberOfUpgraders;
+                                        global[room.name].minUpgraders = minimumNumberOfUpgraders > 1 ? minimumNumberOfUpgraders - 1 : minimumNumberOfUpgraders;
                                     }
                                 }
+
+                                minimumNumberOfUpgraders = global[room.name].minUpgraders;
                             }
                         }
                         else minimumNumberOfUpgraders = 1;
