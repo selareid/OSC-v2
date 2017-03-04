@@ -207,7 +207,7 @@ module.exports = {
         else splitStr = split_it[0].split(':')[0].split(',');
 
         if (Math.abs(newTime-splitStr[3]) > 199) {
-            roadUnderCreep.remove();
+            roadUnderCreep.destroy();
             Memory.steppedPos = str.replace(splitStr, '');
             return;
         }
