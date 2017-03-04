@@ -177,7 +177,7 @@ module.exports = {
         if (!roadUnderCreep) return;
 
         if (!Memory.steppedPos) {
-            Memory.steppedPos = creep.pos.roomName + ',' + creep.pos.x + ',' + creep.pos.y + ',' + Game.time % 10000 + ':';
+            Memory.steppedPos = creep.pos.roomName + ',' + creep.pos.x + ',' + creep.pos.y + ',' + Game.time % 100000 + ':';
             return;
         }
 
@@ -192,7 +192,7 @@ module.exports = {
 
         var posInString = str.indexOf(posToFind);
 
-        var newTime = Game.time % 10000;
+        var newTime = Game.time % 100000;
 
         if (str.search(posToFind) == -1) {
             Memory.steppedPos = Memory.steppedPos + creep.pos.roomName + ',' + creep.pos.x + ',' + creep.pos.y + ',' + newTime + ':';
