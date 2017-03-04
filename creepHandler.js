@@ -173,6 +173,9 @@ module.exports = {
 
     roomPositionSaving: function (room, creep) {
         if (creep.pos.roomName != room.name) return;
+        var roadUnderCreep = _.filter(creep.pos.lookFor(LOOK_STRUCTURES), (s) => s.structureType == STRUCTURE_ROAD)[0];
+        if (!roadUnderCreep) return;
+
         if (!Memory.steppedPos) {
             Memory.steppedPos = creep.pos.roomName + ',' + creep.pos.x + ',' + creep.pos.y + ',' + Game.time % 10000 + ':';
             return;
@@ -189,12 +192,12 @@ module.exports = {
 
         var posInString = str.indexOf(posToFind);
 
+        var newTime = Game.time % 10000;
+
         if (str.search(posToFind) == -1) {
-            Memory.steppedPos = Memory.steppedPos + creep.pos.roomName + ',' + creep.pos.x + ',' + creep.pos.y + ',' + Game.time % 10000 + ':';
+            Memory.steppedPos = Memory.steppedPos + creep.pos.roomName + ',' + creep.pos.x + ',' + creep.pos.y + ',' + newTime + ':';
             return;
         }
-
-        var newTime = Game.time % 10000;
 
         var splitStr;
         var split_it = splitValue(str, posInString).split(':,');
@@ -203,7 +206,13 @@ module.exports = {
         else if (split_it[1]) splitStr = split_it[1].split(':')[0].split(',');
         else splitStr = split_it[0].split(':')[0].split(',');
 
-        Memory.steppedPos = str.replace(splitStr, posToFind + newTime);
+        if (Math.abs(newTime-splitStr[3]) > 199) {
+            roadUnderCreep.remove();
+            Memory.steppedPos = str.replace(splitStr, '');
+            return;
+        }
+
+        Memory.steppedPos = str.replace(splitStr, posToFind + ',' + newTime);
 
     }
 };
