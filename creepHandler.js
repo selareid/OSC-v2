@@ -177,7 +177,7 @@ module.exports = {
         if (!roadUnderCreep) return; // if there's no road under creep don't need to save pos
 
         if (!Memory.steppedPos) {
-            Memory.steppedPos = creep.pos.roomName + ',' + creep.pos.x + ',' + creep.pos.y + ',' + Game.time % 100000 + ':'; //if it doesn't exist in memory create it and put our stats in
+            Memory.steppedPos = creep.pos.roomName + ',' + creep.pos.x + ',' + creep.pos.y + ',' + Game.time  + ':'; //if it doesn't exist in memory create it and put our stats in
             return;
         }
 
@@ -192,7 +192,7 @@ module.exports = {
 
         var posInString = str.indexOf(posToFind); // the pos of found posToFind
 
-        var newTime = Game.time % 100000; // the new time it'll be changed to
+        var newTime = Game.time; // the new time it'll be changed to
 
         if (str.search(posToFind) == -1) { //if not in str
             Memory.steppedPos = Memory.steppedPos + creep.pos.roomName + ',' + creep.pos.x + ',' + creep.pos.y + ',' + newTime + ':'; // add it to str
