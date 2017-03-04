@@ -334,7 +334,7 @@ module.exports = {
 
                             if (room.controller.level >= 6) {
                                 if (!global[room.name].minUpgraders || Game.time % 45 == 0) {
-                                    var terminalEnergy = room.terminal ? room.terminal.energy : 0;
+                                    var terminalEnergy = room.terminal && room.terminal.store && room.terminal.store[RESOURCE_ENERGY] ? room.terminal.store[RESOURCE_ENERGY] : 0;
                                     global[room.name].minUpgraders = Math.floor(((storage.store.energy + terminalEnergy) - 20000) / 20000) > 1 ?
                                         Math.floor(((storage.store.energy + terminalEnergy) - 20000) / 20000) : 1;
                                 }
