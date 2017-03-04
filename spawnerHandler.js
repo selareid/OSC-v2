@@ -325,10 +325,20 @@ module.exports = {
                     default:
                         minimumNumberOfCaretakers = 1;
                         if (room.controller.level < 8) {
-                            if (minimumNumberOfUpgraders < 1) minimumNumberOfUpgraders = 1;
-                            if (Game.time % 2 == 0) {
-                                var storage = room.storage;
-                                if (storage) {
+                            var storage = room.storage;
+                            if (minimumNumberOfUpgraders < 1) {
+                                minimumNumberOfUpgraders = 1;
+                                break;
+                            }
+                            if (!storage) break;
+
+                            if (room.controller.level >= 6) {
+                                var terminalEnergy = room.terminal ? room.terminal.energy : 0;
+                                minimumNumberOfUpgraders = Math.floor(((storage.store.energy + terminalEnergy) - 20000) / 20000) > 1?
+                                    Math.floor(((storage.store.energy + terminalEnergy) - 20000) / 20000) : 1;
+                            }
+                            else {
+                                if (Game.time % 2 == 0) {
                                     if (storage.store[RESOURCE_ENERGY] > 90000) {
                                         minimumNumberOfUpgraders = minimumNumberOfUpgraders < 8 ? minimumNumberOfUpgraders + 1 : minimumNumberOfUpgraders;
                                     }
