@@ -14,7 +14,7 @@ module.exports = function () {
 
     Room.prototype.findOtherRoomToGoTo =
         function () {
-            var otherRoomFlag = _.filter(Game.flags, f => f.memory.type == 'otherRoomToGoTo' && f.memory.room == this.name && f.memory.numberOfCreeps > 0)[0];
+            var otherRoomFlag = _.filter(Game.flags, f => f.name.split(' ')[0] == 'otherRoomToGoTo' && f.memory.room == this.name && f.memory.numberOfCreeps > 0)[0];
 
             if (otherRoomFlag) {
                 return otherRoomFlag;
