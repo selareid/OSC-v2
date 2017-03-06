@@ -2,6 +2,8 @@ require('global');
 require('prototype.creep');
 require('prototype.creepSpeech')();
 
+const remoteHarvester = require('role.remoteHarvester');
+
 module.exports = {
 
     run: function (room, creep, remoteCreepFlags) {
@@ -102,17 +104,17 @@ module.exports = {
             var mineral = Game.getObjectById(creep.memory.mineral);
 
             if (mineral && !mineral.ticksToRegeneration) {
-                switch (creep.harvest(mineral)) {
-                    case ERR_NOT_IN_RANGE:
-                        creep.creepSpeech(room, 'movingToSource');
-                        creep.moveTo(mineral);
-                        break;
-                    case OK:
-                        creep.creepSpeech(room, 'harvesting');
-                        break;
-                }
+                    switch (creep.harvest(mineral)) {
+                        case ERR_NOT_IN_RANGE:
+                            creep.creepSpeech(room, 'movingToSource');
+                            creep.moveTo(mineral);
+                            break;
+                        case OK:
+                            creep.creepSpeech(room, 'harvesting');
+                            break;
+                    }
             }
-            else console.log('Creep ' + creep.name + "says there's no mineral in room " + creep.pos.roomName);
+            else remoteHarvester.realRun(room, creep);
         }
     }
 };
