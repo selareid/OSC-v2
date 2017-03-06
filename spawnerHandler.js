@@ -271,7 +271,7 @@ module.exports = {
                 //set number of remote guards ends
 
                 if (room.find(FIND_MY_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_EXTRACTOR})[0]) {
-                    var mineral = room.find(FIND_MINERALS)[0];
+                    var mineral = global[room.name].mineral;
                     if (!mineral.ticksToRegeneration || mineral.ticksToRegeneration < 500) {
                         minimumNumberOfMiners = 1;
                     }
