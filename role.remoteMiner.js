@@ -107,7 +107,7 @@ module.exports = {
                         break;
                 }
             }
-            else console.log('Creep ' + creep.name + "says there's no extractor in room " + creep.pos.roomName);
+            else console.log('Creep ' + creep.name + "says there's no mineral in room " + creep.pos.roomName);
         }
     }
 };
