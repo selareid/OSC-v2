@@ -93,6 +93,11 @@ module.exports = function () {
             global[this.name].containers = this.find(FIND_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_CONTAINER});
             //sources
             global[this.name].sources = this.find(FIND_SOURCES);
+            //minerals
+            if (!global[this.name].mineralId) {
+                global[this.name].mineralId = this.find(FIND_MINERALS)[0] ? this.find(FIND_MINERALS)[0] : undefined;
+            }
+            global[this.name].mineral = global[this.name].mineralId ? Game.getObjectById(global[this.name].mineralId) : undefined;
 
         };
 
