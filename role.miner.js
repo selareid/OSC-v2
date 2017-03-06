@@ -1,6 +1,6 @@
 require('global');
 require('prototype.creepSpeech')();
-const roleEmergencyHarvester = require ('role.emergencyHarvester');
+const roleUpgrader = require ('role.upgrader');
 
 module.exports = {
     run: function (room, creep) {
@@ -41,9 +41,12 @@ module.exports = {
             var extractor = room.find(FIND_MY_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_EXTRACTOR})[0];
             if (extractor) {
                 var mineral = global[room.name].mineral;
-                if (creep.harvest(mineral) != OK) {
-                    creep.moveTo(mineral);
+                if (!mineral.ticksToLive) {
+                    if (creep.harvest(mineral) != OK) {
+                        creep.moveTo(mineral);
+                    }
                 }
+                else roleUpgrader.run(room, creep);
             }
 
         }
