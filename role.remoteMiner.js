@@ -94,9 +94,14 @@ module.exports = {
             }
         }
         else {
-            var mineral = creep.room.find(FIND_MINERALS)[0];
+            if (!creep.memory.mineral) {
+                var foundMineral = creep.room.find(FIND_MINERALS)[0];
+                creep.memory.mineral = foundMineral ? foundMineral.id : undefined;
+            }
 
-            if (mineral) {
+            var mineral = Game.getObjectById(creep.memory.mineral);
+
+            if (mineral && !mineral.ticksToRegeneration) {
                 switch (creep.harvest(mineral)) {
                     case ERR_NOT_IN_RANGE:
                         creep.creepSpeech(room, 'movingToSource');
