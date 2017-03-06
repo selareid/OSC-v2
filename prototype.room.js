@@ -95,7 +95,7 @@ module.exports = function () {
             global[this.name].sources = this.find(FIND_SOURCES);
             //minerals
             if (!global[this.name].mineralId) {
-                global[this.name].mineralId = this.find(FIND_MINERALS)[0] ? this.find(FIND_MINERALS)[0] : undefined;
+                global[this.name].mineralId = this.find(FIND_MINERALS)[0] ? this.find(FIND_MINERALS)[0].id : undefined;
             }
             global[this.name].mineral = global[this.name].mineralId ? Game.getObjectById(global[this.name].mineralId) : undefined;
 
