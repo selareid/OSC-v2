@@ -85,6 +85,8 @@ module.exports = function () {
             global[this.name].creepsNotMine = this.find(FIND_HOSTILE_CREEPS);
             //spawns
             global[this.name].spawns = this.find(FIND_MY_SPAWNS);
+            //towers
+            global[this.name].towers = this.find(FIND_MY_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_TOWER});
             //extensions
             global[this.name].extensions = this.find(FIND_MY_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_EXTENSION});
             //links
@@ -101,19 +103,33 @@ module.exports = function () {
 
         };
 
-            Room.prototype.buildThings =
+    Room.prototype.buildThings =
         function (room = this) {
-        if (_.size(Game.constructionSites) > 90) return;
+            if (_.size(Game.constructionSites) > 90) return;
 
             var storage = room.storage;
+            var terminal = room.terminal;
+
 
             if (storage) {
-                let pathController = room.findPath(storage.pos, room.controller.pos, {
-                        ignoreCreeps: true,
-                        ignoreRoads: true,
-                        plainCost: 1,
-                        swampCost: 1
-                    }) || [];
+                if (!storage.pos.lookFor(LOOK_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_RAMPART})[0]) storage.pos.createConstructionSite(STRUCTURE_RAMPART);
+                if (terminal) {
+                    if (!terminal.pos.lookFor(LOOK_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_RAMPART})[0]) terminal.pos.createConstructionSite(STRUCTURE_RAMPART);
+                    _.forEach(global[this.name].spawns, (spawn) => {
+                        if (!spawn.pos.lookFor(LOOK_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_RAMPART})[0]) spawn.pos.createConstructionSite(STRUCTURE_RAMPART);
+                    });
+                    _.forEach(global[this.name].towers, (tower) => {
+                        if (!tower.pos.lookFor(LOOK_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_RAMPART})[0]) spawn.pos.createConstructionSite(STRUCTURE_RAMPART);
+                    });
+
+
+                    let pathController = room.findPath(storage.pos, room.controller.pos, {
+                            ignoreCreeps: true,
+                            ignoreRoads: true,
+                            plainCost: 1,
+                            swampCost: 1
+                        }) || [];
+                }
                 _.forEach(pathController, (pathData) => {
                     if (!new RoomPosition(pathData.x, pathData.y, room.name).lookFor(LOOK_STRUCTURES)[0]) {
                         var res = room.createConstructionSite(pathData.x, pathData.y, STRUCTURE_ROAD);
@@ -185,5 +201,7 @@ module.exports = function () {
                 }
 
             });
+
+
         };
 };
