@@ -121,7 +121,7 @@ module.exports = function () {
                     _.forEach(global[this.name].towers, (tower) => {
                         if (!tower.pos.lookFor(LOOK_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_RAMPART})[0]) spawn.pos.createConstructionSite(STRUCTURE_RAMPART);
                     });
-
+                }
 
                     let pathController = room.findPath(storage.pos, room.controller.pos, {
                             ignoreCreeps: true,
@@ -129,7 +129,7 @@ module.exports = function () {
                             plainCost: 1,
                             swampCost: 1
                         }) || [];
-                }
+
                 _.forEach(pathController, (pathData) => {
                     if (!new RoomPosition(pathData.x, pathData.y, room.name).lookFor(LOOK_STRUCTURES)[0]) {
                         var res = room.createConstructionSite(pathData.x, pathData.y, STRUCTURE_ROAD);
