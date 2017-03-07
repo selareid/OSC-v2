@@ -42,7 +42,7 @@ module.exports = {
                     }
                 }
                 else {
-                    var flagToGoTo = room.find(FIND_FLAGS, {filter: (f) => (f.memory.type == 'distributorGoTo' || f.name.split(' ')[0] == 'distributorGoTo') && f.memory.room == creep.room.name})[0];
+                    var flagToGoTo = room.find(FIND_FLAGS, {filter: (f) => (f.memory.type == 'distributorGoTo' || f.name.split(' ')[0] == 'distributorGoTo')})[0];
                     if (flagToGoTo) {
                         creep.moveTo(flagToGoTo, {visualizePathStyle: {
                             fill: 'transparent',
