@@ -310,17 +310,17 @@ module.exports = {
                 switch (room.controller.level) {
                     case 3:
                         minimumNumberOfCaretakers = 1;
-                        minimumNumberOfUpgraders = 3;
+                        minimumNumberOfUpgraders = 7;
                         break;
                     case 2:
 
                         minimumNumberOfCaretakers = 3;
-                        minimumNumberOfUpgraders = 3;
+                        minimumNumberOfUpgraders = 5;
                         break;
                     case 1:
 
                         minimumNumberOfCaretakers = 1;
-                        minimumNumberOfUpgraders = 2;
+                        minimumNumberOfUpgraders = 3;
                         break;
                     default:
                         minimumNumberOfCaretakers = 1;
