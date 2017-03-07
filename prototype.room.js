@@ -111,8 +111,8 @@ module.exports = function () {
                         swampCost: 1
                     }) || [];
                 _.forEach(pathStorage, (pathData) => {
-                    room.createConstructionSite(pathData.x, pathData.y, STRUCTURE_ROAD);
-                    console.log('Created Construction Site At ' + pathData.x + ' ' + pathData.y + ' ' + room.name);
+                    var res = room.createConstructionSite(pathData.x, pathData.y, STRUCTURE_ROAD);
+                    if (res == 0) console.log('Created Construction Site At ' + pathData.x + ' ' + pathData.y + ' ' + room.name);
                 });
 
 
@@ -124,8 +124,8 @@ module.exports = function () {
                             swampCost: 1
                         }) || [];
                     _.forEach(pathSpawn, (pathData) => {
-                        room.createConstructionSite(pathData.x, pathData.y, STRUCTURE_ROAD);
-                        console.log('Created Construction Site At ' + pathData.x + ' ' + pathData.y + ' ' + room.name);
+                        var res = room.createConstructionSite(pathData.x, pathData.y, STRUCTURE_ROAD);
+                        if (res == 0) console.log('Created Construction Site At ' + pathData.x + ' ' + pathData.y + ' ' + room.name);
                     });
                 });
 
