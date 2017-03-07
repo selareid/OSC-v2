@@ -103,6 +103,9 @@ module.exports = function () {
 
     Room.prototype.createPathToController =
         function (room = this) {
+        if (_.size(Game.constructionSites) > 90) return;
+
+
             _.forEach(global[room.name].sources, (source) => {
                 let pathStorage = room.findPath(source.pos, room.controller.pos, {
                         ignoreCreeps: true,
