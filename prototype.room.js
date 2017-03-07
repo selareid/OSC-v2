@@ -101,7 +101,7 @@ module.exports = function () {
 
         };
 
-    Room.prototype.buildThings =
+            Room.prototype.buildThings =
         function (room = this) {
         if (_.size(Game.constructionSites) > 90) return;
 
@@ -114,7 +114,7 @@ module.exports = function () {
                         swampCost: 1
                     }) || [];
                 _.forEach(pathStorage, (pathData) => {
-                    if (!pathData.lookFor(LOOK_STRUCTURES)[0]) {
+                    if (!new RoomPosition(pathData.x, pathData.y, room.name).lookFor(LOOK_STRUCTURES)[0]) {
                         var res = room.createConstructionSite(pathData.x, pathData.y, STRUCTURE_ROAD);
                         if (res == 0) console.log('Created Construction Site At ' + pathData.x + ' ' + pathData.y + ' ' + room.name);
                     }
@@ -129,7 +129,7 @@ module.exports = function () {
                             swampCost: 1
                         }) || [];
                     _.forEach(pathSpawn, (pathData) => {
-                        if (!pathData.lookFor(LOOK_STRUCTURES)[0]) {
+                        if (!new RoomPosition(pathData.x, pathData.y, room.name).lookFor(LOOK_STRUCTURES)[0]) {
                             var res = room.createConstructionSite(pathData.x, pathData.y, STRUCTURE_ROAD);
                             if (res == 0) console.log('Created Construction Site At ' + pathData.x + ' ' + pathData.y + ' ' + room.name);
                         }
