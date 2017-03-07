@@ -101,7 +101,7 @@ module.exports = function () {
 
         };
 
-    Room.prototype.createPathToController =
+    Room.prototype.buildThings =
         function (room = this) {
         if (_.size(Game.constructionSites) > 90) return;
 

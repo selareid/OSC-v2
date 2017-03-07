@@ -17,7 +17,7 @@ module.exports = {
         try {
             var d = new Date();
             if (d.getHours % 10 == 0 && d.getMinutes() % 0 == 0 && d.getSeconds() < 3) {
-                room.createPathToController();
+                room.buildThings();
             }
         }
         catch (err) {
