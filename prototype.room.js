@@ -107,13 +107,13 @@ module.exports = function () {
 
 
             _.forEach(global[room.name].sources, (source) => {
-                let pathStorage = room.findPath(source.pos, room.controller.pos, {
+                let pathController = room.findPath(source.pos, room.controller.pos, {
                         ignoreCreeps: true,
                         ignoreRoads: true,
                         plainCost: 1,
                         swampCost: 1
                     }) || [];
-                _.forEach(pathStorage, (pathData) => {
+                _.forEach(pathController, (pathData) => {
                     if (!new RoomPosition(pathData.x, pathData.y, room.name).lookFor(LOOK_STRUCTURES)[0]) {
                         var res = room.createConstructionSite(pathData.x, pathData.y, STRUCTURE_ROAD);
                         if (res == 0) console.log('Created Construction Site At ' + pathData.x + ' ' + pathData.y + ' ' + room.name);
