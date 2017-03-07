@@ -3,7 +3,7 @@ require('global');
 module.exports = {
 
     run: function (room) {
-            var towers = room.find(FIND_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_TOWER}); // get towers in room
+            var towers = global[room.name].towers; // get towers in room
             for (let tower of towers) {
                 if (tower.energy > 500) { // if energy in tower is greater than x
                     if (this.attackRun(room, tower) == 'no thing to heal') {

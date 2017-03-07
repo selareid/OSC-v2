@@ -145,7 +145,7 @@ module.exports = {
     },
 
     getTowerToRefill: function (room) {
-        var towers = room.find(FIND_MY_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_TOWER && s.energy < s.energyCapacity});
+        var towers = _.filter(global[room.name].towers, (t) => t.energy < t.energyCapacity);
 
         if (towers.length > 0) {
 

@@ -178,10 +178,7 @@ module.exports = {
     },
 
     findTower: function (room, energyOfTowers) {
-        var tower = room.find(FIND_MY_STRUCTURES, {
-            filter: (s) => s.structureType == STRUCTURE_TOWER
-            && s.energy <= energyOfTowers && s.energy != s.energyCapacity
-        })[0];
+        var tower = _.filter(global[room.name].towers, (t) => t.energy <= energyOfTowers && t.energy < t.energyCapacity)[0];
         return tower;
     }
 };
