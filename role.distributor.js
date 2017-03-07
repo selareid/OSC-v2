@@ -90,7 +90,7 @@ module.exports = {
                             }
                         }
                         else {
-                            if (creep.pickup(droppedEnergy) == ERR_NOT_IN_RANGE) {
+                            if (creep.pickup(droppedEnergy, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                                 creep.moveTo(container, {visualizePathStyle: {
                                     fill: 'transparent',
                                     stroke: '#f46464',
@@ -102,7 +102,7 @@ module.exports = {
                     }
                 }
                 else {
-                    if (creep.pickup(droppedEnergy) == ERR_NOT_IN_RANGE) {
+                    if (creep.pickup(droppedEnergy, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                         creep.moveTo(droppedEnergy, {visualizePathStyle: {
                             fill: 'transparent',
                             stroke: '#f46464',

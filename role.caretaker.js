@@ -85,14 +85,14 @@ module.exports = {
                         }
                     }
                     else {
-                        if (creep.pickup(droppedEnergy) == ERR_NOT_IN_RANGE) {
+                        if (creep.pickup(droppedEnergy, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                             creep.moveTo(droppedEnergy)
                         }
                     }
                 }
             }
             else {
-                if (creep.pickup(droppedEnergy) == ERR_NOT_IN_RANGE) {
+                if (creep.pickup(droppedEnergy, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(droppedEnergy);
                 }
             }
