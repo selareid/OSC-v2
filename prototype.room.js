@@ -105,9 +105,10 @@ module.exports = function () {
         function (room = this) {
         if (_.size(Game.constructionSites) > 90) return;
 
+            var storage = room.storage;
 
-            _.forEach(global[room.name].sources, (source) => {
-                let pathController = room.findPath(source.pos, room.controller.pos, {
+            if (storage) {
+                let pathController = room.findPath(storage.pos, room.controller.pos, {
                         ignoreCreeps: true,
                         ignoreRoads: true,
                         plainCost: 1,
@@ -122,7 +123,7 @@ module.exports = function () {
 
 
                 _.forEach(global[room.name].spawns, (spawn) => {
-                    let pathSpawn = room.findPath(source.pos, spawn.pos, {
+                    let pathSpawn = room.findPath(storage.pos, spawn.pos, {
                             ignoreCreeps: true,
                             ignoreRoads: true,
                             plainCost: 1,
@@ -135,6 +136,53 @@ module.exports = function () {
                         }
                     });
                 });
+            }
+
+            _.forEach(global[room.name].sources, (source) => {
+                if (storage) {
+                    let pathStorage = room.findPath(storage.pos, source.pos, {
+                            ignoreCreeps: true,
+                            ignoreRoads: true,
+                            plainCost: 1,
+                            swampCost: 1
+                        }) || [];
+                    _.forEach(pathStorage, (pathData) => {
+                        if (!new RoomPosition(pathData.x, pathData.y, room.name).lookFor(LOOK_STRUCTURES)[0]) {
+                            var res = room.createConstructionSite(pathData.x, pathData.y, STRUCTURE_ROAD);
+                            if (res == 0) console.log('Created Construction Site At ' + pathData.x + ' ' + pathData.y + ' ' + room.name);
+                        }
+                    });
+                }
+                else {
+                    let pathController = room.findPath(source.pos, room.controller.pos, {
+                            ignoreCreeps: true,
+                            ignoreRoads: true,
+                            plainCost: 1,
+                            swampCost: 1
+                        }) || [];
+                    _.forEach(pathController, (pathData) => {
+                        if (!new RoomPosition(pathData.x, pathData.y, room.name).lookFor(LOOK_STRUCTURES)[0]) {
+                            var res = room.createConstructionSite(pathData.x, pathData.y, STRUCTURE_ROAD);
+                            if (res == 0) console.log('Created Construction Site At ' + pathData.x + ' ' + pathData.y + ' ' + room.name);
+                        }
+                    });
+
+
+                    _.forEach(global[room.name].spawns, (spawn) => {
+                        let pathSpawn = room.findPath(source.pos, spawn.pos, {
+                                ignoreCreeps: true,
+                                ignoreRoads: true,
+                                plainCost: 1,
+                                swampCost: 1
+                            }) || [];
+                        _.forEach(pathSpawn, (pathData) => {
+                            if (!new RoomPosition(pathData.x, pathData.y, room.name).lookFor(LOOK_STRUCTURES)[0]) {
+                                var res = room.createConstructionSite(pathData.x, pathData.y, STRUCTURE_ROAD);
+                                if (res == 0) console.log('Created Construction Site At ' + pathData.x + ' ' + pathData.y + ' ' + room.name);
+                            }
+                        });
+                    });
+                }
 
             });
         };
