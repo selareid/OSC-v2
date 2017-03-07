@@ -2,7 +2,7 @@ module.exports = function () {
 
     Room.prototype.getGuardStationFlag =
         function () {
-            var guardStationFlag = _.filter(Game.flags, f => f.memory.type == 'guardStationFlag' && f.pos.roomName == this.name)[0];
+            var guardStationFlag = _.filter(Game.flags, f => (f.memory.type == 'guardStationFlag' || f.name.split(' ')[0] == 'guardStationFlag') && f.pos.roomName == this.name)[0];
 
             if (guardStationFlag) {
                 return guardStationFlag;
