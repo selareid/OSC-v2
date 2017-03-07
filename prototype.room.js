@@ -104,9 +104,31 @@ module.exports = function () {
     Room.prototype.createPathToController =
         function (room = this) {
             _.forEach(global[room.name].sources, (source) => {
-                let path = room.findPath(source.pos, room.controller.pos, {ignoreCreeps: true, ignoreRoads: true, plainCost: 1, swampCost: 1}) || [];
-                _.forEach(path, (pathData) => {room.createConstructionSite(pathData.x, pathData.y, STRUCTURE_ROAD);
-                    console.log('Created Construction Site At ' + pathData.x + ' ' + pathData.y + ' ' + room.name);});
+                let pathStorage = room.findPath(source.pos, room.controller.pos, {
+                        ignoreCreeps: true,
+                        ignoreRoads: true,
+                        plainCost: 1,
+                        swampCost: 1
+                    }) || [];
+                _.forEach(pathStorage, (pathData) => {
+                    room.createConstructionSite(pathData.x, pathData.y, STRUCTURE_ROAD);
+                    console.log('Created Construction Site At ' + pathData.x + ' ' + pathData.y + ' ' + room.name);
+                });
+
+
+                _.forEach(global[room.name].spawns, (spawn) => {
+                    let pathSpawn = room.findPath(source.pos, spawn.pos, {
+                            ignoreCreeps: true,
+                            ignoreRoads: true,
+                            plainCost: 1,
+                            swampCost: 1
+                        }) || [];
+                    _.forEach(pathSpawn, (pathData) => {
+                        room.createConstructionSite(pathData.x, pathData.y, STRUCTURE_ROAD);
+                        console.log('Created Construction Site At ' + pathData.x + ' ' + pathData.y + ' ' + room.name);
+                    });
+                });
+
             });
         };
 };
