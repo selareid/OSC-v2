@@ -115,7 +115,7 @@ module.exports = {
                         }
                         else {
                             
-                            var structure = creep.findClosestByRange(FIND_STRUCTURES, {
+                            var structure = creep.pos.findClosestByRange(FIND_STRUCTURES, {
                         filter: (s) => (s.structureType == STRUCTURE_SPAWN && s.energy < s.energyCapacity)
                         || (s.structureType == STRUCTURE_CONTAINER && _.sum(s.store) < s.storeCapacity)
                     });
