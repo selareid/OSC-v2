@@ -114,8 +114,24 @@ module.exports = {
                             }
                         }
                         else {
-                            for (let resourceType in creep.carry) {
-                                creep.drop(resourceType);
+                            
+                            var structure = creep.findClosestByRange(FIND_STRUCTURES, {
+                        filter: (s) => (s.structureType == STRUCTURE_SPAWN && s.energy < s.energyCapacity)
+                        || (s.structureType == STRUCTURE_CONTAINER && _.sum(s.store) < s.storeCapacity)
+                    });
+
+                    if (structure) {
+                        for (let resourceType in creep.carry) {
+                        if (creep.transfer(structure, resourceType) == ERR_NOT_IN_RANGE) {
+                            creep.moveTo(structure);
+                            break;
+                            }
+                            }
+                      }
+                            else {
+                                  for (let resourceType in creep.carry) {
+                                  creep.drop(resourceType);
+                                 }
                             }
                         }
                     }
