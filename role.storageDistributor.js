@@ -133,6 +133,7 @@ module.exports = {
         if (creep.memory.working == true) {
             for (let resourceType in room.storage.store) {
                 creep.transfer(lab, resourceType);
+                creep.memory.working = true;
             }
         }
         else {
