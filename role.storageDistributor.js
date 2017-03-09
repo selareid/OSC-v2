@@ -33,6 +33,9 @@ module.exports = {
                     case 'terminal':
                         this.putExcessInTerminal(room, creep);
                         break;
+                    case 'labBoost':
+                        this.boostLab(room, creep);
+                        break;
                     default:
                         console.log('ERROR in storageDistributor logic, creep.memory.doing is undefined');
                         creep.memory.doing = 'link';
@@ -44,6 +47,9 @@ module.exports = {
                 }
                 else if (this.putExcessInTerminal(room, creep) == OK) {
                     creep.memory.doing = 'terminal';
+                }
+                else if (this.boostLab(room, creep) == OK) {
+                    creep.memory.doing = 'labBoost';
                 }
                 else {
                     creep.creepSpeech(undefined, 'bored');
@@ -116,6 +122,33 @@ module.exports = {
             }
             else {
                 return 'nothing to do'
+            }
+        }
+    },
+
+    boostLab: function (room, creep) {
+        var lab = creep.pos.findInRange(FIND_MY_STRUCTURES, 1, {filter: (s) => s.structureType == STRUCTURE_LAB})[0];
+        if (!lab) return 'error no labs';
+
+        if (creep.memory.working == true) {
+            for (let resourceType in room.storage.store) {
+                creep.transfer(lab, resourceType);
+            }
+        }
+        else {
+            if (lab.energy < lab.energyCapacity * 0.5) {
+                creep.withdraw(room.storage, RESOURCE_ENERGY);
+            }
+            else {
+                var boostNeeded = room.memory.br;
+                if (lab.mineralAmount >= lab.mineralCapacity || boostNeeded != lab.mineralType) return 'lab full';
+                if (!boostNeeded) return 'nothing to do';
+
+                var result = creep.withdraw(room.storage, boostNeeded);
+                creep.memory.working = true;
+                //console.log(result);
+                if (result == OK) return OK;
+                else return 'failed';
             }
         }
     }
