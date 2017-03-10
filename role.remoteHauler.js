@@ -169,6 +169,8 @@ module.exports = {
                             }
                         }
                         else {
+                            // randomly pick out a new remote flag :)
+                            // since there's nothing to pick up in this room
                             var counter = 0;
                             do {
                                 var newFlag = this.getRemoteFlag(room, creep, global[room.name].cachedRemoteCreepFlags);
