@@ -29,7 +29,7 @@ module.exports = {
         }
     },
 
-    getRemoteFlag: function (room, creep, remoteCreepFlags = global[room.name].cachedRemoteCreepFlags) {
+    getRemoteFlag: function (room, creep, remoteCreepFlags) {
 
         var zeChosenFlag = remoteCreepFlags[Math.floor(Math.random() * remoteCreepFlags.length)];
 
@@ -42,7 +42,9 @@ module.exports = {
     },
 
     realRun: function (room, creep, remoteFlag) {
-        var getRemoteFlag = this.getRemoteFlag();
+        function getRemoteFlag (room, creep, remoteCreepFlags) {
+            this.getRemoteFlag(room, creep, remoteCreepFlags);
+        }
 
         creep.say('hauler remote');
 
