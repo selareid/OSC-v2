@@ -173,7 +173,7 @@ module.exports = {
                             // since there's nothing to pick up in this room
                             var counter = 0;
                             do {
-                                var newFlag = this.getRemoteFlag(room, creep, global[room.name].cachedRemoteCreepFlags);
+                                var newFlag = getRemoteFlag(room, creep, global[room.name].cachedRemoteCreepFlags);
                                 counter =+ 1;
                             }
                             while (counter < (global[room.name].cachedRemoteCreepFlags.length + 1) && (newFlag == Game.flags[newFlag] || !Game.flags[newFlag].room));
