@@ -3,7 +3,7 @@ require('prototype.creep');
 require('prototype.creepSpeech')();
 
 module.exports = {
-    run: function (room, creep, remoteCreepFlags = global[room.name].cachedRemoteGuardFlags) {
+    run: function (room, creep, remoteCreepFlags = global[room.name].cachedRemoteCreepFlags) {
         creep.say('yeah');
         if (remoteCreepFlags.length > 0) {
 
@@ -169,7 +169,14 @@ module.exports = {
                             }
                         }
                         else {
-                            creep.memory.remoteFlag = this.getRemoteFlag(room, creep, global[room.name].cachedRemoteGuardFlags);
+                            var counter = 0;
+                            do {
+                                var newFlag = this.getRemoteFlag(room, creep, global[room.name].cachedRemoteCreepFlags);
+                                counter =+ 1;
+                            }
+                            while (counter < (global[room.name].cachedRemoteCreepFlags.length + 1) && (newFlag == Game.flags[newFlag] || !Game.flags[newFlag].room));
+
+                             creep.memory.remoteFlag = newFlag;
                         }
                     }
                 }
