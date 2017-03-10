@@ -45,11 +45,11 @@ module.exports = {
                 if (this.linkToStorage(room, creep) == OK) {
                     creep.memory.doing = 'link';
                 }
-                else if (this.putExcessInTerminal(room, creep) == OK) {
-                    creep.memory.doing = 'terminal';
-                }
                 else if (this.boostLab(room, creep) == OK) {
                     creep.memory.doing = 'labBoost';
+                }
+                else if (this.putExcessInTerminal(room, creep) == OK) {
+                    creep.memory.doing = 'terminal';
                 }
                 else {
                     creep.creepSpeech(undefined, 'bored');
