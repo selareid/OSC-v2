@@ -30,7 +30,7 @@ module.exports = {
 
                 }
                 else if (flag.memory.type == 'reserveFlag') {
-                    if (creep.room.controller.reservation.ticksToEnd >= 4500) creep.memory.flag = this.findFlagToDo(room, creep);
+                    if (creep.room.controller && creep.room.controller.reservation && creep.room.controller.reservation.ticksToEnd >= 4500) creep.memory.flag = this.findFlagToDo(room, creep);
                     switch (creep.reserveController(creep.room.controller)) {
                         case ERR_NOT_IN_RANGE:
                             creep.moveTo(creep.room.controller);
