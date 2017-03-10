@@ -42,10 +42,6 @@ module.exports = {
     },
 
     realRun: function (room, creep, remoteFlag) {
-        function getRemoteFlag (room, creep, remoteCreepFlags) {
-            this.getRemoteFlag(room, creep, remoteCreepFlags);
-        }
-
         creep.say('hauler remote');
 
         if (creep.memory.goingHome === true && _.sum(creep.carry) == 0) {
@@ -108,24 +104,24 @@ module.exports = {
                             }
                         }
                         else {
-                            
-                            var structure = creep.pos.findClosestByRange(FIND_STRUCTURES, {
-                        filter: (s) => (s.structureType == STRUCTURE_SPAWN && s.energy < s.energyCapacity)
-                        || (s.structureType == STRUCTURE_CONTAINER && _.sum(s.store) < s.storeCapacity)
-                    });
 
-                    if (structure) {
-                        for (let resourceType in creep.carry) {
-                        if (creep.transfer(structure, resourceType) == ERR_NOT_IN_RANGE) {
-                            creep.moveTo(structure);
-                            break;
+                            var structure = creep.pos.findClosestByRange(FIND_STRUCTURES, {
+                                filter: (s) => (s.structureType == STRUCTURE_SPAWN && s.energy < s.energyCapacity)
+                                || (s.structureType == STRUCTURE_CONTAINER && _.sum(s.store) < s.storeCapacity)
+                            });
+
+                            if (structure) {
+                                for (let resourceType in creep.carry) {
+                                    if (creep.transfer(structure, resourceType) == ERR_NOT_IN_RANGE) {
+                                        creep.moveTo(structure);
+                                        break;
+                                    }
+                                }
                             }
-                            }
-                      }
                             else {
-                                  for (let resourceType in creep.carry) {
-                                  creep.drop(resourceType);
-                                 }
+                                for (let resourceType in creep.carry) {
+                                    creep.drop(resourceType);
+                                }
                             }
                         }
                     }
@@ -133,59 +129,57 @@ module.exports = {
             })();
         }
         else {
-            (function () {
-                if (creep.pos.roomName != remoteFlag.pos.roomName) {
-                    creep.moveTo(remoteFlag.pos, {reusePath: 37});
+            if (creep.pos.roomName != remoteFlag.pos.roomName) {
+                creep.moveTo(remoteFlag.pos, {reusePath: 37});
+            }
+            else {
+                let allDroppedResources = _.max(creep.room.find(FIND_DROPPED_RESOURCES), '.amount');
+                var droppedResource = allDroppedResources !== Number.POSITIVE_INFINITY && allDroppedResources !== Number.NEGATIVE_INFINITY ? allDroppedResources : undefined;
+                if (droppedResource) {
+                    var pickupResult = creep.pickup(droppedResource);
+                    switch (pickupResult) {
+                        case 0:
+                            // pickup successful
+                            break;
+                        case -9:
+                            creep.moveTo(droppedResource, {reusePath: 7});
+                            break;
+                    }
+
                 }
                 else {
-                    let allDroppedResources = _.max(creep.room.find(FIND_DROPPED_RESOURCES), '.amount');
-                    var droppedResource = allDroppedResources !== Number.POSITIVE_INFINITY && allDroppedResources !== Number.NEGATIVE_INFINITY ? allDroppedResources : undefined;
-                    if (droppedResource) {
-                        var pickupResult = creep.pickup(droppedResource);
-                        switch (pickupResult) {
-                            case 0:
-                                // pickup successful
-                                break;
-                            case -9:
-                                creep.moveTo(droppedResource, {reusePath: 7});
-                                break;
-                        }
 
-                    }
-                    else {
+                    var container = creep.pos.findClosestByRange(global[room.name].containers, {filter: (s) => _.sum(s.store) > 0});
 
-                        var container = creep.pos.findClosestByRange(global[room.name].containers, {filter: (s) => _.sum(s.store) > 0});
-
-                        if (container) {
-                            var containerStore = _.sum(container.store);
-                            if (containerStore > 0) {
-                                if (container) {
-                                    for (let resourceType in container.store) {
-                                        if (containerStore <= 0) {
-                                            break;
-                                        }
-                                        else if (creep.withdraw(container, resourceType) == ERR_NOT_IN_RANGE) {
-                                            creep.moveTo(container, {reusePath: 10});
-                                        }
+                    if (container) {
+                        var containerStore = _.sum(container.store);
+                        if (containerStore > 0) {
+                            if (container) {
+                                for (let resourceType in container.store) {
+                                    if (containerStore <= 0) {
+                                        break;
+                                    }
+                                    else if (creep.withdraw(container, resourceType) == ERR_NOT_IN_RANGE) {
+                                        creep.moveTo(container, {reusePath: 10});
                                     }
                                 }
                             }
                         }
-                        else {
-                            // randomly pick out a new remote flag :)
-                            // since there's nothing to pick up in this room
-                            var counter = 0;
-                            do {
-                                var newFlag = getRemoteFlag(room, creep, global[room.name].cachedRemoteCreepFlags);
-                                counter =+ 1;
-                            }
-                            while (counter < (global[room.name].cachedRemoteCreepFlags.length + 1) && (newFlag == Game.flags[newFlag] || !Game.flags[newFlag].room));
-
-                             creep.memory.remoteFlag = newFlag;
+                    }
+                    else {
+                        // randomly pick out a new remote flag :)
+                        // since there's nothing to pick up in this room
+                        var counter = 0;
+                        do {
+                            var newFlag = this.getRemoteFlag(room, creep, global[room.name].cachedRemoteCreepFlags);
+                            counter = +1;
                         }
+                        while (counter < (global[room.name].cachedRemoteCreepFlags.length + 1) && (newFlag == Game.flags[newFlag] || !Game.flags[newFlag].room));
+
+                        creep.memory.remoteFlag = newFlag;
                     }
                 }
-            })();
+            }
         }
     }
 };
