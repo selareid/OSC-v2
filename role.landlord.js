@@ -1,5 +1,6 @@
 require('global');
 require('prototype.creepSpeech')();
+require('prototype.creep')();
 
 module.exports = {
     run: function (room, creep) {
@@ -7,9 +8,7 @@ module.exports = {
         var flag = Game.flags[creep.memory.flag];
 
         if (!flag) {
-            let claimFlags = this.findClaimFlags(room, creep);
-            let reserveFlags = this.findReserveFlags(room, creep);
-            creep.memory.flag = this.findFlagToDo(room, creep, claimFlags, reserveFlags);
+            creep.memory.flag = this.findFlagToDo(room, creep);
         }
         else {
             
@@ -31,6 +30,7 @@ module.exports = {
 
                 }
                 else if (flag.memory.type == 'reserveFlag') {
+                    if (creep.room.controller.reservation.ticksToEnd >= 4500) creep.memory.flag = this.findFlagToDo(room, creep);
                     switch (creep.reserveController(creep.room.controller)) {
                         case ERR_NOT_IN_RANGE:
                             creep.moveTo(creep.room.controller);
@@ -42,7 +42,7 @@ module.exports = {
                 }
             }
             else {
-                creep.moveTo(flag.pos);
+                creep.moveTo(flag.pos, {reusePath: 21});
             }
 
 
@@ -65,7 +65,7 @@ module.exports = {
         return reserveFlags;
     },
 
-    findFlagToDo: function (room, creep, claimFlags, reserveFlags) {
+    findFlagToDo: function (room, creep, claimFlags = this.findClaimFlags(room, creep), reserveFlags = this.findReserveFlags(room, creep)) {
 
         for (let flag of claimFlags) {
 
@@ -81,17 +81,17 @@ module.exports = {
                 var controller = flag.room.controller;
                 if (controller) {
                     if (controller.reservation) {
-                        if (controller.reservation.ticksToEnd > 2500) {
+                        if (controller.reservation.ticksToEnd < 3000) {
                             if (amountOfCreepsAssignedToThisFlag < 1) {
                                 return flag.name;
                             }
-                        }
-                        else {
-                            if (amountOfCreepsAssignedToThisFlag < 2) {
-                                return flag.name;
+                            else {
+                                if (amountOfCreepsAssignedToThisFlag <= 2 && creep.getActiveBodyparts(CLAIM) == 1) {
+                                    return flag.name;
+                                }
                             }
                         }
-                    }
+                        else if (controller.reservation.ticksToEnd < 4000) return flag.name;
                     else {
                         if (amountOfCreepsAssignedToThisFlag < 2) {
                             return flag.name;
