@@ -92,6 +92,7 @@ module.exports = {
                             }
                         }
                         else if (controller.reservation.ticksToEnd < 4000) return flag.name;
+                    }
                     else {
                         if (amountOfCreepsAssignedToThisFlag < 2) {
                             return flag.name;
