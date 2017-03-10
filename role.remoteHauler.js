@@ -29,7 +29,7 @@ module.exports = {
         }
     },
 
-    getRemoteFlag: function (room, creep, remoteCreepFlags) {
+    getRemoteFlag: function (room, creep, remoteCreepFlags = global[room.name].cachedRemoteCreepFlags) {
 
         var zeChosenFlag = remoteCreepFlags[Math.floor(Math.random() * remoteCreepFlags.length)];
 
