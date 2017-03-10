@@ -42,6 +42,7 @@ module.exports = {
     },
 
     realRun: function (room, creep, remoteFlag) {
+        var getRemoteFlag = this.getRemoteFlag();
 
         creep.say('hauler remote');
 
