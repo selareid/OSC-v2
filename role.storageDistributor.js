@@ -139,7 +139,11 @@ module.exports = {
         else {
             if (lab.energy < lab.energyCapacity * 0.5) {
                 if (room.storage.store.energy < 30000) return 'not enough energy';
-                creep.withdraw(room.storage, RESOURCE_ENERGY);
+                var result = creep.withdraw(room.storage, RESOURCE_ENERGY);
+                creep.memory.working = true;
+                //console.log(result);
+                if (result == OK) return OK;
+                else return 'failed';
             }
             else {
                 var boostNeeded = room.memory.br;
