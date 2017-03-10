@@ -3,14 +3,14 @@ require('prototype.creep');
 require('prototype.creepSpeech')();
 
 module.exports = {
-    run: function (room, creep, remoteCreepFlags) {
+    run: function (room, creep, remoteCreepFlags = global[room.name].cachedRemoteGuardFlags) {
         creep.say('yeah');
         if (remoteCreepFlags.length > 0) {
 
             var creepRemoteFlag = creep.memory.remoteFlag;
 
             if (!creepRemoteFlag) {
-                creep.memory.remoteFlag = this.setRemoteFlagMemory(room, creep, remoteCreepFlags);
+                creep.memory.remoteFlag = this.getRemoteFlag(room, creep, remoteCreepFlags);
                 creepRemoteFlag = creep.memory.remoteFlag;
             }
 
@@ -29,18 +29,9 @@ module.exports = {
         }
     },
 
-    setRemoteFlagMemory: function (room, creep, remoteCreepFlags) {
+    getRemoteFlag: function (room, creep, remoteCreepFlags) {
 
-        var zeChosenFlag;
-
-        for (let flag of remoteCreepFlags) {
-            var amountOfCreepsAssignedToThisFlag = _.filter(Game.creeps, (c) => c.memory.room == room.name && c.memory.role == 'remoteHauler' && c.memory.remoteFlag == flag.name).length;
-            if (amountOfCreepsAssignedToThisFlag < flag.memory.numberOfRemoteHaulers) {
-                zeChosenFlag = flag;
-                break;
-            }
-        }
-
+        var zeChosenFlag = remoteCreepFlags[Math.floor(Math.random() * remoteCreepFlags.length)];
 
         if (zeChosenFlag) {
             return zeChosenFlag.name;
@@ -150,7 +141,7 @@ module.exports = {
                         var pickupResult = creep.pickup(droppedResource);
                         switch (pickupResult) {
                             case 0:
-                                delete creep.memory.container;
+                                // pickup successful
                                 break;
                             case -9:
                                 creep.moveTo(droppedResource, {reusePath: 7});
@@ -176,9 +167,9 @@ module.exports = {
                                     }
                                 }
                             }
-                            else {
-                                delete creep.memory.container;
-                            }
+                        }
+                        else {
+                            creep.memory.remoteFlag = this.getRemoteFlag(room, creep, global[room.name].cachedRemoteGuardFlags);
                         }
                     }
                 }
