@@ -120,6 +120,7 @@ module.exports = {
         var newPos;
 
         if (!pos) return;
+        if (pos.x == 0 || pos.x == 49 || pos.y == 0 || pos.y == 49) return;
 
         tempPos = pos;
 
