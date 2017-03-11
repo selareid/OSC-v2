@@ -8,7 +8,7 @@ module.exports =  {
         }
 
         // Note: This is fragile and will change if the Game.cpu API changes
-        Memory.stats.cpu = Game.cpu.getUsed();
+        Memory.stats.cpu = Game.cpu;
         // Memory.stats.cpu.used = Game.cpu.getUsed(); // AT END OF MAIN LOOP
 
         // Note: This is fragile and will change if the Game.gcl API changes
@@ -26,7 +26,7 @@ module.exports =  {
             num_orders: Game.market.orders ? Object.keys(Game.market.orders).length : 0,
         };
 
-        Memory.stats.cpu = Game.cpu.getUsed();
+        Memory.stats.cpu.getUsed = Game.cpu.getUsed();
     },
 
     summarize_room_internal: function(room) {
