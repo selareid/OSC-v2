@@ -146,7 +146,7 @@ module.exports = {
                 else return 'failed';
             }
             else {
-                var boostNeeded = room.memory.br;
+                var boostNeeded = Memory.rooms[room].br;
                 if (lab.mineralAmount >= lab.mineralCapacity || boostNeeded != lab.mineralType) return 'lab full';
                 if (!boostNeeded) return 'nothing to do';
 
