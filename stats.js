@@ -84,7 +84,6 @@ module.exports =  {
         const my_const_sites = room.find(FIND_CONSTRUCTION_SITES, {filter: cs => cs.my});
         const num_construction_sites = const_sites.length;
         const num_my_construction_sites = my_const_sites.length;
-        const num_source_containers = count_source_containers(room);
         const has_terminal = room.terminal != null;
         const terminal_energy = room.terminal ? room.terminal.store[RESOURCE_ENERGY] : 0;
         const terminal_minerals = room.terminal ? _.sum(room.terminal.store) - terminal_energy : 0;
@@ -171,7 +170,6 @@ module.exports =  {
             num_construction_sites,
             num_my_construction_sites,
             ground_resources: reduced_resources,
-            num_source_containers,
         };
 
         // console.log('Room ' + room.name + ': ' + JSON.stringify(retval));
