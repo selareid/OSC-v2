@@ -4,7 +4,7 @@ const roomHandler = require('roomHandler');
 const creepHandler = require('creepHandler');
 
 const profiler = require('screeps-profiler');
-const grafana = require('stats.js');
+const grafana = require('stats');
 
 console.log('reset!'); // reset log
 console.log(Game.cpu.bucket); // reset log

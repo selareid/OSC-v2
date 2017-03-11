@@ -7,7 +7,7 @@ const towerHandler = require ('towerHandler');
 const marketDealer = require ('marketDealer');
 const labHandler = require ('labHandler');
 
-const grafana = require('stats.js');
+const grafana = require('stats');
 
 module.exports = {
     run: function (room) {
