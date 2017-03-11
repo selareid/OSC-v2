@@ -14,6 +14,8 @@ module.exports = {
 
         linkHandler.run(room);
 
+        if (room.memory.br == undefined || room.memory.br == null) room.memory.br = "";
+
         try {
             var d = new Date();
             if (d.getHours % 10 == 0 && d.getMinutes() % 0 == 0 && d.getSeconds() < 3) {
