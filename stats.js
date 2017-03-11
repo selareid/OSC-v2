@@ -173,7 +173,7 @@ module.exports =  {
         };
 
         // console.log('Room ' + room.name + ': ' + JSON.stringify(retval));
-        Memory.stats[room.name] = retval;
+        Memory.stats[room.name] = JSON.stringify(retval);
     }
 
 };
