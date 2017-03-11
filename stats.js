@@ -172,8 +172,10 @@ module.exports =  {
             ground_resources: reduced_resources,
         };
 
+        if (!Memory.stats.rooms) Memory.stats.rooms = {}
+
         // console.log('Room ' + room.name + ': ' + JSON.stringify(retval));
-        Memory.stats[room.name] = retval;
+        Memory.stats.rooms[room.name] = retval;
     }
 
 };
