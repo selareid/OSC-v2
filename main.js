@@ -108,6 +108,6 @@ if (Game.cpu.bucket > 300) module.exports.loop = function () {
 
         creepHandler.run();
 
-        grafana.mainStats();
+        if (Game.time % 2 == 0) grafana.mainStats();
     });
 };

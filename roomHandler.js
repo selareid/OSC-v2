@@ -182,6 +182,6 @@ module.exports = {
         }
 
 
-        grafana.summarize_room_internal(room);
+        if (Game.time % 11 == 0) grafana.summarize_room_internal(room);
     }
 };
