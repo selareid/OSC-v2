@@ -147,7 +147,7 @@ module.exports = {
             }
             else {
                 var boostNeeded = Memory.rooms[room].br;
-                if (lab.mineralAmount >= lab.mineralCapacity || boostNeeded != lab.mineralType) return 'lab full';
+                if (lab.mineralAmount >= lab.mineralCapacity || (lab.mineralAmount <= 0 && boostNeeded != lab.mineralType)) return 'lab full';
                 if (!boostNeeded) return 'nothing to do';
 
                 var result = creep.withdraw(room.storage, boostNeeded);
