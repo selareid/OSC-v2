@@ -7,6 +7,8 @@ const towerHandler = require ('towerHandler');
 const marketDealer = require ('marketDealer');
 const labHandler = require ('labHandler');
 
+const grafana = require('stats.js');
+
 module.exports = {
     run: function (room) {
 
@@ -179,5 +181,7 @@ module.exports = {
             }
         }
 
+
+        grafana.summarize_room_internal(room);
     }
 };

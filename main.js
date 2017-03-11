@@ -4,6 +4,7 @@ const roomHandler = require('roomHandler');
 const creepHandler = require('creepHandler');
 
 const profiler = require('screeps-profiler');
+const grafana = require('stats.js');
 
 console.log('reset!'); // reset log
 console.log(Game.cpu.bucket); // reset log
@@ -107,5 +108,6 @@ if (Game.cpu.bucket > 300) module.exports.loop = function () {
 
         creepHandler.run();
 
+        grafana.mainStats();
     });
 };
