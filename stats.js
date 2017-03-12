@@ -2,7 +2,7 @@
 
 
 module.exports =  {
-    mainStats: function() {
+    mainStats: function(creepCPU) {
         if (Memory.stats == null) {
             Memory.stats = { tick: Game.time };
         }
@@ -25,6 +25,8 @@ module.exports =  {
             credits: Game.market.credits,
             num_orders: Game.market.orders ? Object.keys(Game.market.orders).length : 0,
         };
+
+        Memory.stats.cpu.creep_handler = creepCPU;
 
         Memory.stats.cpu.getUsed = Game.cpu.getUsed();
     },

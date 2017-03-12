@@ -106,8 +106,10 @@ if (Game.cpu.bucket > 300) module.exports.loop = function () {
             }
         }
 
+        var bfrCH = Game.cpu.getUsed();
         creepHandler.run();
+        var creepHandlerCPU = Game.cpu.getUsed() - bfrCH;
 
-        if (Game.time % 2 == 0) grafana.mainStats();
+        if (Game.time % 2 == 0) grafana.mainStats(creepHandlerCPU);
     });
 };
