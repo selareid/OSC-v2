@@ -78,9 +78,12 @@ module.exports =  {
         const num_construction_sites = const_sites.length;
         const terminal_energy = room.terminal ? room.terminal.store[RESOURCE_ENERGY] : 0;
         const terminal_minerals = room.terminal ? _.sum(room.terminal.store) - terminal_energy : 0;
-        const spawn_queue_normal = Memory.rooms[room].spawnQueue.normal;
-        const spawn_queue_priority = Memory.rooms[room].spawnQueue.priority;
-        const spawn_queue_war = Memory.rooms[room].spawnQueue.war;
+
+        const spawn_queues = {
+            spawn_queue_normal: Memory.rooms[room].spawnQueue.normal,
+            spawn_queue_priority: Memory.rooms[room].spawnQueue.priority,
+            spawn_queue_war: Memory.rooms[room].spawnQueue.war
+        };
 
         // Number of each kind of creeps
         // const creep_types = new Set(creeps.map(c => c.memory.role));
@@ -128,9 +131,7 @@ module.exports =  {
             num_towers,
             tower_energy,
             num_construction_sites,
-            spawn_queue_normal,
-            spawn_queue_priority,
-            spawn_queue_war
+            spawn_queues
         };
 
         if (!Memory.stats.rooms) Memory.stats.rooms = {};
