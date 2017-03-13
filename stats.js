@@ -51,7 +51,6 @@ module.exports =  {
         // const controller_safemode = room.controller.safeMode ? room.controller.safeMode : 0;
         // const controller_safemode_avail = room.controller.safeModeAvailable;
         // const controller_safemode_cooldown = room.controller.safeModeCooldown;
-        const has_storage = room.storage != null;
         const storage_energy = room.storage ? room.storage.store[RESOURCE_ENERGY] : 0;
         const storage_minerals = room.storage ? _.sum(room.storage.store) - storage_energy : 0;
         const energy_avail = room.energyAvailable;
@@ -77,7 +76,6 @@ module.exports =  {
         const tower_energy = _.sum(towers, t => t.energy);
         const const_sites = room.find(FIND_CONSTRUCTION_SITES);
         const num_construction_sites = const_sites.length;
-        const has_terminal = room.terminal != null;
         const terminal_energy = room.terminal ? room.terminal.store[RESOURCE_ENERGY] : 0;
         const terminal_minerals = room.terminal ? _.sum(room.terminal.store) - terminal_energy : 0;
         const spawn_queue_normal = Memory.rooms[room].spawnQueue.normal;
@@ -115,10 +113,8 @@ module.exports =  {
             mineral_type,
             mineral_amount,
             num_extractors,
-            has_storage,
             storage_energy,
             storage_minerals,
-            has_terminal,
             terminal_energy,
             terminal_minerals,
             container_energy,
@@ -131,7 +127,10 @@ module.exports =  {
             spawns_spawning,
             num_towers,
             tower_energy,
-            num_construction_sites
+            num_construction_sites,
+            spawn_queue_normal,
+            spawn_queue_priority,
+            spawn_queue_war
         };
 
         if (!Memory.stats.rooms) Memory.stats.rooms = {};
