@@ -58,17 +58,17 @@ module.exports =  {
         const container_energy = _.sum(global[room.name].containers, c => c.store.energy);
         const source_energy = _.sum(global[room.name].sources, s => s.energy);
         const link_energy = _.sum(global[room.name].links, l => l.energy);
-        const mineral = global[room.name].mineral;
-        const mineral_type = mineral ? mineral.mineralType : "";
-        const mineral_amount = mineral ? mineral.mineralAmount : 0;
-        const extractors = room.find(FIND_STRUCTURES, {filter: s => s.structureType == STRUCTURE_EXTRACTOR});
-        const num_extractors = extractors.length;
+        // const mineral = global[room.name].mineral;
+        // const mineral_type = mineral ? mineral.mineralType : "";
+        // const mineral_amount = mineral ? mineral.mineralAmount : 0;
+        // const extractors = room.find(FIND_STRUCTURES, {filter: s => s.structureType == STRUCTURE_EXTRACTOR});
+        // const num_extractors = extractors.length;
         const creeps = _.filter(Game.creeps, c => c.memory.room == room.name);
         const num_creeps = creeps ? creeps.length : 0;
-        const enemy_creeps = room.find(FIND_HOSTILE_CREEPS);
+        const enemy_creeps = global[room.name].creepsNotMine;
         const creep_energy = _.sum(Game.creeps, c => c.pos.roomName == room.name ? c.carry.energy : 0);
         const num_enemies = enemy_creeps ? enemy_creeps.length : 0;
-        const spawns = room.find(FIND_MY_SPAWNS);
+        const spawns = global[room.name].spawns;
         const num_spawns = spawns ? spawns.length : 0;
         const spawns_spawning = _.sum(spawns, s => s.spawning ? 1 : 0);
         const towers = global[room.name].towers;
@@ -110,9 +110,9 @@ module.exports =  {
             energy_avail,
             energy_cap,
             source_energy,
-            mineral_type,
-            mineral_amount,
-            num_extractors,
+            // mineral_type,
+            // mineral_amount,
+            // num_extractors,
             storage_energy,
             storage_minerals,
             terminal_energy,
