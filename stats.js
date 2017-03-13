@@ -80,9 +80,9 @@ module.exports =  {
         const terminal_minerals = room.terminal ? _.sum(room.terminal.store) - terminal_energy : 0;
 
         const spawn_queues = {
-            spawn_queue_normal: Memory.rooms[room].spawnQueue.normal,
-            spawn_queue_priority: Memory.rooms[room].spawnQueue.priority,
-            spawn_queue_war: Memory.rooms[room].spawnQueue.war
+            normal: Memory.rooms[room].spawnQueue.normal.length,
+            priority: Memory.rooms[room].spawnQueue.priority.length,
+            war: Memory.rooms[room].spawnQueue.war.length
         };
 
         // Number of each kind of creeps
