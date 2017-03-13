@@ -80,6 +80,9 @@ module.exports =  {
         const has_terminal = room.terminal != null;
         const terminal_energy = room.terminal ? room.terminal.store[RESOURCE_ENERGY] : 0;
         const terminal_minerals = room.terminal ? _.sum(room.terminal.store) - terminal_energy : 0;
+        const spawn_queue_normal = Memory.rooms[room].spawnQueue.normal;
+        const spawn_queue_priority = Memory.rooms[room].spawnQueue.priority;
+        const spawn_queue_war = Memory.rooms[room].spawnQueue.war;
 
         // Number of each kind of creeps
         // const creep_types = new Set(creeps.map(c => c.memory.role));
