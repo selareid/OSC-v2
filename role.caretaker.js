@@ -13,6 +13,12 @@ module.exports = {
             creep.memory.working = true;
         }
 
+        if (_.sum(creep.carry) - creep.carry.energy > 0) {
+            for (let resourceType in creep.carry) {
+                if (resourceType == RESOURCE_ENERGY) continue;
+                creep.drop(resourceType);
+        }
+
 
         if (creep.memory.working == true) {
             var structureToRepair = this.findStructureToRepair(room, creep);
