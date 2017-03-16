@@ -17,6 +17,7 @@ module.exports = {
             for (let resourceType in creep.carry) {
                 if (resourceType == RESOURCE_ENERGY) continue;
                 creep.drop(resourceType);
+            }
         }
 
 
