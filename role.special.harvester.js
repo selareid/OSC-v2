@@ -17,6 +17,7 @@ module.exports = {
 
         switch (doing) {
             case 'harvest':
+                creep.say('harvest');
                 this.harvest(room, creep);
                 break;
             default:

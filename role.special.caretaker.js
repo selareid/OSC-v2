@@ -19,6 +19,7 @@ module.exports = {
 
             switch (doing) {
                 case 'upgrade':
+                    creep.say('upgrading');
                     this.upgrade(room, creep);
                     break;
                 default:
