@@ -33,7 +33,7 @@ module.exports = {
     
     harvest: function (room, creep) {
 
-        if (creep.memory.w == true) {
+        if (creep.memory.w == false) {
             // needs to harvest
 
             if (!creep.memory.s || !Game.getObjectById(creep.memory.s))
