@@ -14,14 +14,16 @@ module.exports = {
 
         var doing = creep.memory.d;
 
+        var result;
+
         switch (doing) {
             case 'filler':
                 creep.say('filler');
-                //this.filler(room, creep);
+                result = this.filler(room, creep);
                 break;
             case 'harvest':
                 creep.say('harvest');
-                this.harvest(room, creep);
+                result = this.harvest(room, creep);
                 break;
             default:
                 if (room.storage.store.energy < 400) {
@@ -38,6 +40,8 @@ module.exports = {
                     }
                 }
         }
+
+        if (result != OK) creep.memory.d = '';
 
     },
     
