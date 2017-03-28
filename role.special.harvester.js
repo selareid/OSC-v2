@@ -86,6 +86,7 @@ module.exports = {
                     break;
                 case OK:
                     creep.creepSpeech(room, 'droppingEnergy');
+                    return 'complete';
                     break;
             }
 
@@ -120,6 +121,7 @@ module.exports = {
     },
 
     filler: function (room, creep) {
+        if (room.storage.store.energy < 400) return 'needs energy';
         if (room.energyAvailable >= room.energyCapacityAvailable) return 'nothing to do';
 
         if (creep.memory.w == false) return this.getEnergy(room, creep);
@@ -138,7 +140,8 @@ module.exports = {
                         creep.moveTo(tower);
                     }
                 }
-            }
+                else return 'complete';
+
         }
 
     }
