@@ -142,7 +142,8 @@ module.exports = {
                 }
                 else return 'complete';
 
-        }
+            }
 
+        }
     }
 };
