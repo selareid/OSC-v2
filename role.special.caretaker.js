@@ -12,7 +12,7 @@ module.exports = {
         }
         else if (!creep.memory.w) creep.memory.w = false;
 
-        if (creep.memory.w == true) {
+        if (creep.memory.w == false) {
             this.getEnergy(room, creep)
         }
         else {
