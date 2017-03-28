@@ -181,6 +181,7 @@ module.exports = {
     },
 
     roomPositionSaving: function (room, creep) {
+        if (creep.name.includes('special')) return;
         if (!room) return;
         if (creep.pos.roomName != room.name) return; // we're only doing this for the creep's homeroom
         var roadUnderCreep = _.filter(creep.pos.lookFor(LOOK_STRUCTURES), (s) => s.structureType == STRUCTURE_ROAD)[0];
