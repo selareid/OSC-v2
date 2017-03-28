@@ -132,15 +132,25 @@ module.exports = {
             var spawnExtension = this.findSpawnExtension(room, creep);
 
             if (spawnExtension) {
-                if (creep.transfer(spawnExtension, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(spawnExtension);
+                switch (creep.transfer(spawnExtension, RESOURCE_ENERGY)) {
+                    case ERR_NOT_IN_RANGE:
+                        return creep.moveTo(spawnExtension);
+                        break;
+                    case OK:
+                        return OK;
+                        break;
                 }
             }
             else {
                 var tower = _.filter(global[room.name].towers, (t) => t.energy < t.energyCapacity);
                 if (tower) {
-                    if (creep.transfer(tower, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                        creep.moveTo(tower);
+                    switch (creep.transfer(tower, RESOURCE_ENERGY)) {
+                        case ERR_NOT_IN_RANGE:
+                            return creep.moveTo(tower);
+                            break;
+                        case OK:
+                            return OK;
+                            break;
                     }
                 }
                 else return 'complete';
