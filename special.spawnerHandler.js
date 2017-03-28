@@ -3,7 +3,7 @@ require('global');
 module.exports = {
     run: function (room) {
 
-        StructureSpawn.prototype.createCustomCreep = function (energy, role) {
+        StructureSpawn.prototype.specialCreateCustomCreep = function (energy, role) {
 
             var numberOfParts;
             var body = [];
@@ -91,7 +91,7 @@ module.exports = {
         if (!spawnToUse) return;
         if (energy < 300) return;
 
-        var name = spawnToUse.createCustomCreep(energy, creepToSpawn);
+        var name = spawnToUse.specialCreateCustomCreep(energy, creepToSpawn);
 
         if (Game.creeps[name]) console.log("Creating Creep " + name + ' Room ' + room.name);
 
