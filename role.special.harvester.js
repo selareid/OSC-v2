@@ -28,15 +28,15 @@ module.exports = {
             default:
                 if (room.storage.store.energy < 400) {
                     if (this.harvest(room, creep) == OK) {
-                        creep.memory.doing = 'harvest';
+                        creep.memory.d = 'harvest';
                     }
                 }
                 else {
                     if (this.filler(room, creep) == OK) {
-                        creep.memory.doing = 'filler';
+                        creep.memory.d = 'filler';
                     }
                     else if (this.harvest(room, creep) == OK) {
-                        creep.memory.doing = 'harvest';
+                        creep.memory.d = 'harvest';
                     }
                 }
         }
