@@ -25,6 +25,7 @@ const roleTowerDrainer = require ('role.towerDrainer');
 const roleStorageDistributor = require ('role.storageDistributor');
 
 const roleSpecialHarvester = require ('role.special.harvester');
+const roleSpecialCaretaker = require ('role.special.caretaker');
 
 module.exports = {
     run: function () {
@@ -152,6 +153,9 @@ module.exports = {
                     break;
                 case 'specialHarvester':
                     roleSpecialHarvester.run(room, creep);
+                    break;
+                case 'specialCaretaker':
+                    roleSpecialCaretaker.run(room, creep);
                     break;
                 case '':
                     creep.say('ERROR!!!', true);

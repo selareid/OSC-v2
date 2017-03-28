@@ -35,7 +35,7 @@ module.exports = {
 
         if (!storage) return 'error no storage';
 
-        var result = creep.transfer(storage);
+        var result = creep.withdraw(storage, RESOURCE_ENERGY);
         switch (result) {
             case ERR_NOT_IN_RANGE:
                 creep.creepSpeech(room, 'movingToEnergy');
