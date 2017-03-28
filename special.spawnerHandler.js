@@ -85,7 +85,7 @@ module.exports = {
 
         if (!creepToSpawn) return;
 
-        var energy = room.energyAvailable * 0.85;
+        var energy = room.energyAvailable * 0.85 > 300 ? room.energyAvailable * 0.85 : room.energyAvailable;
         var spawnToUse = _.filter(global[room.name].spawns, (s) => !s.spawning)[0];
 
         if (!spawnToUse) return;
