@@ -1,6 +1,7 @@
 require('global');
 
 const roomHandler = require('roomHandler');
+const specialRoomHandler = require('special.roomHandler');
 const creepHandler = require('creepHandler');
 
 const profiler = require('screeps-profiler');
@@ -91,7 +92,11 @@ if (Game.cpu.bucket > 300) module.exports.loop = function () {
 
                 try {
                     if (room.find(FIND_MY_SPAWNS)[0]) {
-                        roomHandler.run(room);
+                        var sources = room.find(FIND_SOURCES);
+                        if (!sources || sources.length <= 0) continue;
+
+                        if (sources.length >= 2) roomHandler.run(room);
+                        else specialRoomHandler.run(room);
                     }
                     else {
                         //put automatic otherRoomCreep flag placer here
