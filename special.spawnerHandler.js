@@ -45,7 +45,7 @@ module.exports = {
                     return this.createCreep(sortedParts(body), creepName(role), {
                         role: role,
                         room: room.name,
-                        working: false
+                        w: false
                     });
                 case 'specialCaretaker':
                     numberOfParts = Math.floor(energy / 200);
@@ -63,7 +63,7 @@ module.exports = {
                     return this.createCreep(sortedParts(body), creepName(role), {
                         role: role,
                         room: room.name,
-                        working: false
+                        w: false
                     });
             }
         };

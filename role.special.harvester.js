@@ -12,6 +12,7 @@ module.exports = {
         else if (creep.memory.w == false && _.sum(creep.carry) == creep.carryCapacity) {
             creep.memory.w = true;
         }
+        else if (!creep.memory.w) creep.memory.w = false;
 
         var doing = creep.memory.d;
 
@@ -38,7 +39,7 @@ module.exports = {
             // needs to harvest
 
             if (!creep.memory.s || !Game.getObjectById(creep.memory.s))
-                creep.memory.s = global[room.name].sources;
+                creep.memory.s = global[room.name].sources[0] ? global[room.name].sources[0].id : undefined;
 
             var source = Game.getObjectById(creep.memory.s);
 

@@ -10,6 +10,7 @@ module.exports = {
         else if (creep.memory.w == false && _.sum(creep.carry) == creep.carryCapacity) {
             creep.memory.w = true;
         }
+        else if (!creep.memory.w) creep.memory.w = false;
 
         if (creep.memory.w == true) {
             this.getEnergy(room, creep)
