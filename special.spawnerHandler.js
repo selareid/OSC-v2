@@ -86,12 +86,16 @@ module.exports = {
         if (!creepToSpawn) return;
 
         var energy = room.energyAvailable * 0.85;
-        var spawnToUse = _.filter(global[room.name].spawns, (s) => s.spawning == false)[0];
+        var spawnToUse = _.filter(global[room.name].spawns, (s) => !s.spawning)[0];
 
         if (!spawnToUse) return;
         if (energy < 300) return;
 
-        spawnToUse.createCustomCreep(energy, creepToSpawn);
+        var name = spawnToUse.createCustomCreep(energy, creepToSpawn);
+
+        if (Game.creeps[name]) console.log("Creating Creep " + name + ' Room ' + room.name);
+
+
 
     }
 };
