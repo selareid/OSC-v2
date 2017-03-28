@@ -124,7 +124,10 @@ module.exports = {
         if (room.storage.store.energy < 400) return 'needs energy';
         if (room.energyAvailable >= room.energyCapacityAvailable) return 'nothing to do';
 
-        if (creep.memory.w == false) return this.getEnergy(room, creep);
+        if (creep.memory.w == false) {
+            this.getEnergy(room, creep);
+            return OK;
+        }
         else {
             var spawnExtension = this.findSpawnExtension(room, creep);
 
