@@ -58,7 +58,7 @@ module.exports = {
         switch (reslt) {
             case ERR_NOT_IN_RANGE:
                 creep.creepSpeech(controller, 'upgrading');
-                reslt = creep.moveTo(source, {reusePath: 10});
+                reslt = creep.moveTo(controller, {reusePath: 10});
                 break;
             case OK:
                 creep.creepSpeech(room, 'upgrading');
