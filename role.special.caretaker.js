@@ -18,14 +18,16 @@ module.exports = {
         else {
             var doing = creep.memory.d;
 
+            var result;
+
             switch (doing) {
                 case 'filler':
                     creep.say('filler');
-                    this.filler(room, creep);
+                    result = this.filler(room, creep);
                     break;
                 case 'upgrade':
                     creep.say('upgrading');
-                    this.upgrade(room, creep);
+                    result = this.upgrade(room, creep);
                     break;
                 default:
                     if (this.filler(room, creep) == OK) {
@@ -35,7 +37,10 @@ module.exports = {
                         creep.memory.d = 'upgrade';
                     }
             }
-        }
+
+            if (result != OK) delete creep.memory.d;
+
+
 
     },
 
