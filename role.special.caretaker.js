@@ -40,6 +40,7 @@ module.exports = {
 
             if (result != OK) delete creep.memory.d;
 
+        }
 
 
     },
