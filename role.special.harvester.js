@@ -44,7 +44,7 @@ module.exports = {
         if (result != OK) creep.memory.d = '';
 
     },
-    
+
     harvest: function (room, creep) {
 
         if (creep.memory.w == false) {
@@ -121,9 +121,6 @@ module.exports = {
     },
 
     filler: function (room, creep) {
-        if (room.storage.store.energy < 400) return 'needs energy';
-        if (room.energyAvailable >= room.energyCapacityAvailable) return 'nothing to do';
-
         if (creep.memory.w == false) {
             this.getEnergy(room, creep);
             return OK;
