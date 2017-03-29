@@ -14,34 +14,16 @@ module.exports = {
 
         var doing = creep.memory.d;
 
-        var result;
-
         switch (doing) {
-            case 'filler':
-                creep.say('filler');
-                result = this.filler(room, creep);
-                break;
             case 'harvest':
                 creep.say('harvest');
-                result = this.harvest(room, creep);
+               this.harvest(room, creep);
                 break;
             default:
-                if (room.storage.store.energy < 400) {
-                    if (this.harvest(room, creep) == OK) {
-                        creep.memory.d = 'harvest';
-                    }
-                }
-                else {
-                    if (this.filler(room, creep) == OK) {
-                        creep.memory.d = 'filler';
-                    }
-                    else if (this.harvest(room, creep) == OK) {
-                        creep.memory.d = 'harvest';
-                    }
+                if (this.harvest(room, creep) == OK) {
+                    creep.memory.d = 'harvest';
                 }
         }
-
-        if (result != OK) creep.memory.d = '';
 
     },
 
@@ -93,67 +75,5 @@ module.exports = {
             return result;
         }
 
-    },
-
-    getEnergy: function (room, creep) {
-        var storage = room.storage;
-
-        if (!storage) return 'error no storage';
-
-        var result = creep.withdraw(storage, RESOURCE_ENERGY);
-        switch (result) {
-            case ERR_NOT_IN_RANGE:
-                creep.creepSpeech(room, 'movingToEnergy');
-                result = creep.moveTo(storage, {reusePath: 10});
-                break;
-            case OK:
-                creep.creepSpeech(room, 'movingToEnergy');
-                break;
-        }
-
-        return result;
-    },
-
-    findSpawnExtension: function (room, creep) {
-        var spawns = _.filter(global[room.name].spawns, (s) => s.energy < s.energyCapacity);
-        var extensions = _.filter(global[room.name].extensions, (s) => s.energy < s.energyCapacity);
-        return creep.pos.findClosestByRange(spawns.concat(extensions));
-    },
-
-    filler: function (room, creep) {
-        if (creep.memory.w == false) {
-            this.getEnergy(room, creep);
-            return OK;
-        }
-        else {
-            var spawnExtension = this.findSpawnExtension(room, creep);
-
-            if (spawnExtension) {
-                switch (creep.transfer(spawnExtension, RESOURCE_ENERGY)) {
-                    case ERR_NOT_IN_RANGE:
-                        return creep.moveTo(spawnExtension);
-                        break;
-                    case OK:
-                        return OK;
-                        break;
-                }
-            }
-            else {
-                var tower = _.filter(global[room.name].towers, (t) => t.energy < t.energyCapacity);
-                if (tower) {
-                    switch (creep.transfer(tower, RESOURCE_ENERGY)) {
-                        case ERR_NOT_IN_RANGE:
-                            return creep.moveTo(tower);
-                            break;
-                        case OK:
-                            return OK;
-                            break;
-                    }
-                }
-                else return 'complete';
-
-            }
-
-        }
     }
 };
