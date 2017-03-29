@@ -38,7 +38,7 @@ module.exports = {
                     }
             }
 
-            if (result != OK) delete creep.memory.d;
+            if (result != OK || room.energyAvailable < room.energyCapacityAvailable) delete creep.memory.d;
 
         }
 
