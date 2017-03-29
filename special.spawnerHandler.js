@@ -32,8 +32,8 @@ module.exports = {
                 case 'specialHarvester':
                     numberOfParts = Math.floor(energy / 250);
                     if (numberOfParts > 0) {
-                        if (numberOfParts > 12) {
-                            numberOfParts = 12;
+                        if (numberOfParts > 7) {
+                            numberOfParts = 7;
                         }
 
                         for (let i = 0; i < numberOfParts; i++) {
