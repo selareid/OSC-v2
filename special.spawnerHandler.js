@@ -30,15 +30,16 @@ module.exports = {
 
             switch (role) {
                 case 'specialHarvester':
-                    numberOfParts = Math.floor(energy / 200);
+                    numberOfParts = Math.floor(energy / 250);
                     if (numberOfParts > 0) {
-                        if (numberOfParts > 16) {
-                            numberOfParts = 16;
+                        if (numberOfParts > 12) {
+                            numberOfParts = 12;
                         }
 
                         for (let i = 0; i < numberOfParts; i++) {
                             body.push(WORK);
                             body.push(CARRY);
+                            body.push(MOVE);
                             body.push(MOVE);
                         }
                     }
@@ -48,15 +49,16 @@ module.exports = {
                         w: false
                     });
                 case 'specialCaretaker':
-                    numberOfParts = Math.floor(energy / 200);
+                    numberOfParts = Math.floor(energy / 250);
                     if (numberOfParts > 0) {
-                        if (numberOfParts > 16) {
-                            numberOfParts = 16;
+                        if (numberOfParts > 12) {
+                            numberOfParts = 12;
                         }
 
                         for (let i = 0; i < numberOfParts; i++) {
                             body.push(WORK);
                             body.push(CARRY);
+                            body.push(MOVE);
                             body.push(MOVE);
                         }
                     }
