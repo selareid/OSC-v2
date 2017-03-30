@@ -31,7 +31,7 @@ module.exports = {
                                             //creep.say something here using prototype.creepSpeech.js
                                             break;
                                         default:
-                                            console.creepErrorLog('Attack Error: ' + attackCreepResult, creep, room);
+                                            global.creepErrorLog('Attack Error: ' + attackCreepResult, creep, room);
                                     }
 
                                     creep.basicRangedHandler(targetCreep);
