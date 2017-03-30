@@ -120,7 +120,7 @@ module.exports = {
 
         var name = spawnToUse.specialCreateCustomCreep(energy, creepToSpawn);
 
-        if (Game.creeps[name]) console.log("Creating Creep " + name + ' Room ' + room.name);
+        if (Game.creeps[name]) console.log("[" + room.name + "] Spawning Creep " + name);
 
 
 
