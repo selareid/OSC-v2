@@ -85,7 +85,7 @@ global.errorString = "[" + "<p style=\"display:inline; color: #ed4543\">ERROR</p
  * @param select {boolean} whether or not you want the object to be selected when the link is clicked.
  * @returns {string}
  */
-global._roomLink = function(roomArg, text = undefined, select = true) {
+global.roomLinker = function(roomArg, text = undefined, select = true) {
     let roomName;
     let id = roomArg.id;
     if (roomArg instanceof Room) {
@@ -100,11 +100,11 @@ global._roomLink = function(roomArg, text = undefined, select = true) {
         console.log(`Invalid parameter to roomLink global function: ${roomArg} of type ${typeof roomArg}`);
     }
     text = text || (id ? roomArg : roomName);
-    return `<a href="#!/room/${roomName}" ${select && id ? `onclick="angular.element('body').injector().get('RoomViewPendingSelector').set('${id}')"` : ``}>${text}</a>`;
+    return `<a style="color: #61ed3b" href="#!/room/${roomName}" ${select && id ? `onclick="angular.element('body').injector().get('RoomViewPendingSelector').set('${id}')"` : ``}>${text}</a>`;
 };
 
 global.roomLink = function (room) {
-    return "[" + "<p style='color: #61ed3b; display:inline'>" + global._roomLink(room.name) + "</p>" + "] ";
+    return "[" + "<p style='display:inline'>" + global.roomLinker(room.name) + "</p>" + "] ";
 };
 
 
