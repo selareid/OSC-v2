@@ -67,14 +67,36 @@ module.exports = {
                         room: room.name,
                         w: false
                     });
+                case 'upgrader':
+                    numberOfParts = Math.floor(energy / 250);
+                    if (numberOfParts > 0) {
+                        if (numberOfParts > 12) {
+                            numberOfParts = 12;
+                        }
+
+                        for (let i = 0; i < numberOfParts; i++) {
+                            body.push(WORK);
+                            body.push(CARRY);
+                            body.push(MOVE);
+                            body.push(MOVE);
+                        }
+                    }
+                    return this.createCreep(sortedParts(body), creepName(role), {
+                        role: role,
+                        room: room.name,
+                        working: false
+                    });
             }
         };
 
         var numberOfSpecialHarvesters = _.sum(Game.creeps, (c) => c.memory.role == 'specialHarvester' && c.memory.room == room.name);
         var numberOfSpecialCaretakers = _.sum(Game.creeps, (c) => c.memory.role == 'specialCaretaker' && c.memory.room == room.name);
+        var numberOfUpgraders = _.sum(Game.creeps, (c) => c.memory.role == 'upgrader' && c.memory.room == room.name);
 
         var minimumNumberOfSpecialHarvesters = 1;
         var minimumNumberOfSpecialCaretakers = 1;
+
+        var minimumNumberOfUpgraders = Math.floor((room.storage.store.energy - 30000)/20000);
 
         var creepToSpawn;
 
@@ -83,6 +105,9 @@ module.exports = {
         }
         else if (numberOfSpecialCaretakers < minimumNumberOfSpecialCaretakers) {
             creepToSpawn = 'specialCaretaker'
+        }
+        else if (numberOfUpgraders < minimumNumberOfUpgraders) {
+            creepToSpawn = 'upgrader'
         }
 
         if (!creepToSpawn) return;
