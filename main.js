@@ -7,7 +7,7 @@ const creepHandler = require('creepHandler');
 const profiler = require('screeps-profiler');
 const grafana = require('stats');
 
-console.log('[RESET] ' + Game.cpu.bucket); // reset log
+console.log("[" + "<p style=\"display:inline; color: #ededed\">RESET</p>" + "] " + "<p style=\"display:inline; color: #6dbbff\">" + Game.cpu.bucket + "</p>"); // reset log
 
 profiler.enable();
 if (Game.cpu.bucket > 300) module.exports.loop = function () {
