@@ -90,7 +90,7 @@ global.roomLog = function (message, room) {
 global.creepLog = function (message, creep, room) {
     if (!message) return console.log(global.errorString + 'No message passed to global.creepLog');
 
-    if (room && room.name) return console.log(roomLink(room) [' + creep.name + '] ' + message);
+    if (room && room.name) return console.log(roomLink(room) + '[' + creep.name + '] ' + message);
     else if (creep && creep.name) return console.log('[' + creep.name + '] ' + message);
     else return console.log(message); // I swear that else is only there for clarity
 };
