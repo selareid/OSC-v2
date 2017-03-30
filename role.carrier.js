@@ -42,7 +42,7 @@ module.exports = {
                 }
             }
             else {
-                console.log('Creep ' + creep + ' could not find structure storage in room ' + room);
+                console.log('[' + room.name + '] [' + creep.name + '] could not find a storage');
             }
         }
         else {
@@ -66,7 +66,7 @@ module.exports = {
                     let foundContainer = this.carrierFindContainer(room, creep);
                     if (foundContainer) {
                         creep.memory.container = foundContainer.id;
-                        console.log('carrier recalculating container');
+                        console.log('[' + room.name + '] [' + creep.name + '] recalculating container');
                     }
                 }
 
@@ -125,7 +125,7 @@ module.exports = {
                 }
             }
             else {
-                console.log('Creep ' + creep + ' could not find structure storage in room ' + room);
+                console.log('[' + room.name + '] [' + creep.name + '] could not find a storage');
             }
         }
         else {
@@ -142,7 +142,7 @@ module.exports = {
                     let foundContainer = this.carrierFindContainerNoEnergy(room, creep);
                     if (foundContainer) {
                         creep.memory.container = foundContainer.id;
-                        console.log('carrier recalculating container');
+                        console.log('[' + room.name + '] [' + creep.name + '] recalculating container');
                     }
                 }
 
