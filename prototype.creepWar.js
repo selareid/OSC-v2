@@ -3,7 +3,7 @@ require('prototype.creep')();
 module.exports = function () {
     Creep.prototype.needTeam =
         function (room) {
-            console.log(this.memory.role + ' creep ' + this.name + ' At pos ' + this.pos + ' needs a team');
+            global.creepLog('At pos ' + this.pos + ' needs a team', this, room); // this = creep ++
 
             if (this.memory.team == undefined) this.memory.team = this.memory.room == 'E64S41' || this.memory.room == 'E65S47' || this.memory.room == 'E63S47' ? 'team2' : 'team1';
 

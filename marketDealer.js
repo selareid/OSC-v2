@@ -24,7 +24,7 @@ module.exports = {
                 if (bestOrder.orderId) {
                     let amountToDeal = Math.floor((terminal.store[RESOURCE_ENERGY] - 10) / bestOrder.energyCostToSend) > terminal.store[Game.market.getOrderById(bestOrder.orderId).resourceType] ? terminal.store[Game.market.getOrderById(bestOrder.orderId).resourceType] : Math.floor((terminal.store[RESOURCE_ENERGY] - 10) / bestOrder.energyCostToSend);
                     Game.market.deal(bestOrder.orderId, amountToDeal, room.name);
-                    console.log('Order ' + bestOrder.orderId + ' dealt, amount ' + amountToDeal + ' room ' + room.name);
+                    global.roomLog('Order ' + bestOrder.orderId + ' dealt, amount ' + amountToDeal, room);
                     return;
                 }
             }

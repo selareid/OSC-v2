@@ -60,24 +60,12 @@ module.exports = {
         var numberOfWarHealers = _.sum(Game.creeps, (c) => c.memory.role == 'warHealer' && c.memory.room == room.name);
         var numberOfTowerDrainers = _.sum(Game.creeps, (c) => c.memory.role == 'towerDrainer' && c.memory.room == room.name);
 
-        // debugging
-        // console.log('Harvesters ' + numberOfHarvesters);
-        // console.log('Carriers ' + numberOfCarriers);
-        // console.log('Distributors ' + numberOfDistributors);
-        // console.log('Upgraders ' + numberOfUpgraders);
-        // console.log('Builders ' + numberOfBuilders);
-        // console.log('Repairer ' + numberOfRepairers);
-        // console.log('Defence Managers ' + numberOfDefenceManagers);
-        // console.log('Landlords ' + numberOfLandlords);
-        // console.log('Other Room Creeps ' + numberOfOtherRoomCreeps);
-        // add more cause this ain't all the roles ^
-
         //if no harvesters email me and spam console
         if (numberOfHarvesters <= 0) {
             if (Game.time % 200 == 0) {
                 Game.notify("No harvesters in room " + room);
             }
-            console.log("No harvesters in room " + room);
+            global.roomLog("No harvesters", room);
         }
 
 
@@ -694,7 +682,7 @@ module.exports = {
                 if (Game.creeps[name]) {
                     _.filter(Memory.rooms[room].spawnQueue, (q) => q.length > 0)[Game.time % _.filter(Memory.rooms[room].spawnQueue, (q) => q.length > 0).length].splice(0, 1);
 
-                    console.log("[" + room.name + "] Spawning Creep " + name);
+                    global.roomLog("Spawning Creep " + name, room);
                 }
             }
         }

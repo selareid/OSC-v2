@@ -73,7 +73,7 @@ global.storageData[RESOURCE_CATALYZED_ZYNTHIUM_ACID] = 6000;
 global.storageData[RESOURCE_CATALYZED_ZYNTHIUM_ALKALIDE] = 6000;
 
 global.roomLog = function (message, room) {
-    if (!message) return console.log('[Error] No message passed to console.roomLog');
+    if (!message) return console.log('[Error] No message passed to global.roomLog');
 
     if (room && room.name) return console.log('[' + room.name + '] ' + message);
     else return console.log(message); // I swear that else is only there for clarity
@@ -81,7 +81,7 @@ global.roomLog = function (message, room) {
 };
 
 global.creepLog = function (message, creep, room) {
-    if (!message) return console.log('[Error] No message passed to console.creepLog');
+    if (!message) return console.log('[Error] No message passed to global.creepLog');
 
     if (room && room.name) return console.log('[' + room.name + '] [' + creep.name + '] ' + message);
     else if (creep && creep.name) return console.log('[' + creep.name + '] ' + message);
@@ -89,7 +89,7 @@ global.creepLog = function (message, creep, room) {
 };
 
 global.errorLog = function (message, room) {
-    if (!message) return console.log('[Error] No message passed to console.errorLog');
+    if (!message) return console.log('[Error] No message passed to global.errorLog');
 
     if (room && room.name) return console.log('[' + room.name + '] [Error] ' + message);
     else return console.log('[Error] ' + message); // I swear that else is only there for clarity
@@ -97,7 +97,7 @@ global.errorLog = function (message, room) {
 };
 
 global.creepErrorLog = function (message, creep, room) {
-    if (!message) return console.log('[Error] No message passed to console.creepErrorLog');
+    if (!message) return console.log('[Error] No message passed to global.creepErrorLog');
 
     if (room && room.name) return console.log('[' + room.name + '] [' + creep.name + '] [Error] ' + message);
     else if (creep && creep.name) return console.log('[' + creep.name + '] [Error] ' + message);

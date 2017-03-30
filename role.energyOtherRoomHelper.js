@@ -44,7 +44,7 @@ module.exports = {
                         }
                     }
                     else {
-                        console.log('Creep ' + creep.memory.role + ' could not find structure in room ' + room);
+                        global.creepErrorLog('could not find structure in room' + creep + room);
                     }
                 }
             }

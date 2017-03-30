@@ -522,7 +522,7 @@ module.exports = function () {
                     }
                     return this.createCreep(sortedParts(body), creepName(roleName), {role: roleName, room: room.name, working: false});
                 default:
-                    if (roleName !== undefined) console.log('Try to create creep ' + roleName + ' at room ' + room.name + ' failed');
+                    if (roleName !== undefined) global.errorLog('Try to create creep ' + roleName + 'failed', room);
                     return undefined;
             }
             

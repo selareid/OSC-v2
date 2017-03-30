@@ -92,7 +92,7 @@ module.exports = {
 
 
 
-            console.log('harvesters calculating source');
+            global.creepErrorLog('calculating source', creep, room);
         }
 
         var source = Game.getObjectById(creep.memory.source);

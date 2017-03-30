@@ -74,7 +74,7 @@ module.exports = {
                     //creep.say something here using prototype.creepSpeech.js
                     break;
                 default:
-                    console.log('Error with creep: ' + creep.name + '' + ' Attack Error: ' + attackResult);
+                    global.creepErrorLog('Attack Error: ' + attackResult, creep, room);
             }
 
         }

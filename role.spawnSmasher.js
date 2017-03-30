@@ -31,7 +31,7 @@ module.exports = {
                                             //creep.say something here using prototype.creepSpeech.js
                                             break;
                                         default:
-                                            console.log('Error with creep: ' + creep.name + '' + ' Attack Error: ' + attackSpawnResult);
+                                            global.creepErrorLog('Attack Error: ' + attackSpawnResult, creep, room);
                                     }
 
                                     this.rangedHandler(creep, targetSpawn);

@@ -9,7 +9,7 @@ module.exports = {
 
         var flagToGoTo = room.find(FIND_FLAGS, {filter: (f) => (f.memory.type == 'storageDistributorGoTo' || f.name.split(' ')[0] == 'storageDistributorGoTo') && f.pos.roomName == creep.room.name})[0];
         if (!flagToGoTo) {
-            console.log('Error no storage distribution flag in room ' + room.name);
+            global.creepErrorLog('No storage distribution flag', creep, room);
             return;
         }
 
@@ -37,7 +37,7 @@ module.exports = {
                         this.boostLab(room, creep);
                         break;
                     default:
-                        console.log('ERROR in storageDistributor logic, creep.memory.doing is undefined');
+                        global.creepErrorLog('creep.memory.doing is undefined', creep, room);
                         creep.memory.doing = 'link';
                 }
             }

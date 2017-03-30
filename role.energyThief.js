@@ -27,7 +27,7 @@ module.exports = {
                         }
                     }
                     else {
-                        console.log('Storage Full In Room ' + room.name);
+                        global.creepLog('Storage Full In Room', creep, room);
                     }
                 }
             }

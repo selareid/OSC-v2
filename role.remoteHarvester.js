@@ -99,7 +99,7 @@ creep.say('harvester remote');
                 }
 
                 creep.memory.source = this.findSource(room, creep, takenSources).id;
-                console.log('harvesters calculating source');
+                global.creepLog('calculating source', creep, room);
             }
             else {
 

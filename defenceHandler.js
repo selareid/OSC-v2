@@ -7,8 +7,8 @@ module.exports = {
         var hostileCreepsInRoom = this.getHostileCreeps(room);
 
         if (Game.time % 20 == 0) {
-            console.log('Enemy creeps spotted in room ' + room);
-            console.log("<h1 style=\"color: #ff2f3c\"><strong><i>EMERGENCY MODE </i></strong></h1>\nIn Room: " + room.name + "\nEstimated time of death: " + hostileCreepsInRoom.length * 100 + "ticks" + "\nCreeps remaining: " + _.sum(Game.creeps, (s) => s.room.name === room.name));
+            global.roomLog('Enemy creeps spotted', room);
+            global.roomLog("<h1 style=\"color: #ff2f3c\"><strong><i>EMERGENCY MODE </i></strong></h1>\nIn Room: " + room.name + "\nEstimated time of death: " + hostileCreepsInRoom.length * 100 + "ticks" + "\nCreeps remaining: " + _.sum(Game.creeps, (s) => s.room.name === room.name));
 
             if (hostileCreepsInRoom[0] && hostileCreepsInRoom[0].owner && hostileCreepsInRoom[0].owner.username != 'Invader') {
                 Game.notify('Enemy creeps spotted in room ' + room);

@@ -27,7 +27,7 @@ module.exports = {
         catch (err) {
             if (err !== null && err !== undefined) {
                 Game.notify("Error in auto construction sites logic: \n" + err + "\n " + err.stack);
-                console.log("Error in auto construction sites logic: \n" + err + "\n" + err.stack + " room: " + room.name);
+                global.errorLog("Auto construction sites logic: \n" + err + "\n" + err.stack, room);
             }
         }
 
@@ -44,7 +44,7 @@ module.exports = {
         catch (err) {
             if (err !== null && err !== undefined) {
                 Game.notify("Error in market logic: \n" + err + "\n " + err.stack);
-                console.log("Error in market logic: \n" + err + "\n" + err.stack + " room: " + room.name);
+                global.errorLog("Market logic: \n" + err + "\n" + err.stack, room);
             }
         }
 
@@ -64,7 +64,7 @@ module.exports = {
         catch (err) {
             if (err !== null && err !== undefined) {
                 Game.notify("Error in lab logic: \n" + err + "\n " + err.stack);
-                console.log("Error in lab logic: \n" + err + "\n" + err.stack + " room: " + room.name);
+                global.errorLog("Lab logic: \n" + err + "\n" + err.stack, room);
             }
         }
         //lab stuff ends
@@ -177,7 +177,7 @@ module.exports = {
         catch (err) {
             if (err !== null && err !== undefined) {
                 Game.notify("Error in spawner logic: \n" + err + "\n " + err.stack);
-                console.log("Error in spawner logic: \n" + err + "\n" + err.stack + " room: " + room.name);
+                global.errorLog("Spawner logic: \n" + err + "\n" + err.stack, room);
             }
         }
 

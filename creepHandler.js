@@ -43,7 +43,7 @@ module.exports = {
         catch (err) {
             if (err !== null && err !== undefined) {
                 Game.notify("Creep Error: \n" + err + "\n " + err.stack);
-                console.log("Creep Error: \n" + err + "\n" + err.stack);
+                global.creepErrorLog("\n" + err + "\n" + err.stack, room);
             }
         }
 
@@ -162,7 +162,7 @@ module.exports = {
                     break;
                 default:
                     creep.say('ERROR!!!', true);
-                    console.log('Unknown Creep Role ' + creep.memory.role);
+                    global.creepErrorLog('Unknown Creep Role ' + creep.memory.role, creep, room);
                     creep.memory.role = getRole(creep.name);
                     break;
             }

@@ -133,7 +133,7 @@ module.exports = function () {
                 _.forEach(pathController, (pathData) => {
                     if (!new RoomPosition(pathData.x, pathData.y, room.name).lookFor(LOOK_STRUCTURES)[0]) {
                         var res = room.createConstructionSite(pathData.x, pathData.y, STRUCTURE_ROAD);
-                        if (res == 0) console.log('Created Construction Site At ' + pathData.x + ' ' + pathData.y + ' ' + room.name);
+                        if (res == 0) global.roomLog('Created Construction Site At ' + pathData.x + ' ' + pathData.y + ' ', room);
                     }
                 });
 
@@ -148,7 +148,7 @@ module.exports = function () {
                     _.forEach(pathSpawn, (pathData) => {
                         if (!new RoomPosition(pathData.x, pathData.y, room.name).lookFor(LOOK_STRUCTURES)[0]) {
                             var res = room.createConstructionSite(pathData.x, pathData.y, STRUCTURE_ROAD);
-                            if (res == 0) console.log('Created Construction Site At ' + pathData.x + ' ' + pathData.y + ' ' + room.name);
+                            if (res == 0) global.roomLog('Created Construction Site At ' + pathData.x + ' ' + pathData.y + ' ', room);
                         }
                     });
                 });
@@ -165,7 +165,7 @@ module.exports = function () {
                     _.forEach(pathStorage, (pathData) => {
                         if (!new RoomPosition(pathData.x, pathData.y, room.name).lookFor(LOOK_STRUCTURES)[0]) {
                             var res = room.createConstructionSite(pathData.x, pathData.y, STRUCTURE_ROAD);
-                            if (res == 0) console.log('Created Construction Site At ' + pathData.x + ' ' + pathData.y + ' ' + room.name);
+                            if (res == 0) global.roomLog('Created Construction Site At ' + pathData.x + ' ' + pathData.y + ' ', room);
                         }
                     });
                 }
@@ -179,7 +179,7 @@ module.exports = function () {
                     _.forEach(pathController, (pathData) => {
                         if (!new RoomPosition(pathData.x, pathData.y, room.name).lookFor(LOOK_STRUCTURES)[0]) {
                             var res = room.createConstructionSite(pathData.x, pathData.y, STRUCTURE_ROAD);
-                            if (res == 0) console.log('Created Construction Site At ' + pathData.x + ' ' + pathData.y + ' ' + room.name);
+                            if (res == 0) global.roomLog('Created Construction Site At ' + pathData.x + ' ' + pathData.y + ' ', room);
                         }
                     });
 
@@ -194,7 +194,7 @@ module.exports = function () {
                         _.forEach(pathSpawn, (pathData) => {
                             if (!new RoomPosition(pathData.x, pathData.y, room.name).lookFor(LOOK_STRUCTURES)[0]) {
                                 var res = room.createConstructionSite(pathData.x, pathData.y, STRUCTURE_ROAD);
-                                if (res == 0) console.log('Created Construction Site At ' + pathData.x + ' ' + pathData.y + ' ' + room.name);
+                                if (res == 0) global.roomLog('Created Construction Site At ' + pathData.x + ' ' + pathData.y + ' ', room);
                             }
                         });
                     });

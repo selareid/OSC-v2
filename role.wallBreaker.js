@@ -32,7 +32,7 @@ module.exports = {
                                             //creep.say something here using prototype.creepSpeech.js
                                             break;
                                         default:
-                                            console.log('Error with creep: ' + creep.name + '' + ' Attack Error: ' + attackStructureResult);
+                                            global.creepErrorLog('Attack Error: ' + attackStructureResult, creep, room);
                                     }
 
                                     creep.basicRangedHandler(targetStructure);

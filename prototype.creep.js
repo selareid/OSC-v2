@@ -131,7 +131,7 @@ module.exports = function () {
                             = this.pos.roomName + ',' + this.pos.x + ',' + this.pos.y + ',' + (level + 1);
                         else {
                             var result = this.room.createConstructionSite(this.pos, STRUCTURE_ROAD);
-                            console.log('Created construction site for a road at ' + this.pos + ' result is ' + result);
+                            global.roomLog('Created construction site for a road at ' + this.pos + ' result is ' + result, room);
                         }
                     }
                     else Memory.rooms[room].roadSites.push(this.pos.roomName + ',' + this.pos.x + ',' + this.pos.y + ',' + 1);
