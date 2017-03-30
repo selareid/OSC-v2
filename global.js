@@ -75,7 +75,7 @@ global.storageData[RESOURCE_CATALYZED_ZYNTHIUM_ALKALIDE] = 6000;
 global.errorString = "[" + "<p style=\"display:inline; color: #ed4543\">ERROR</p>" + "] ";
 
 global.roomLink = function (room) {
-    return "[" + "<p style=\"display:inline; color: #ed4543\"><a href='#!/room/" + room.name +"'>" + room.name + "</a></p>" + "] ";
+    return "[" + "<p style=\"display:inline; color: #ed4543\"><a href='#!/room/" + room.name +"' target='_blank'>" + room.name + "</a></p>" + "] ";
 };
 
 
