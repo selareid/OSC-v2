@@ -71,3 +71,35 @@ global.storageData[RESOURCE_CATALYZED_LEMERGIUM_ACID] = 6000;
 global.storageData[RESOURCE_CATALYZED_LEMERGIUM_ALKALIDE] = 6000;
 global.storageData[RESOURCE_CATALYZED_ZYNTHIUM_ACID] = 6000;
 global.storageData[RESOURCE_CATALYZED_ZYNTHIUM_ALKALIDE] = 6000;
+
+console.roomLog = function (message, room) {
+    if (!message) return console.log('[Error] No message passed to console.roomLog');
+
+    if (room && room.name) return console.log('[' + room.name + '] ' + message);
+    else console.log(message); // I swear that else is only there for clarity
+
+};
+
+console.creepLog = function (message, creep, room) {
+    if (!message) return console.log('[Error] No message passed to console.creepLog');
+
+    if (room && room.name) return console.log('[' + room.name + '] [' + creep.name + '] ' + message);
+    else if (creep && creep.name) return console.log('[' + creep.name + '] ' + message);
+    else console.log(message); // I swear that else is only there for clarity
+};
+
+console.errorLog = function (message, room) {
+    if (!message) return console.log('[Error] No message passed to console.errorLog');
+
+    if (room && room.name) return console.log('[' + room.name + '] [Error] ' + message);
+    else console.log('[Error] ' + message); // I swear that else is only there for clarity
+
+};
+
+console.creepErrorLog = function (message, creep, room) {
+    if (!message) return console.log('[Error] No message passed to console.creepErrorLog');
+
+    if (room && room.name) return console.log('[' + room.name + '] [' + creep.name + '] [Error] ' + message);
+    else if (creep && creep.name) return console.log('[' + creep.name + '] [Error] ' + message);
+    else console.log('[Error] ' + message); // I swear that else is only there for clarity
+};
