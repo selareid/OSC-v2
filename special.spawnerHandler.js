@@ -120,7 +120,7 @@ module.exports = {
 
         var name = spawnToUse.specialCreateCustomCreep(energy, creepToSpawn);
 
-        if (Game.creeps[name]) global.roomLog("[SPAWNING]" + name, room);
+        if (Game.creeps[name]) global.roomLog("[SPAWNING] " + name, room);
 
 
 
