@@ -16,32 +16,15 @@ module.exports = {
             this.getEnergy(room, creep)
         }
         else {
-            var doing = creep.memory.d;
 
-            var result;
-
-            switch (doing) {
-                case 'filler':
-                    creep.say('filler');
-                    result = this.filler(room, creep);
-                    break;
-                case 'upgrade':
-                    creep.say('upgrading');
-                    result = this.upgrade(room, creep);
-                    break;
-                default:
-                    if (this.filler(room, creep) == OK) {
-                        creep.memory.d = 'filler';
-                    }
-                    else if (this.upgrade(room, creep) == OK) {
-                        creep.memory.d = 'upgrade';
-                    }
+            var spawnExtensions = this.findSpawnExtension(room, creep);
+            if (spawnExtensions) this.filler(room, creep, spawnExtensions);
+            else {
+                var tower = _.filter(global[room.name].towers, (t) => t.energy < t.energyCapacity);
+                if (tower) this.towerFiller(room, creep, tower);
+                else this.upgrade(room, creep);
             }
-
-            if (result != OK || room.energyAvailable < room.energyCapacityAvailable) delete creep.memory.d;
-
         }
-
 
     },
 
@@ -54,7 +37,7 @@ module.exports = {
         switch (result) {
             case ERR_NOT_IN_RANGE:
                 creep.creepSpeech(room, 'movingToEnergy');
-                result = creep.moveTo(storage, {reusePath: 10});
+                creep.moveTo(storage, {reusePath: 10});
                 break;
             case OK:
                 creep.creepSpeech(room, 'movingToEnergy');
@@ -70,36 +53,30 @@ module.exports = {
         return creep.pos.findClosestByRange(spawns.concat(extensions));
     },
 
-    filler: function (room, creep) {
+    filler: function (room, creep, spawnExtension) {
 
-            var spawnExtension = this.findSpawnExtension(room, creep);
-
-            if (spawnExtension) {
-                switch (creep.transfer(spawnExtension, RESOURCE_ENERGY)) {
-                    case ERR_NOT_IN_RANGE:
-                        return creep.moveTo(spawnExtension);
-                        break;
-                    case OK:
-                        return OK;
-                        break;
-                }
+        if (spawnExtension) {
+            switch (creep.transfer(spawnExtension, RESOURCE_ENERGY)) {
+                case ERR_NOT_IN_RANGE:
+                    creep.moveTo(spawnExtension);
+                    break;
+                case OK:
+                    break;
             }
-            else {
-                var tower = _.filter(global[room.name].towers, (t) => t.energy < t.energyCapacity);
-                if (tower) {
-                    switch (creep.transfer(tower, RESOURCE_ENERGY)) {
-                        case ERR_NOT_IN_RANGE:
-                            return creep.moveTo(tower);
-                            break;
-                        case OK:
-                            return OK;
-                            break;
-                    }
-                }
-                else return 'complete';
+        }
 
+    },
+
+    towerFiller: function (room, creep, tower) {
+        if (tower) {
+            switch (creep.transfer(tower, RESOURCE_ENERGY)) {
+                case ERR_NOT_IN_RANGE:
+                    creep.moveTo(tower);
+                    break;
+                case OK:
+                    break;
             }
-
+        }
     },
 
     upgrade: function (room, creep) {
@@ -115,8 +92,6 @@ module.exports = {
                 creep.creepSpeech(room, 'upgrading');
                 break;
         }
-
-        return reslt;
 
     }
 };
