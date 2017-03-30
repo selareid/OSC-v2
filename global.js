@@ -74,10 +74,15 @@ global.storageData[RESOURCE_CATALYZED_ZYNTHIUM_ALKALIDE] = 6000;
 
 global.errorString = "[" + "<p style=\"display:inline; color: #ed4543\">ERROR</p>" + "] ";
 
+global.roomLink = function (room) {
+    return "[" + "<p style=\"display:inline; color: #ed4543\"><a href='#!/room/" + room.name +"'>" + room.name + "</a></p>" + "] ";
+};
+
+
 global.roomLog = function (message, room) {
     if (!message) return console.log(global.errorString + 'No message passed to global.roomLog');
 
-    if (room && room.name) return console.log('[' + room.name + '] ' + message);
+    if (room && room.name) return console.log(roomLink(room) + message);
     else return console.log(message); // I swear that else is only there for clarity
 
 };
@@ -85,7 +90,7 @@ global.roomLog = function (message, room) {
 global.creepLog = function (message, creep, room) {
     if (!message) return console.log(global.errorString + 'No message passed to global.creepLog');
 
-    if (room && room.name) return console.log('[' + room.name + '] [' + creep.name + '] ' + message);
+    if (room && room.name) return console.log(roomLink(room) [' + creep.name + '] ' + message);
     else if (creep && creep.name) return console.log('[' + creep.name + '] ' + message);
     else return console.log(message); // I swear that else is only there for clarity
 };
@@ -93,7 +98,7 @@ global.creepLog = function (message, creep, room) {
 global.errorLog = function (message, room) {
     if (!message) return console.log(global.errorString + 'No message passed to global.errorLog');
 
-    if (room && room.name) return console.log('[' + room.name + ']' + global.errorString + message);
+    if (room && room.name) return console.log(roomLink(room) + global.errorString + message);
     else return console.log(global.errorString + message); // I swear that else is only there for clarity
 
 };
@@ -101,7 +106,7 @@ global.errorLog = function (message, room) {
 global.creepErrorLog = function (message, creep, room) {
     if (!message) return console.log(global.errorString + 'No message passed to global.creepErrorLog');
 
-    if (room && room.name) return console.log('[' + room.name + '] [' + creep.name + '] ' + global.errorString + message);
+    if (room && room.name) return console.log(roomLink(room) + '[' + creep.name + '] ' + global.errorString + message);
     else if (creep && creep.name) return console.log('[' + creep.name + '] ' + global.errorString + message);
     else return console.log(global.errorString + message); // I swear that else is only there for clarity
 };
