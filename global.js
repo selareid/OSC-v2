@@ -74,17 +74,25 @@ global.storageData[RESOURCE_CATALYZED_ZYNTHIUM_ALKALIDE] = 6000;
 
 global.errorString = "[" + "<p style=\"display:inline; color: #ed4543\">ERROR</p>" + "] ";
 
-/**
- * returns string for a link that can be clicked from the console
- * to change which room you are viewing. Useful for other logging functions.
- * If you pass a room object that has a '.id' property, that object will be selected
- * upon entering the room.
- * Author: Helam, Dragnar, Fubz
- * @param roomArg {Room|RoomObject|RoomPosition|RoomName}
- * @param text {String} optional text value of link
- * @param select {boolean} whether or not you want the object to be selected when the link is clicked.
- * @returns {string}
- */
+global.objectLinker = function(roomArg, text = undefined, select = true) {
+    let roomName;
+    let id = roomArg.id;
+    if (roomArg instanceof Room) {
+        roomName = roomArg.name;
+    } else if (roomArg.pos != undefined) {
+        roomName = roomArg.pos.roomName;
+    } else if (roomArg.roomName != undefined) {
+        roomName = roomArg.roomName;
+    } else if (typeof roomArg === 'string') {
+        roomName = roomArg;
+    } else {
+        console.log(`Invalid parameter to roomLink global function: ${roomArg} of type ${typeof roomArg}`);
+    }
+    text = text || (id ? roomArg : roomName);
+    return `<a style="color: #ed00a6" href="#!/room/${roomName}" ${select && id ? `onclick="angular.element('body').injector().get('RoomViewPendingSelector').set('${id}')"` : ``}>${text}</a>`;
+};
+
+// * Author: Helam, Dragnar, Fubz
 global.roomLinker = function(roomArg, text = undefined, select = true) {
     let roomName;
     let id = roomArg.id;
@@ -136,6 +144,6 @@ global.creepErrorLog = function (message, creep, room) {
     if (!message) return console.log(global.errorString + 'No message passed to global.creepErrorLog');
 
     if (room && room.name) return console.log(roomLink(room) + '[' + creep.name + '] ' + global.errorString + message);
-    else if (creep && creep.name) return console.log('[' + creep.name + '] ' + global.errorString + message);
+    else if (creep && creep.name) return console.log('[' + global.objectLinker(creep, creep.name) + '] ' + global.errorString + message);
     else return console.log(global.errorString + message); // I swear that else is only there for clarity
 };
