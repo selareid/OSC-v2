@@ -89,7 +89,7 @@ global.objectLinker = function(roomArg, text = undefined, select = true) {
         console.log(`Invalid parameter to roomLink global function: ${roomArg} of type ${typeof roomArg}`);
     }
     text = text || (id ? roomArg : roomName);
-    return `<a style="color: #ed00a6" href="#!/room/${roomName}" ${select && id ? `onclick="angular.element('body').injector().get('RoomViewPendingSelector').set('${id}')"` : ``}>${text}</a>`;
+    return `<a style="color: #c49e4c" href="#!/room/${roomName}" ${select && id ? `onclick="angular.element('body').injector().get('RoomViewPendingSelector').set('${id}')"` : ``}>${text}</a>`;
 };
 
 // * Author: Helam, Dragnar, Fubz
