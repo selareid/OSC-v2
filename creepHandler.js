@@ -236,7 +236,7 @@ module.exports = {
 
         if (Math.abs(newTime-splitStr[3]) > 999) { // if last time this pos has been stepped on was over 199 ticks ago
             roadUnderCreep.destroy(); // destroy that road
-            Memory.steppedPos = str.replace(splitStr, ''); // remove this pos from the string
+            Memory.steppedPos = str.replace(splitStr + ':', ''); // remove this pos from the string
             // (because there's no road so this'll never run again for this pos, so we don't need to have it saved, since memory costs CPu, and I need to save CPU)
             return;
         }
