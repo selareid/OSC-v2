@@ -92,7 +92,7 @@ module.exports = {
 
 
 
-            global.creepErrorLog('calculating source', creep, room);
+            global.creepLog('calculating source', creep, room);
         }
 
         var source = Game.getObjectById(creep.memory.source);
