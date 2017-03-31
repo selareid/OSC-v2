@@ -43,7 +43,7 @@ module.exports = {
         catch (err) {
             if (err !== null && err !== undefined) {
                 Game.notify("Creep Error: \n" + err + "\n " + err.stack);
-                global.creepErrorLog("\n" + err + "\n" + err.stack, room);
+                global.creepErrorLog("\n" + err + "\n" + err.stack, Game.rooms[creep.memory.room]);
             }
         }
 
