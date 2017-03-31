@@ -20,9 +20,15 @@ module.exports = {
             var spawnExtensions = this.findSpawnExtension(room, creep);
             if (spawnExtensions) this.filler(room, creep, spawnExtensions);
             else {
-                var tower = _.filter(global[room.name].towers, (t) => t.energy < t.energyCapacity)[0];
-                if (tower) this.towerFiller(room, creep, tower);
-                else this.upgrade(room, creep);
+                var buildSites = room.find(FIND_MY_CONSTRUCTION_SITES);
+                if (buildSites.length) {
+                    this.build(room, creep, creep.pos.findClosestByRange(buildSites))
+                }
+                else {
+                    var tower = _.filter(global[room.name].towers, (t) => t.energy < t.energyCapacity)[0];
+                    if (tower) this.towerFiller(room, creep, tower);
+                    else this.upgrade(room, creep);
+                }
             }
         }
 
@@ -50,19 +56,22 @@ module.exports = {
     findSpawnExtension: function (room, creep) {
         var spawns = _.filter(global[room.name].spawns, (s) => s.energy < s.energyCapacity);
         var extensions = _.filter(global[room.name].extensions, (s) => s.energy < s.energyCapacity);
-        return creep.pos.findClosestByRange(spawns.concat(extensions));
+
+        var concatted = spawns.concat(extensions);
+        if (concatted.length <= 0) return;
+        return creep.pos.findClosestByRange(concatted);
     },
 
     filler: function (room, creep, spawnExtension) {
 
-        if (spawnExtension) {
-            switch (creep.transfer(spawnExtension, RESOURCE_ENERGY)) {
-                case ERR_NOT_IN_RANGE:
-                    creep.moveTo(spawnExtension);
-                    break;
-                case OK:
-                    break;
-            }
+        if (!spawnExtension) return;
+
+        switch (creep.transfer(spawnExtension, RESOURCE_ENERGY)) {
+            case ERR_NOT_IN_RANGE:
+                creep.moveTo(spawnExtension);
+                break;
+            case OK:
+                break;
         }
 
     },
@@ -77,6 +86,22 @@ module.exports = {
                     break;
             }
         }
+    },
+
+    build: function (room, creep, constructionSite) {
+        if (!constructionSite) return;
+
+        var reslt = creep.build(constructionSite);
+        switch (reslt) {
+            case ERR_NOT_IN_RANGE:
+                creep.creepSpeech(room, 'building');
+                reslt = creep.moveTo(constructionSite, {reusePath: 7});
+                break;
+            case OK:
+                creep.creepSpeech(room, 'building');
+                break;
+        }
+
     },
 
     upgrade: function (room, creep) {
