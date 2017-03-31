@@ -107,7 +107,7 @@ module.exports = {
     },
 
     findStructureToRepair: function (room, creep) {
-        var structure = Game.getObjectById(creep.memory.structureToRepair);
+        var structure = Game.getObjectById(creep.memory.str);
 
         if (structure) {
             if (structure.hits < structure.hitsMax) {
@@ -127,14 +127,14 @@ module.exports = {
             }));
         }
 
-        if (structure) creep.memory.structureToRepair = structure.id;
+        if (structure) creep.memory.str = structure.id;
         return structure;
     },
 
     findDefence: function (room, creep) {
-        var minDefenceLevel = Memory.rooms[room].minDefenceLevel;
-        if (!Memory.rooms[room].minDefenceLevel) {
-            Memory.rooms[room].minDefenceLevel = 100000;
+        var minDefenceLevel = Memory.rooms[room].mdl;
+        if (!Memory.rooms[room].mdl) {
+            Memory.rooms[room].mdl = 100000;
             minDefenceLevel = 100000;
         }
 
@@ -144,7 +144,7 @@ module.exports = {
         var structure = creep.pos.findClosestByRange(structures);
 
         if (!structure) {
-            Memory.rooms[room].minDefenceLevel = minDefenceLevel + 10000;
+            Memory.rooms[room].mdl = minDefenceLevel + 10000;
             return;
         }
 
