@@ -125,7 +125,7 @@ module.exports = {
                 }
             }
             else {
-                global.creepErrorLog('could not find a storage', creep, room);
+                global.creepLog('could not find a storage', creep, room);
             }
         }
         else {
