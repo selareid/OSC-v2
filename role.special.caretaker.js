@@ -20,7 +20,7 @@ module.exports = {
             var spawnExtensions = this.findSpawnExtension(room, creep);
             if (spawnExtensions) this.filler(room, creep, spawnExtensions);
             else {
-                var tower = _.filter(global[room.name].towers, (t) => t.energy < t.energyCapacity);
+                var tower = _.filter(global[room.name].towers, (t) => t.energy < t.energyCapacity)[0];
                 if (tower) this.towerFiller(room, creep, tower);
                 else this.upgrade(room, creep);
             }
