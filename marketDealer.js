@@ -2,32 +2,25 @@
 require('global');
 module.exports = {
     run: function (room, terminal) {
-        if (terminal.store[RESOURCE_ENERGY] < 1000) return;
         for (let resourceType in terminal.store) {
             if (resourceType == RESOURCE_ENERGY) continue;
             let resource = terminal.store[resourceType];
-            if (resource > 1000) {
-                let bestOrder = {orderId: undefined, priceOverAll: global.energyValue, energyCostToSend: 0, amount: 0};
-                for (let order of Game.market.getAllOrders({resourceType: resourceType, type: ORDER_BUY})) {
-                    let orderRoom = order.roomName;
-                    let orderPrice = order.price;
-                    let energyCostToSend = global.energyCostToSend(room, orderRoom);
-                    let priceOverAll = global.priceOverAll(orderPrice, energyCostToSend);
-                    if (priceOverAll > bestOrder.priceOverAll) bestOrder = {
-                        orderId: order.id,
-                        priceOverAll: priceOverAll,
-                        energyCostToSend: energyCostToSend,
-                        amount: order.amount
-                    };
+            if (resource > 25000) {
 
-                }
-                if (bestOrder.orderId) {
-                    let amountToDeal = Math.floor((terminal.store[RESOURCE_ENERGY] - 10) / bestOrder.energyCostToSend) > terminal.store[Game.market.getOrderById(bestOrder.orderId).resourceType] ? terminal.store[Game.market.getOrderById(bestOrder.orderId).resourceType] : Math.floor((terminal.store[RESOURCE_ENERGY] - 10) / bestOrder.energyCostToSend);
-                    Game.market.deal(bestOrder.orderId, amountToDeal, room.name);
-                    global.roomLog('Order ' + bestOrder.orderId + ' dealt, amount ' + amountToDeal, room);
-                    return;
-                }
+                var order = _.filter(Game.market.orders, (o) => o.roomName == room.name && o.type == ORDER_SELL && o.resourceType == resourceType)[0];
+                if (!order) return; //Todo: add create order code
+
+                if (order.remainingAmount < resource) Game.market.extendOrder(order.id, resource - order.remainingAmount);
+
+                var avg = this.getAvrg(Game.market.getAllOrders({resourceType: resourceType, type: ORDER_BUY}));
+
+                if (Math.abs(order.price - avg) > 0.05) Game.market.changeOrderPrice(order.id, avg);
+
             }
         }
+    },
+
+    getAvrg: function (allOrders) {
+        return Math.floor((_.sum(allOrders, '.price') / allOrders.length * 100)) / 100; //average with only 2 decimal places
     }
 };
