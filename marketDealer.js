@@ -10,12 +10,27 @@ module.exports = {
                 var order = _.filter(Game.market.orders, (o) => o.roomName == room.name && o.type == ORDER_SELL && o.resourceType == resourceType)[0];
                 if (!order) return; //Todo: add create order code
 
-                if (order.remainingAmount < resource) Game.market.extendOrder(order.id, resource - order.remainingAmount);
+                var logMsg;
+                var rsl;
+
+                if (order.remainingAmount < resource) rsl = Game.market.extendOrder(order.id, resource - order.remainingAmount);
+                if (rsl) {
+                    logMsg = 'Extended Order ' + order.id + ' By ' + resource - order.remainingAmount;
+                    rsl = undefined
+                }
 
                 var avg = this.getAvrg(Game.market.getAllOrders({resourceType: resourceType, type: ORDER_BUY}));
 
-                if (Math.abs(order.price - avg) > 0.05) Game.market.changeOrderPrice(order.id, avg);
+                if (Math.abs(order.price - avg) > 0.05) rsl = Game.market.changeOrderPrice(order.id, avg);
+                if (rsl) {
+                    logMsg = logMsg + ' Changed Order Price ' + order.id + ' To ' + avg;
+                    rsl = undefined
+                }
 
+                if (logMsg) {
+                    console.log(logMsg);
+                    Game.notify(logMsg);
+                }
             }
         }
     },
