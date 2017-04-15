@@ -203,8 +203,18 @@ module.exports = function () {
                     return this.createCreep(sortedParts(body), creepName(roleName), {role: roleName, room: room.name, working: false});
                 case 'landlord':
                     numberOfParts = Math.floor((energy - (energy * amountToSave)) / 650);
-                    if (numberOfParts > 0) {
-                        if (numberOfParts > 25) numberOfParts = 25;
+                    if (room.energyCapacityAvailable >= 2000) {
+                        if (numberOfParts > 1) {
+                            if (numberOfParts > 6) numberOfParts = 6;
+
+                            if (numberOfParts >= 1) {
+                                body.push(CLAIM);
+                                body.push(MOVE);
+                            }
+                        }
+                    }
+                    else if (numberOfParts > 0) {
+                        if (numberOfParts > 6) numberOfParts = 6;
 
                         if (numberOfParts >= 1) {
                             body.push(CLAIM);
