@@ -4,17 +4,36 @@ require('prototype.creep')();
 
 module.exports = {
     run: function (room, creep) {
+//Memory.rooms[room].clm
+//Memory.rooms[room].rsv
+        var roomToGoTo = creep.memory.lndR;
 
-        var flag = Game.flags[creep.memory.flag];
-
-        if (!flag) {
-            creep.memory.flag = this.findFlagToDo(room, creep);
+        if (!roomToGoTo) {
+            creep.memory.lndR = this.findRoomToDo(room, creep);
+            creep.memory.qR = this.whatQueue(room, creep.memory.lndR);
         }
+        else if (!creep.memory.qR) creep.memory.qR = this.whatQueue(room, creep.memory.lndR);
         else {
-            
-            if (creep.pos.roomName == flag.pos.roomName) {
-                if (flag.memory.type == 'claimFlag') {
-                    if (flag.room && flag.room.controller && flag.room.controller.my === false) {
+            if (creep.pos.roomName == roomToGoTo) {
+                if (creep.memory.qR == 'reserve') {
+
+                    if (creep.room.controller && creep.room.controller.reservation && creep.room.controller.reservation.ticksToEnd >= 5000) {
+                        delete creep.memory.lndR;
+                        delete creep.memory.qR;
+                    }
+                    switch (creep.reserveController(creep.room.controller)) {
+                        case ERR_NOT_IN_RANGE:
+                            creep.moveTo(creep.room.controller);
+                            break;
+                        case ERR_INVALID_TARGET:
+                            creep.attackController(creep.room.controller);
+                            break;
+                    }
+
+                }
+                else if (creep.memory.qR == 'claim') {
+
+                    if (Game.rooms[roomToGoTo] && Game.rooms[roomToGoTo].controller && Game.rooms[roomToGoTo].controller.my === false) {
                         switch (creep.claimController(creep.room.controller)) {
                             case ERR_NOT_IN_RANGE:
                                 creep.moveTo(creep.room.controller);
@@ -25,87 +44,55 @@ module.exports = {
                         }
                     }
                     else {
-                        flag.remove();
+                        delete creep.memory.lndR;
+                        delete creep.memory.qR;
                     }
 
-                }
-                else if (flag.memory.type == 'reserveFlag') {
-                    if (creep.room.controller || creep.room.controller.reservation || creep.room.controller.reservation.ticksToEnd >= 4500) creep.memory.flag = this.findFlagToDo(room, creep);
-                    switch (creep.reserveController(creep.room.controller)) {
-                        case ERR_NOT_IN_RANGE:
-                            creep.moveTo(creep.room.controller);
-                            break;
-                        case ERR_INVALID_TARGET:
-                            creep.attackController(creep.room.controller);
-                            break;
-                    }
                 }
             }
             else {
-                creep.moveTo(flag.pos, {reusePath: 21});
+                creep.moveTo(new RoomPosition(25, 25, roomToGoTo), {reusePath: 21, range: 23});
             }
 
 
         }
     },
 
-    findClaimFlags: function (room, creep) {
-        var claimFlags = [];
-        _.forEach(_.filter(Game.flags, (f) => f.memory.type == 'claimFlag' && f.memory.room == creep.memory.room), function (flag) {
-            claimFlags.push(flag);
-        });
-        return claimFlags;
-    },
+    findRoomToDo: function (room) {
+        for (let claimRoom_it in Memory.rooms[room].clm) {
+            let claimRoom = Game.rooms[Memory.rooms[room].clm[claimRoom_it]];
+            if (!claimRoom) return claimRoom.name;
+            if (!claimRoom.controller) Memory.rooms[room].clm.splice(0, 1);
+            if (claimRoom.controller.my) Memory.rooms[room].clm.splice(0, 1);
 
-    findReserveFlags: function (room, creep) {
-        var reserveFlags = [];
-        _.forEach(_.filter(Game.flags, (f) => f.memory.type == 'reserveFlag' && f.memory.room == creep.memory.room), function (flag) {
-            reserveFlags.push(flag);
-        });
-        return reserveFlags;
-    },
-
-    findFlagToDo: function (room, creep, claimFlags = this.findClaimFlags(room, creep), reserveFlags = this.findReserveFlags(room, creep)) {
-
-        for (let flag of claimFlags) {
-
-            let myCreepsNearby = _.filter(Game.creeps, (c) => c.memory.role == 'landlord' && c.memory.room == flag.memory.room && c.memory.flag == flag.name)[0];
-
-            if (!myCreepsNearby) {
-                return flag.name;
-            }
+            return claimRoom.name;
         }
-        for (let flag of reserveFlags) {
-            var amountOfCreepsAssignedToThisFlag = _.filter(Game.creeps, (c) => c.memory.room == room.name && c.memory.role == 'landlord' && c.memory.flag == flag.name).length;
-            if (flag.room) {
-                var controller = flag.room.controller;
-                if (controller) {
-                    if (controller.reservation) {
-                        if (controller.reservation.ticksToEnd < 3000) {
-                            if (amountOfCreepsAssignedToThisFlag < 1) {
-                                return flag.name;
-                            }
-                            else {
-                                if (amountOfCreepsAssignedToThisFlag <= 2 && creep.getActiveBodyparts(CLAIM) == 1) {
-                                    return flag.name;
-                                }
-                            }
-                        }
-                        else if (controller.reservation.ticksToEnd < 4000) return flag.name;
-                    }
-                    else {
-                        if (amountOfCreepsAssignedToThisFlag < 2) {
-                            return flag.name;
-                        }
-                    }
-                }
-                else {
-                    flag.remove();
-                }
-            }
-            else {
-                return flag.name;
-            }
+
+        return _.filter(Memory.rooms[room].rsv, function (r_it) {
+            let r = Game.rooms(r_it);
+            if (!r) return r_it;
+
+            if (!r.controller) Game.notify(r_it + ' reserve room for room ' + room.name + " doesn't have a controller");
+
+                if (!r.controller.reservation) return r_it;
+                if (!r.controller.reservation.ticksToEnd < 3000) return r_it;
+        })[0];
+    },
+    
+    whatQueue: function (room, roomToCheck) {
+        if (!roomToCheck) return;
+        if (!typeof roomToCheck == 'string') roomToCheck = roomToCheck.room;
+
+        var queue;
+
+        for (let clmR of Memory.rooms[room].clm) {
+            if (clmR == roomToCheck) queue = 'claim';
         }
+
+        for (let rsvR of Memory.rooms[room].rsv) {
+            if (rsvR == roomToCheck) queue = 'reserve';
+        }
+
+        return queue;
     }
 };

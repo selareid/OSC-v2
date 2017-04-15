@@ -18,6 +18,9 @@ module.exports = {
 
         if (Memory.rooms[room].br == undefined || Memory.rooms[room].br == null) Memory.rooms[room].br = "";
 
+        if (!Memory.rooms[room].rsv) Memory.rooms[room].rsv = [];
+        if (!Memory.rooms[room].clm) Memory.rooms[room].clm = [];
+
         try {
             var d = new Date();
             if (d.getHours % 10 == 0 && d.getMinutes() % 0 == 0 && d.getSeconds() < 3) {

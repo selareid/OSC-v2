@@ -197,10 +197,9 @@ module.exports = {
 
                 //set number of landlords starts
                 if (Game.time % 6 == 0 || global[room.name]['cachedMinimumNumberOfLandlords'] == undefined) {
-                    var numberOfClaimFlags = _.sum(Game.flags, (f) => f.memory.type == 'claimFlag' && f.memory.room == room.name);
-                    var reserveFlags = _.filter(Game.flags, (f) => f.memory.type == 'reserveFlag' && f.memory.room == room.name);
-                    var amountOfReservers = this.getAmountOfReservers(room, reserveFlags);
-                    minimumNumberOfLandlords = numberOfClaimFlags + amountOfReservers;
+                    var claimRooms = _.filter(Memory.rooms[room].clm, (a) => a);
+                    var reserveRooms = _.filter(Memory.rooms[room].rsv, (a) => a);
+                    minimumNumberOfLandlords = claimRooms.length + reserveRooms.length*2;
 
                     global[room.name]['cachedMinimumNumberOfLandlords'] = minimumNumberOfLandlords;
                 }
@@ -612,36 +611,6 @@ module.exports = {
         if (Memory.rooms[room].populationGoal[21] == undefined) {
             Memory.rooms[room].populationGoal[21] = 0;
         }
-    },
-
-    getAmountOfReservers: function (room, reserveFlags) {
-//find the amount of reservers we need to add to the number of landlords
-        var amountToReturn = 0;
-
-        for (let flag of reserveFlags) {
-            if (flag.room) {
-                if (flag.room.controller.reservation) {
-                    if (flag.room.controller.reservation.ticksToEnd <= 2500) {
-                        amountToReturn += 2;
-                    }
-                    else {
-                        var landlordsInRoom = flag.room.find(FIND_CREEPS, {filter: (c) => c.memory && c.memory.role == 'landlord' && c.memory.flag == flag.name});
-                        if (landlordsInRoom == 0) {
-                            amountToReturn += 1;
-                        }
-                    }
-                }
-                else {
-                    amountToReturn += 2;
-                }
-            }
-            else {
-                amountToReturn += 2;
-            }
-        }
-
-        return amountToReturn + _.sum(Game.creeps, (c) => c.memory.role == 'landlord' && c.memory.room == room && reserveFlags.includes(Game.flags[c.memory.flag]));
-
     },
 
     spawn: function (room, numberOfHarvesters, minimumNumberOfHarvesters, numberOfDistributors, minimumNumberOfDistributors, numberOfCarriers) {
