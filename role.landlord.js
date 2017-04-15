@@ -23,7 +23,7 @@ module.exports = {
                     }
                     switch (creep.reserveController(creep.room.controller)) {
                         case ERR_NOT_IN_RANGE:
-                            creep.moveTo(creep.room.controller);
+                            creep.moveTo(creep.room.controller, {reusePath: 21, maxRooms: 1});
                             break;
                         case ERR_INVALID_TARGET:
                             creep.attackController(creep.room.controller);
@@ -36,7 +36,7 @@ module.exports = {
                     if (Game.rooms[roomToGoTo] && Game.rooms[roomToGoTo].controller && Game.rooms[roomToGoTo].controller.my === false) {
                         switch (creep.claimController(creep.room.controller)) {
                             case ERR_NOT_IN_RANGE:
-                                creep.moveTo(creep.room.controller);
+                                creep.moveTo(creep.room.controller, {reusePath: 21, maxRooms: 1});
                                 break;
                             case ERR_INVALID_TARGET:
                                 creep.attackController(creep.room.controller);
@@ -74,11 +74,11 @@ module.exports = {
 
             if (!r.controller) Game.notify(r_it + ' reserve room for room ' + room.name + " doesn't have a controller");
 
-                if (!r.controller.reservation) return r_it;
-                if (!r.controller.reservation.ticksToEnd < 3000) return r_it;
+            if (!r.controller.reservation) return r_it;
+            if (!r.controller.reservation.ticksToEnd < 3000) return r_it;
         })[0];
     },
-    
+
     whatQueue: function (room, roomToCheck) {
         if (!roomToCheck) return;
         if (!typeof roomToCheck == 'string') roomToCheck = roomToCheck.room;
