@@ -75,7 +75,7 @@ module.exports = {
             if (!r.controller) Game.notify(r_it + ' reserve room for room ' + room.name + " doesn't have a controller");
 
             if (!r.controller.reservation) return r_it;
-            if (!r.controller.reservation.ticksToEnd < 3000) return r_it;
+            if (r.controller.reservation.ticksToEnd < 3000) return r_it;
         })[0];
     },
 
