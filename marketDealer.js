@@ -14,7 +14,7 @@ module.exports = {
 
                 if (order.remainingAmount < resource) rslOne = Game.market.extendOrder(order.id, resource - order.remainingAmount);
                 if (rslOne !== undefined && rslTwo !== null) {
-                    global.marketLog('Extended Order ' + order.id + ' By ' + resource - order.remainingAmount + '\n With Result: ' + rslOne, room);
+                    global.marketLog('Extended Order ' + order.id + ' By ' + (resource - order.remainingAmount) + '\n With Result: ' + rslOne, room);
                 }
 
                 var avg = this.getAvrg(Game.market.getAllOrders({resourceType: resourceType, type: ORDER_BUY}));
