@@ -69,7 +69,7 @@ module.exports = {
         }
 
         return _.filter(Memory.rooms[room].rsv, function (r_it) {
-            let r = Game.rooms(r_it);
+            let r = Game.rooms[r_it];
             if (!r) return r_it;
 
             if (!r.controller) Game.notify(r_it + ' reserve room for room ' + room.name + " doesn't have a controller");
