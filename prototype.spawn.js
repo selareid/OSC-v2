@@ -207,19 +207,15 @@ module.exports = function () {
                         if (numberOfParts > 1) {
                             if (numberOfParts > 6) numberOfParts = 6;
 
-                            if (numberOfParts >= 1) {
+                            for (let i = 0; i < numberOfParts; i++) {
                                 body.push(CLAIM);
                                 body.push(MOVE);
                             }
                         }
                     }
                     else if (numberOfParts > 0) {
-                        if (numberOfParts > 6) numberOfParts = 6;
-
-                        if (numberOfParts >= 1) {
-                            body.push(CLAIM);
-                            body.push(MOVE);
-                        }
+                        body.push(CLAIM);
+                        body.push(MOVE);
                     }
                     return this.createCreep(sortedParts(body), creepName(roleName), {role: roleName, room: room.name, working: false});
                 case 'remoteHarvester':
