@@ -8,7 +8,10 @@ module.exports = {
             if (resource > 25000) {
 
                 var order = _.filter(Game.market.orders, (o) => o.roomName == room.name && o.type == ORDER_SELL && o.resourceType == resourceType)[0];
-                if (!order) return; //Todo: add create order code
+                if (!order) {
+                    this.createNewOrder(room, resourceType);
+                    return;
+                }
 
                 var rslOne;
 
@@ -27,6 +30,10 @@ module.exports = {
 
             }
         }
+    },
+    
+    createNewOrder: function (room, resource) {
+        Game.market.createOrder(ORDER_SELL, resource, 0.01, 1, room.name);
     },
 
     getAvrg: function (allOrders) {
