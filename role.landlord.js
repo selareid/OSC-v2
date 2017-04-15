@@ -68,7 +68,7 @@ module.exports = {
             return claimRoom.name;
         }
 
-        return _.filter(Memory.rooms[room].rsv, function (r_it) {
+        return _.filter(_.shuffle(Memory.rooms[room].rsv), function (r_it) {
             let r = Game.rooms[r_it];
             if (!r) return r_it;
 
