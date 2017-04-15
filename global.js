@@ -73,7 +73,7 @@ global.storageData[RESOURCE_CATALYZED_ZYNTHIUM_ACID] = 6000;
 global.storageData[RESOURCE_CATALYZED_ZYNTHIUM_ALKALIDE] = 6000;
 
 global.addReserveRoom = function (room, reserveRoom) {
-    Memory.rooms[Game.rooms[room]].rsv.push(reserveRoom);
+    return Memory.rooms[Game.rooms[room]].rsv.push(reserveRoom);
 };
 
 global.errorString = "[" + "<p style=\"display:inline; color: #ed4543\">ERROR</p>" + "] ";
