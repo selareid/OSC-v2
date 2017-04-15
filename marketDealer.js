@@ -10,27 +10,21 @@ module.exports = {
                 var order = _.filter(Game.market.orders, (o) => o.roomName == room.name && o.type == ORDER_SELL && o.resourceType == resourceType)[0];
                 if (!order) return; //Todo: add create order code
 
-                var logMsg;
-                var rsl;
+                var rslOne;
 
-                if (order.remainingAmount < resource) rsl = Game.market.extendOrder(order.id, resource - order.remainingAmount);
-                if (rsl) {
-                    logMsg = 'Extended Order ' + order.id + ' By ' + resource - order.remainingAmount;
-                    rsl = undefined
+                if (order.remainingAmount < resource) rslOne = Game.market.extendOrder(order.id, resource - order.remainingAmount);
+                if (rslOne !== undefined && rslTwo !== null) {
+                    global.marketLog('Extended Order ' + order.id + ' By ' + resource - order.remainingAmount + '\n With Result: ' + rslOne, room);
                 }
 
                 var avg = this.getAvrg(Game.market.getAllOrders({resourceType: resourceType, type: ORDER_BUY}));
 
-                if (Math.abs(order.price - avg) > 0.05) rsl = Game.market.changeOrderPrice(order.id, avg);
-                if (rsl) {
-                    logMsg = logMsg + ' Changed Order Price ' + order.id + ' To ' + avg;
-                    rsl = undefined
+                var rslTwo;
+                if (Math.abs(order.price - avg) > 0.05) rslTwo = Game.market.changeOrderPrice(order.id, avg);
+                if (rslTwo !== undefined && rslTwo !== null) {
+                    global.marketLog('Changed Order Price ' + order.id + ' To ' + avg + '\n With Result: ' + rslTwo, room);
                 }
 
-                if (logMsg) {
-                    console.log(logMsg);
-                    Game.notify(logMsg);
-                }
             }
         }
     },

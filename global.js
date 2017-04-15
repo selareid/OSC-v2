@@ -115,12 +115,23 @@ global.roomLink = function (room) {
     return "[" + "<p style='display:inline'>" + global.roomLinker(room.name) + "</p>" + "] ";
 };
 
+global.marketHeader = function () {
+    return "[" + "<p style='display:inline'>" + 'MARKET' + "</p>" + "] ";
+};
 
 global.roomLog = function (message, room) {
     if (!message) return console.log(global.errorString + 'No message passed to global.roomLog');
 
     if (room && room.name) return console.log(roomLink(room) + message);
     else return console.log(message); // I swear that else is only there for clarity
+
+};
+
+global.marketLog = function (message, room) {
+    if (!message) return console.log(global.errorString + 'No message passed to global.roomLog');
+
+    if (room && room.name) return console.log(roomLink(room) + global.marketHeader() + message);
+    else return console.log(global.marketHeader() + message); // I swear that else is only there for clarity
 
 };
 
