@@ -91,9 +91,8 @@ module.exports = function () {
                     numberOfParts = Math.floor((energy - (energy * amountToSave)) / 150);
                     if (numberOfParts > 0) {
 
-                        if (numberOfParts > 16) {
-                            numberOfParts = 16;
-                        }
+                        if (global[room.name].containers.length == 1) if (numberOfParts > 2) numberOfParts = 2;
+                        else if (numberOfParts > 16) numberOfParts = 16;
 
                         for (let i = 0; i < numberOfParts; i++) {
                             body.push(CARRY);
