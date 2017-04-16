@@ -54,13 +54,13 @@ module.exports = {
     },
 
     giverRun: function (room, link) {
+        if (!link || link.energy < link.energyCapacity) return;
+
         var orderKey = Object.keys(global[room.name].linkQueue)[0];
         var order = global[room.name].linkQueue[orderKey];
-        if (order && link) {
-            if (link.energy == link.energyCapacity) {
+        if (order) {
                 link.transferEnergy(Game.getObjectById(orderKey), order.amount);
                 delete global[room.name].linkQueue[orderKey];
-            }
         }
     },
 
