@@ -110,37 +110,8 @@ module.exports = function () {
         return false;
     };
 
-    /**
-     * Places road construction site under creep if there is none
-     * they're stored as follows
-     * roomName,x,y,level
-     */
-    Creep.prototype.placeRoadUnderCreep =
-        function (room = Game.rooms[this.memory.room], numberOfStepsNeeded = 7) {
-            if (this.pos.roomName == room.name && room.storage) {
-                var lookRoads = _.filter(this.pos.lookFor(LOOK_STRUCTURES), (s) => s.structureType == STRUCTURE_ROAD);
-                var lookConstructionSite = this.pos.lookFor(LOOK_CONSTRUCTION_SITES);
-                if (!lookRoads.length > 0 && !lookConstructionSite.length > 0) {
-                    var entryInMemory = _.filter(Memory.rooms[room].roadSites, (s) => s.split(',')[0] == this.pos.roomName
-                    && s.split(',')[1] == this.pos.x && s.split(',')[2])[0];
-
-                    if (entryInMemory) {
-                        // var numberOfStepsNeeded = 7;
-                        var level = parseInt(entryInMemory.split(',')[3]);
-                        if (level < numberOfStepsNeeded) Memory.rooms[room].roadSites[Memory.rooms[room].roadSites.indexOf(entryInMemory)]
-                            = this.pos.roomName + ',' + this.pos.x + ',' + this.pos.y + ',' + (level + 1);
-                        else {
-                            var result = this.room.createConstructionSite(this.pos, STRUCTURE_ROAD);
-                            global.roomLog('Created construction site for a road at ' + this.pos + ' result is ' + result, room);
-                        }
-                    }
-                    else Memory.rooms[room].roadSites.push(this.pos.roomName + ',' + this.pos.x + ',' + this.pos.y + ',' + 1);
-                }
-            }
+    Creep.prototype.findLinksEnergy =
+        function (room = Game.rooms[this.memory.room]) {
+            return _.filter(global[room.name].links, (link) => link.energy > 0 && global['linkRole'][link.id] == 'taker');
         };
-        
-        Creep.prototype.findLinksEnergy =
-            function (room = Game.rooms[this.memory.room]) {
-                return _.filter(global[room.name].links, (link) => link.energy > 0 && global['linkRole'][link.id] == 'taker');
-            };
 };

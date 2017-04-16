@@ -6,7 +6,6 @@ module.exports = {
     run: function (room, creep, energyOfTowers) {
 
         creep.creepSpeech(room);
-        creep.placeRoadUnderCreep(room, 3);
 
         if (creep.memory.working == true && creep.carry.energy == 0) {
             creep.memory.working = false;

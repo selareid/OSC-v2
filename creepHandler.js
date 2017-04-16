@@ -36,8 +36,6 @@ module.exports = {
 
 
                 this.creepActions(creep, undefined);
-
-                if (Game.cpu.bucket > 3000) this.roomPositionSaving(Game.rooms[creep.memory.room], creep);
             }
         }
         catch (err) {
@@ -178,70 +176,5 @@ module.exports = {
             allEnergy.push(tower.energy);
         }
         return _.min(allEnergy) + 1;
-    },
-
-    roomPositionSaving: function (room, creep) {
-        if (creep.name.includes('special')) return;
-        if (!room) return;
-        if (creep.pos.roomName != room.name) return; // we're only doing this for the creep's homeroom
-        var roadUnderCreep = _.filter(creep.pos.lookFor(LOOK_STRUCTURES), (s) => s.structureType == STRUCTURE_ROAD)[0];
-        if (!roadUnderCreep) return; // if there's no road under creep don't need to save pos
-
-        if (!Memory.steppedPos) {
-            Memory.steppedPos = creep.pos.roomName + ',' + creep.pos.x + ',' + creep.pos.y + ',' + Game.time  + ':'; //if it doesn't exist in memory create it and put our stats in
-            return;
-        }
-
-
-        function splitValue(value, index) {
-            return value.substring(0, index) + "," + value.substring(index);
-        }
-
-        var str = Memory.steppedPos;
-
-        var posToFind = creep.pos.roomName + ',' + creep.pos.x + ',' + creep.pos.y; // the string we'll be looking for in str
-
-        var posInString = str.indexOf(posToFind); // the pos of found posToFind
-
-        var newTime = Game.time; // the new time it'll be changed to
-
-        if (str.search(posToFind) == -1) { //if not in str
-            Memory.steppedPos = Memory.steppedPos + creep.pos.roomName + ',' + creep.pos.x + ',' + creep.pos.y + ',' + newTime + ':'; // add it to str
-            return;
-        }
-
-        var splitStr;
-        var split_it = splitValue(str, posInString).split(':,');
-        /*
-        Example:
-
-         E58S49,19,10,19436:E65S47,26,16,19538:E58S49,22,7,19517:E64S41,22,28,19532:E63S47,45,32,19538:
-         is str
-
-         we want E58S49,22,7,19517:
-         we have E58S49,22,7
-         and it's position in the string
-         so we start at that position and add a , at the next :
-         and split the :,
-         (because if we just split : we'll get an array, come to think of it is that really a bad thing? hmm, dunno if this is efficient)
-
-         now we have E58S49,22,7,19517:
-         */
-
-        // I was getting errors so I put in these if statements
-        // It's splitting E58S49,22,7,19517: into ["E58S49","22","7","19517"]
-        if (!split_it) return;
-        else if (split_it[1]) splitStr = split_it[1].split(':')[0].split(',');
-        else splitStr = split_it[0].split(':')[0].split(',');
-
-        if (Math.abs(newTime-splitStr[3]) > 999) { // if last time this pos has been stepped on was over 199 ticks ago
-            roadUnderCreep.destroy(); // destroy that road
-            Memory.steppedPos = str.replace(splitStr + ':', ''); // remove this pos from the string
-            // (because there's no road so this'll never run again for this pos, so we don't need to have it saved, since memory costs CPu, and I need to save CPU)
-            return;
-        }
-
-        Memory.steppedPos = str.replace(splitStr, posToFind + ',' + newTime); // else replace old text with new text and store back in memory
-
     }
 };
