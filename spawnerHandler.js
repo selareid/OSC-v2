@@ -635,16 +635,17 @@ module.exports = {
 
             if (room.energyAvailable >= 300) {
 
-                if (energy < 300) {
-                    energy = room.energyAvailable;
-                }
-
                 var queuesWithCreeps = _.filter(Memory.rooms[room].spawnQueue, (q) => q.length > 0);
                 var queueToUse = queuesWithCreeps[(Game.time % queuesWithCreeps.length)];
 
                 if (queueToUse) {
                     roleToSpawn = queueToUse[0];
                     if (roleToSpawn == 'harvester') amountToSave = 0;
+                    else if (roleToSpawn == 'distributor') amountToSave = 0;
+                    else {
+                        if (roleToSpawn == 'guard') amountToSave = 0;
+                        if (energy < spawn.room.energyCapacityAvailable-(spawn.room.energyCapacityAvailable*amountToSave)) return;
+                    }
                     name = spawn.createCustomCreep(room, energy, roleToSpawn, amountToSave);
                 }
 
