@@ -644,7 +644,6 @@ module.exports = {
                     else if (roleToSpawn == 'distributor') amountToSave = 0;
                     else {
                         if (roleToSpawn == 'guard') amountToSave = 0;
-                        if (energy < room.energyCapacityAvailable-room.energyCapacityAvailable*amountToSave) energy = room.energyCapacityAvailable/spawns.length;
                     }
                     name = spawn.createCustomCreep(room, energy, roleToSpawn, amountToSave);
                 }
