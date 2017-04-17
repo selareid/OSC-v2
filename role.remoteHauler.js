@@ -125,6 +125,11 @@ module.exports = {
             (function () {
                 if (creep.pos.roomName != remoteFlag.pos.roomName) {
                     creep.moveTo(remoteFlag.pos, {reusePath: 37});
+
+                    if (creep.carry.energy > 0) {
+                        var storage = creep.pos.isNearTo(room.storage) ? room.storage : undefined;
+                        if (storage) creep.transfer(storage, RESOURCE_ENERGY);
+                    }
                 }
                 else {
                     let allDroppedResources = _.max(creep.room.find(FIND_DROPPED_RESOURCES), '.amount');
