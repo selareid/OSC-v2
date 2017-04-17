@@ -124,41 +124,41 @@ global.marketHeader = function () {
 };
 
 global.roomLog = function (message, room) {
-    if (!message) return console.log(global.errorString + 'No message passed to global.roomLog');
+    if (!message) return console.log('[' + Game.time + '] ' + global.errorString + 'No message passed to global.roomLog');
 
-    if (room && room.name) return console.log(roomLink(room) + message);
-    else return console.log(message); // I swear that else is only there for clarity
+    if (room && room.name) return console.log('[' + Game.time + '] ' + roomLink(room) + message);
+    else return console.log('[' + Game.time + '] ' + message); // I swear that else is only there for clarity
 
 };
 
 global.marketLog = function (message, room) {
-    if (!message) return console.log(global.errorString + 'No message passed to global.roomLog');
+    if (!message) return console.log('[' + Game.time + '] ' + global.errorString + 'No message passed to global.roomLog');
 
-    if (room && room.name) return console.log(roomLink(room) + global.marketHeader() + message);
-    else return console.log(global.marketHeader() + message); // I swear that else is only there for clarity
+    if (room && room.name) return console.log('[' + Game.time + '] ' + roomLink(room) + global.marketHeader() + message);
+    else return console.log('[' + Game.time + '] ' + global.marketHeader() + message); // I swear that else is only there for clarity
 
 };
 
 global.creepLog = function (message, creep, room) {
-    if (!message) return console.log(global.errorString + 'No message passed to global.creepLog');
+    if (!message) return console.log('[' + Game.time + '] ' + global.errorString + 'No message passed to global.creepLog');
 
-    if (room && room.name) return console.log(roomLink(room) + '[' + global.objectLinker(creep, creep.name) + '] ' + message);
-    else if (creep && creep.name) return console.log('[' + global.objectLinker(creep, creep.name) + '] ' + message);
-    else return console.log(message); // I swear that else is only there for clarity
+    if (room && room.name) return console.log('[' + Game.time + '] ' + roomLink(room) + '[' + global.objectLinker(creep, creep.name) + '] ' + message);
+    else if (creep && creep.name) return console.log('[' + Game.time + '] ' + '[' + global.objectLinker(creep, creep.name) + '] ' + message);
+    else return console.log('[' + Game.time + '] ' + message); // I swear that else is only there for clarity
 };
 
 global.errorLog = function (message, room) {
-    if (!message) return console.log(global.errorString + 'No message passed to global.errorLog');
+    if (!message) return console.log('[' + Game.time + '] ' + global.errorString + 'No message passed to global.errorLog');
 
-    if (room && room.name) return console.log(roomLink(room) + global.errorString + message);
-    else return console.log(global.errorString + message); // I swear that else is only there for clarity
+    if (room && room.name) return console.log('[' + Game.time + '] ' + roomLink(room) + global.errorString + message);
+    else return console.log('[' + Game.time + '] ' + global.errorString + message); // I swear that else is only there for clarity
 
 };
 
 global.creepErrorLog = function (message, creep, room) {
-    if (!message) return console.log(global.errorString + 'No message passed to global.creepErrorLog');
+    if (!message) return console.log('[' + Game.time + '] ' + global.errorString + 'No message passed to global.creepErrorLog');
 
-    if (room && room.name) return console.log(roomLink(room) + '[' + global.objectLinker(creep, creep.name) + '] ' + global.errorString + message);
-    else if (creep && creep.name) return console.log('[' + global.objectLinker(creep, creep.name) + '] ' + global.errorString + message);
-    else return console.log(global.errorString + message); // I swear that else is only there for clarity
+    if (room && room.name) return console.log('[' + Game.time + '] ' + roomLink(room) + '[' + global.objectLinker(creep, creep.name) + '] ' + global.errorString + message);
+    else if (creep && creep.name) return console.log('[' + Game.time + '] ' + '[' + global.objectLinker(creep, creep.name) + '] ' + global.errorString + message);
+    else return console.log('[' + Game.time + '] ' + global.errorString + message); // I swear that else is only there for clarity
 };
