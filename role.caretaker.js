@@ -173,7 +173,7 @@ module.exports = {
     },
 
     moveToWithCostMatrix: function (room, creep, target) {
-        creep.moveTo(target, {
+        var rsl = creep.moveTo(target, {
             reusePath: 7, plainCost: 1, swampCost: 4,
             costCallback: function (roomName) {
                 if (roomName == room.name) {
@@ -218,5 +218,9 @@ module.exports = {
                 }
             },
         });
+
+        if (rsl != 0) {
+            creep.moveTo(target, {reusePath: 7, plainCost: 1, swampCost: 4});
+        }
     }
 };
