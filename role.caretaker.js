@@ -79,7 +79,7 @@ module.exports = {
                         creep.moveTo(closer, {reusePath: 10})
                     }
                 }
-                else if (storage && storage.store[RESOURCE_ENERGY] > 1000) {
+                else if (storage && storage.store[RESOURCE_ENERGY] > 100) {
                     if (creep.withdraw(storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                         creep.moveTo(storage, {reusePath: 10})
                     }
