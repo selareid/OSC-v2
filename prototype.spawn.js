@@ -191,7 +191,10 @@ module.exports = function () {
                 case 'caretaker':
                     numberOfParts = Math.floor((energy - (energy * amountToSave)) / 200);
                     if (numberOfParts > 0) {
-                        if (numberOfParts > 16) numberOfParts = 16;
+                        if (_.sum(room.find(FIND_MY_CONSTRUCTION_SITES), 'progressTotal')-_.sum(room.find(FIND_MY_CONSTRUCTION_SITES), 'progress') < 10000) {
+                            if (numberOfParts > 7) numberOfParts = 7;
+                        }
+                        else if (numberOfParts > 16) numberOfParts = 16;
 
                         for (let i = 0; i < numberOfParts; i++) {
                             body.push(WORK);
