@@ -208,6 +208,7 @@ module.exports = function () {
                     return this.createCreep(sortedParts(body), creepName(roleName), {role: roleName, room: room.name, working: false});
                 case 'landlord':
                     numberOfParts = Math.floor((energy - (energy * amountToSave)) / 650);
+                    if (room.energyCapacityAvailable >= 650*3) {
                         if (numberOfParts > 1) {
                             if (numberOfParts > 6) numberOfParts = 6;
 
@@ -216,6 +217,7 @@ module.exports = function () {
                                 body.push(MOVE);
                             }
                         }
+                    }
                     else if (numberOfParts > 0) {
                             body.push(CLAIM);
                             body.push(MOVE);
@@ -265,17 +267,19 @@ module.exports = function () {
                     return this.createCreep(sortedParts(body), creepName(roleName), {role: roleName, room: room.name, goingHome: false});
                 case 'remoteGuard':
                     numberOfParts = Math.floor((energy - (energy * amountToSave)) / 340);
-                    if (numberOfParts > 1) {
+                    if (room.energyCapacityAvailable >= 340*3) {
+                        if (numberOfParts > 1) {
                             if (numberOfParts > 10) numberOfParts = 10;
 
-                        for (let i = 0; i < numberOfParts; i++) {
-                            body.push(RANGED_ATTACK);
-                            body.push(ATTACK);
-                            body.push(TOUGH);
-                            body.push(MOVE);
-                            body.push(MOVE);
-                        }
+                            for (let i = 0; i < numberOfParts; i++) {
+                                body.push(RANGED_ATTACK);
+                                body.push(ATTACK);
+                                body.push(TOUGH);
+                                body.push(MOVE);
+                                body.push(MOVE);
+                            }
 
+                        }
                     }
                     else {
                         numberOfParts = Math.floor((energy - (energy * amountToSave)) / 280);
