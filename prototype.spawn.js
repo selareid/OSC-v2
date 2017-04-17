@@ -202,7 +202,6 @@ module.exports = function () {
                     return this.createCreep(sortedParts(body), creepName(roleName), {role: roleName, room: room.name, working: false});
                 case 'landlord':
                     numberOfParts = Math.floor((energy - (energy * amountToSave)) / 650);
-                    if (room.energyCapacityAvailable >= 2000) {
                         if (numberOfParts > 1) {
                             if (numberOfParts > 6) numberOfParts = 6;
 
@@ -211,11 +210,10 @@ module.exports = function () {
                                 body.push(MOVE);
                             }
                         }
-                    }
                     else if (numberOfParts > 0) {
-                        body.push(CLAIM);
-                        body.push(MOVE);
-                    }
+                            body.push(CLAIM);
+                            body.push(MOVE);
+                        }
                     return this.createCreep(sortedParts(body), creepName(roleName), {role: roleName, room: room.name, working: false});
                 case 'remoteHarvester':
                     numberOfParts = Math.floor(((energy - (energy * amountToSave)) - 100) / 150);

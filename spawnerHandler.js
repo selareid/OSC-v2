@@ -199,7 +199,8 @@ module.exports = {
                 if (Game.time % 6 == 0 || global[room.name]['cachedMinimumNumberOfLandlords'] == undefined) {
                     var claimRooms = _.filter(Memory.rooms[room].clm, (a) => a);
                     var reserveRooms = _.filter(Memory.rooms[room].rsv, (a) => a);
-                    minimumNumberOfLandlords = claimRooms.length + Math.round(reserveRooms.length * 1.3);
+                    if (room.energyCapacityAvailable >= 650*3) minimumNumberOfLandlords = claimRooms.length + Math.ceil(reserveRooms.length * 0.3);
+                    else minimumNumberOfLandlords = claimRooms.length + Math.round(reserveRooms.length * 1.5);
 
                     global[room.name]['cachedMinimumNumberOfLandlords'] = minimumNumberOfLandlords;
                 }
