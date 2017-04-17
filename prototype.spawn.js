@@ -161,7 +161,10 @@ module.exports = function () {
                         if (room.controller.level <= 7) {
                             if (numberOfParts > 15) numberOfParts = 15;
                         }
-                        else if (numberOfParts > 7) numberOfParts = 7;
+                        else {
+                            var maxPart = Math.floor((room.storage.store.energy-5000)/10000);
+                            if (numberOfParts > maxPart) numberOfParts = maxPart > 7 ? 7 : maxPart;
+                        }
 
                         for (let i = 0; i < numberOfParts; i++) {
                             body.push(MOVE);
