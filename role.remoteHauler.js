@@ -70,7 +70,7 @@ module.exports = {
                     else creep.moveTo(Game.rooms[creep.memory.room].find(FIND_MY_SPAWNS)[0], {reusePath: 37});
                 }
                 else {
-                    var links = _.filter(global[room.name].links, (l) => global['linkRole'][l.id] && l.energy < l.energyCapacity);
+                    var links = _.filter(global[room.name].links, (l) => global['linkRole'][l.id] == 'giver' && l.energy < l.energyCapacity);
                     var storage = room.storage;
 
                     var arrayOfBoth = links;
