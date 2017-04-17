@@ -25,9 +25,8 @@ module.exports = {
             var structureToRepair = this.findStructureToRepair(room, creep);
             if (structureToRepair) {
                 creep.creepSpeech(room, 'repairing');
-                if (creep.repair(structureToRepair) == ERR_NOT_IN_RANGE) {
-                    this.moveToWithCostMatrix(room, creep, structureToRepair);
-                }
+                this.moveToWithCostMatrix(room, creep, structureToRepair);
+                creep.repair(structureToRepair)
             }
             else {
                 var structureToBuild = creep.pos.findClosestByRange(room.find(FIND_MY_CONSTRUCTION_SITES));
