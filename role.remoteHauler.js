@@ -53,26 +53,18 @@ module.exports = {
         }
 
         if (creep.memory.goingHome === true) {
+            if (creep.carry.energy > 0) {
+                var needingRepair = creep.pos.lookFor(LOOK_STRUCTURES);
+                if (needingRepair.length > 0) creep.repair(needingRepair[Game.time % needingRepair.length]);
+            }
+            else creep.memory.goingHome = false;
+
             (function () {
                 if (creep.pos.roomName != creep.memory.room) {
-                    if (creep.carry.energy > 0) {
-                        var constructionSite = creep.pos.findClosestByRange(FIND_MY_CONSTRUCTION_SITES);
-                        if (constructionSite) {
-                            if (creep.build(constructionSite) == ERR_NOT_IN_RANGE) {
-                                creep.moveTo(constructionSite);
-                            }
-                        }
-                        else {
-                            var needingRepair = creep.pos.findClosestByRange([creep.pos.findInRange(FIND_STRUCTURES, 3, {filter: (s) => s.hits < s.hitsMax}),
-                                creep.room.find(FIND_STRUCTURES, {filter: (s) => s.hits < s.hitsMax * 0.1})]);
-                            if (needingRepair) {
-                                if (creep.repair(needingRepair) == ERR_NOT_IN_RANGE) {
-                                    creep.moveTo(needingRepair);
-                                }
-                            }
-                            else {
-                                creep.moveTo(Game.rooms[creep.memory.room].find(FIND_MY_SPAWNS)[0], {reusePath: 37});
-                            }
+                    var constructionSite = creep.pos.findClosestByRange(FIND_MY_CONSTRUCTION_SITES);
+                    if (constructionSite) {
+                        if (creep.build(constructionSite) == ERR_NOT_IN_RANGE) {
+                            creep.moveTo(constructionSite);
                         }
                     }
                     else creep.moveTo(Game.rooms[creep.memory.room].find(FIND_MY_SPAWNS)[0], {reusePath: 37});
