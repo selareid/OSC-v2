@@ -19,7 +19,7 @@ module.exports = {
 
             if (remoteFlag) {
                 if (creep.pos.roomName != remoteFlag.pos.roomName) {
-                    creep.moveTo(remoteFlag, {reusePath: 37, ignoreCreeps: true});
+                    creep.moveTo(remoteFlag, {reusePath: 37});
                 }
                 else {
                     this.realRun(room, creep);
