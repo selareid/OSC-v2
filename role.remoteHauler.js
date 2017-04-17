@@ -45,6 +45,12 @@ module.exports = {
         var that = this;
         creep.say('hauler remote');
 
+        //repair structure underneath
+        if (creep.carry.energy > 0) {
+            var needingRepair = creep.pos.lookFor(LOOK_STRUCTURES);
+            if (needingRepair.length > 0) creep.repair(needingRepair[Game.time % needingRepair.length]); //repairs random structure underneath
+        }
+
         if (creep.memory.goingHome === true && _.sum(creep.carry) == 0) {
             creep.memory.goingHome = false;
         }
@@ -53,12 +59,6 @@ module.exports = {
         }
 
         if (creep.memory.goingHome === true) {
-            if (creep.carry.energy > 0) {
-                var needingRepair = creep.pos.lookFor(LOOK_STRUCTURES);
-                if (needingRepair.length > 0) creep.repair(needingRepair[Game.time % needingRepair.length]);
-            }
-            else creep.memory.goingHome = false;
-
             (function () {
                 if (creep.pos.roomName != creep.memory.room) {
                     var constructionSite = creep.pos.findClosestByRange(FIND_MY_CONSTRUCTION_SITES);
