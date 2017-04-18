@@ -175,6 +175,8 @@ global.roadTest = function (roomName) {
     var storage = room.storage;
     var terminal = room.terminal;
 
+    var radius = 0.3;
+    var style;
 
     if (storage) {
         let pathController = Memory.rooms[room].pthCntrl ? Room.deserializePath(Memory.rooms[room].pthCntrl) : undefined;
