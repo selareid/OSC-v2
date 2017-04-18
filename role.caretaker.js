@@ -32,9 +32,8 @@ module.exports = {
                 var structureToBuild = creep.pos.findClosestByRange(room.find(FIND_MY_CONSTRUCTION_SITES));
                 if (structureToBuild) {
                     creep.creepSpeech(room, 'building');
-                    if (creep.build(structureToBuild) == ERR_NOT_IN_RANGE) {
+                    creep.build(structureToBuild);
                         creep.moveTo(structureToBuild);
-                    }
                 }
                 else {
                     var towerToRefill = this.getTowerToRefill(room);
@@ -48,9 +47,9 @@ module.exports = {
                         var defenseToRepair = this.findDefence(room, creep);
                         if (defenseToRepair) {
                             creep.creepSpeech(room, 'repairingDefence');
-                            if (creep.repair(defenseToRepair) == ERR_NOT_IN_RANGE) {
-                                creep.moveTo(defenseToRepair);
-                            }
+                            creep.repair(defenseToRepair);
+                            creep.moveTo(defenseToRepair);
+
                         }
                     }
                 }
