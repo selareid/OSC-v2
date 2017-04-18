@@ -169,25 +169,25 @@ module.exports = function () {
             _.forEach(global[room.name].sources, (source) => {
                 if (!Memory.rooms[room].srcpth[source.id]) Memory.rooms[room].srcpth[source.id] = [];
 
-                if (storage) {
-                    let pathStorage = Memory.rooms[room].srcpth[source.id][0] ? Room.deserializePath(Memory.rooms[room].srcpth[source.id][0]) : undefined;
-                    if (!pathStorage) {
-                        pathStorage = room.findPath(storage.pos, source.pos, {
-                                ignoreCreeps: true,
-                                ignoreRoads: true,
-                                plainCost: 1,
-                                swampCost: 1
-                            }) || [];
-                        Memory.rooms[room].srcpth[source.id][0] = Room.serializePath(pathStorage);
-                    }
-                    _.forEach(pathStorage, (pathData) => {
-                        if (!new RoomPosition(pathData.x, pathData.y, room.name).lookFor(LOOK_STRUCTURES)[0]) {
-                            var res = room.createConstructionSite(pathData.x, pathData.y, STRUCTURE_ROAD);
-                            if (res == 0) global.roomLog('Created Construction Site At ' + pathData.x + ' ' + pathData.y + ' ', room);
-                        }
-                    });
-                }
-                else {
+                // if (storage) {
+                //     let pathStorage = Memory.rooms[room].srcpth[source.id][0] ? Room.deserializePath(Memory.rooms[room].srcpth[source.id][0]) : undefined;
+                //     if (!pathStorage) {
+                //         pathStorage = room.findPath(storage.pos, source.pos, {
+                //                 ignoreCreeps: true,
+                //                 ignoreRoads: true,
+                //                 plainCost: 1,
+                //                 swampCost: 1
+                //             }) || [];
+                //         Memory.rooms[room].srcpth[source.id][0] = Room.serializePath(pathStorage);
+                //     }
+                //     _.forEach(pathStorage, (pathData) => {
+                //         if (!new RoomPosition(pathData.x, pathData.y, room.name).lookFor(LOOK_STRUCTURES)[0]) {
+                //             var res = room.createConstructionSite(pathData.x, pathData.y, STRUCTURE_ROAD);
+                //             if (res == 0) global.roomLog('Created Construction Site At ' + pathData.x + ' ' + pathData.y + ' ', room);
+                //         }
+                //     });
+                // }
+                // else {
                     let pathController = Memory.rooms[room].srcpth[source.id][1] ? Room.deserializePath(Memory.rooms[room].srcpth[source.id][1]) : undefined;
                     if (!pathController) {
                         pathController = room.findPath(room.controller.pos, source.pos, {
@@ -217,7 +217,7 @@ module.exports = function () {
                                     plainCost: 1,
                                     swampCost: 1
                                 }) || [];
-                            Memory.rooms[room].srcpth[source.id][2][spawn.name][2] = Room.serializePath(pathSpawn);
+                            Memory.rooms[room].srcpth[source.id][2][spawn.name] = Room.serializePath(pathSpawn);
                         }
 
                         _.forEach(pathSpawn, (pathData) => {
@@ -227,7 +227,7 @@ module.exports = function () {
                             }
                         });
                     });
-                }
+                // }
 
             });
 
