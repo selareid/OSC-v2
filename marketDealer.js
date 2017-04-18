@@ -43,15 +43,16 @@ module.exports = {
 
                     if (avgGhodiumPrice > 2.5) return;
 
-                    if (!order) {
-                        var amountNeeded = room.storage.store[RESOURCE_GHODIUM] ? Math.abs(room.storage.store[RESOURCE_GHODIUM] - room.storage.store[RESOURCE_GHODIUM]) : global.storageData[RESOURCE_GHODIUM];
+                    var amountNeeded = room.storage.store[RESOURCE_GHODIUM] ? Math.abs(room.storage.store[RESOURCE_GHODIUM] - room.storage.store[RESOURCE_GHODIUM]) : global.storageData[RESOURCE_GHODIUM];
 
+                    if (!order) {
                         if (amountNeeded * avgGhodiumPrice > Game.market.credits - 10000) return;
 
                         that.createBuyNewOrder(room, RESOURCE_GHODIUM, amountNeeded, avgGhodiumPrice)
                     }
                     else {
                         if (Math.abs(order.price - avgGhodiumPrice) > 0.05) rslTwo = Game.market.changeOrderPrice(order.id, avgGhodiumPrice);
+                        if (order.amount < amountNeeded) Game.market.extendOrder(order.id, amountNeeded-order.amount)
                     }
                 }
                 else {
