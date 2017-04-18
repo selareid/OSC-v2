@@ -247,8 +247,9 @@ module.exports = {
 
         if (creep.memory.working == true) {
             for (let resourceType in creep.carry) {
-                creep.transfer(nuke, resourceType);
+                var result = creep.transfer(nuke, resourceType);
                 creep.memory.working = true;
+                if (result != OK) creep.transfer(room.storage, resourceType);
             }
         }
         else {// carry empty
@@ -258,16 +259,16 @@ module.exports = {
             if (needsGhodium) {
                 if (!room.storage.store[RESOURCE_GHODIUM]) return 'error no ghodium';
 
-                var result = creep.withdraw(room.storage, RESOURCE_GHODIUM);
+                var result = creep.withdraw(room.storage, RESOURCE_GHODIUM, nuke.ghodiumCapacity-nuke.ghodium);
                 creep.memory.working = true;
                 //console.log(result);
                 if (result == OK) return OK;
                 else return 'failed';
             }
-            else {
+            else if (needsEnergy) {
                 if (!room.storage.store[RESOURCE_ENERGY] || room.storage.store[RESOURCE_ENERGY] < 10000) return 'error not enough energy';
 
-                var result = creep.withdraw(room.storage, RESOURCE_ENERGY);
+                var result = creep.withdraw(room.storage, RESOURCE_ENERGY, nuke.energy-nuke.energyCapacity);
                 creep.memory.working = true;
                 //console.log(result);
                 if (result == OK) return OK;
