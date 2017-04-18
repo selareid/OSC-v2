@@ -268,7 +268,7 @@ module.exports = {
             else if (needsEnergy) {
                 if (!room.storage.store[RESOURCE_ENERGY] || room.storage.store[RESOURCE_ENERGY] < 10000) return 'error not enough energy';
 
-                var result = creep.withdraw(room.storage, RESOURCE_ENERGY, nuke.energy-nuke.energyCapacity);
+                var result = creep.withdraw(room.storage, RESOURCE_ENERGY, nuke.energyCapacity-nuke.energy);
                 creep.memory.working = true;
                 //console.log(result);
                 if (result == OK) return OK;
