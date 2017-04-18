@@ -105,7 +105,9 @@ module.exports = function () {
 
     Room.prototype.buildThings =
         function (room = this) {
-            if (_.size(Game.constructionSites) > 90) return;
+            if (_.size(Game.constructionSites) > 50) return;
+            if (!Memory.rooms[room].pthSpwn) Memory.rooms[room].pthSpwn = {};
+            if (!Memory.rooms[room].srcpth) Memory.rooms[room].srcpth = [];
 
             var storage = room.storage;
             var terminal = room.terminal;
@@ -123,12 +125,17 @@ module.exports = function () {
                     });
                 }
 
-                    let pathController = room.findPath(storage.pos, room.controller.pos, {
+                    let pathController = Room.deserializePath(Memory.rooms[room].pthCntrl);
+
+                    if (!pathController) {
+                        pathController = room.findPath(storage.pos, room.controller.pos, {
                             ignoreCreeps: true,
                             ignoreRoads: true,
                             plainCost: 1,
                             swampCost: 1
                         }) || [];
+                        Memory.rooms[room].pthCntrl = Room.serializePath(pathController);
+                    }
 
                 _.forEach(pathController, (pathData) => {
                     if (!new RoomPosition(pathData.x, pathData.y, room.name).lookFor(LOOK_STRUCTURES)[0]) {
@@ -139,12 +146,17 @@ module.exports = function () {
 
 
                 _.forEach(global[room.name].spawns, (spawn) => {
-                    let pathSpawn = room.findPath(storage.pos, spawn.pos, {
-                            ignoreCreeps: true,
-                            ignoreRoads: true,
-                            plainCost: 1,
-                            swampCost: 1
-                        }) || [];
+                    let pathSpawn = Room.deserializePath(Memory.rooms[room].pthSpwn[spawn.name]);
+
+                    if (!pathSpawn) {
+                        pathSpawn = room.findPath(storage.pos, spawn.pos, {
+                                ignoreCreeps: true,
+                                ignoreRoads: true,
+                                plainCost: 1,
+                                swampCost: 1
+                            }) || [];
+                        Memory.rooms[room].pthSpwn[spawn.name] = Room.serializePath(pathSpawn);
+                    }
                     _.forEach(pathSpawn, (pathData) => {
                         if (!new RoomPosition(pathData.x, pathData.y, room.name).lookFor(LOOK_STRUCTURES)[0]) {
                             var res = room.createConstructionSite(pathData.x, pathData.y, STRUCTURE_ROAD);
@@ -155,13 +167,19 @@ module.exports = function () {
             }
 
             _.forEach(global[room.name].sources, (source) => {
+                if (!Memory.rooms[room].srcpth[source.id]) Memory.rooms[room].srcpth[source.id] = [];
+
                 if (storage) {
-                    let pathStorage = room.findPath(storage.pos, source.pos, {
-                            ignoreCreeps: true,
-                            ignoreRoads: true,
-                            plainCost: 1,
-                            swampCost: 1
-                        }) || [];
+                    let pathStorage = Room.deserializePath(Memory.rooms[room].srcpth[source.id][0]);
+                    if (!pathStorage) {
+                        pathStorage = room.findPath(storage.pos, source.pos, {
+                                ignoreCreeps: true,
+                                ignoreRoads: true,
+                                plainCost: 1,
+                                swampCost: 1
+                            }) || [];
+                        Memory.rooms[room].srcpth[source.id][0] = Room.serializePath(pathStorage);
+                    }
                     _.forEach(pathStorage, (pathData) => {
                         if (!new RoomPosition(pathData.x, pathData.y, room.name).lookFor(LOOK_STRUCTURES)[0]) {
                             var res = room.createConstructionSite(pathData.x, pathData.y, STRUCTURE_ROAD);
@@ -170,12 +188,17 @@ module.exports = function () {
                     });
                 }
                 else {
-                    let pathController = room.findPath(source.pos, room.controller.pos, {
-                            ignoreCreeps: true,
-                            ignoreRoads: true,
-                            plainCost: 1,
-                            swampCost: 1
-                        }) || [];
+                    let pathController = Room.deserializePath(Memory.rooms[room].srcpth[source.id][1]);
+                    if (!pathController) {
+                        pathController = room.findPath(room.controller.pos, source.pos, {
+                                ignoreCreeps: true,
+                                ignoreRoads: true,
+                                plainCost: 1,
+                                swampCost: 1
+                            }) || [];
+                        Memory.rooms[room].srcpth[source.id][1] = Room.serializePath(pathController);
+                    }
+
                     _.forEach(pathController, (pathData) => {
                         if (!new RoomPosition(pathData.x, pathData.y, room.name).lookFor(LOOK_STRUCTURES)[0]) {
                             var res = room.createConstructionSite(pathData.x, pathData.y, STRUCTURE_ROAD);
@@ -183,14 +206,20 @@ module.exports = function () {
                         }
                     });
 
+                    if (!Memory.rooms[room].srcpth[source.id][2]) Memory.rooms[room].srcpth[source.id][2] = {};
 
                     _.forEach(global[room.name].spawns, (spawn) => {
-                        let pathSpawn = room.findPath(source.pos, spawn.pos, {
-                                ignoreCreeps: true,
-                                ignoreRoads: true,
-                                plainCost: 1,
-                                swampCost: 1
-                            }) || [];
+                        let pathSpawn = Room.deserializePath(Memory.rooms[room].srcpth[source.id][2][spawn.name]);
+                        if (!pathSpawn) {
+                            pathSpawn = room.findPath(spawn.pos, source.pos, {
+                                    ignoreCreeps: true,
+                                    ignoreRoads: true,
+                                    plainCost: 1,
+                                    swampCost: 1
+                                }) || [];
+                            Memory.rooms[room].srcpth[source.id][2][spawn.name][2] = Room.serializePath(pathSpawn);
+                        }
+
                         _.forEach(pathSpawn, (pathData) => {
                             if (!new RoomPosition(pathData.x, pathData.y, room.name).lookFor(LOOK_STRUCTURES)[0]) {
                                 var res = room.createConstructionSite(pathData.x, pathData.y, STRUCTURE_ROAD);
