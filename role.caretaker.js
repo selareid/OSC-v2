@@ -25,7 +25,7 @@ module.exports = {
             var structureToRepair = this.findStructureToRepair(room, creep);
             if (structureToRepair) {
                 creep.creepSpeech(room, 'repairing');
-                this.moveToWithCostMatrix(room, creep, structureToRepair);
+                creep.moveTo(structureToRepair);
                 creep.repair(structureToRepair)
             }
             else {
@@ -169,57 +169,5 @@ module.exports = {
             return undefined;
         }
 
-    },
-
-    moveToWithCostMatrix: function (room, creep, target) {
-        var rsl = creep.moveTo(target, {
-            reusePath: 7, plainCost: 1, swampCost: 4,
-            costCallback: function (roomName) {
-                if (roomName == room.name) {
-                    let room = Game.rooms[roomName];
-
-                    if (!room) return;
-                    let costs = new PathFinder.CostMatrix;
-
-                    room.find(FIND_STRUCTURES).forEach(function (structure) {
-                        if (structure.structureType === STRUCTURE_ROAD) {
-                            // Avoid Roads
-                            costs.set(structure.pos.x, structure.pos.y, 4);
-                        } else if (structure.structureType !== STRUCTURE_CONTAINER &&
-                            (structure.structureType !== STRUCTURE_RAMPART || !structure.my)) {
-                            // Can't walk through non-walkable buildings
-                            costs.set(structure.pos.x, structure.pos.y, 0xff);
-                        }
-                    });
-
-                    for (x = 0; x < 50; x++) {
-                        costs.set(x, 49, 10);
-                    }
-                    for (x = 0; x < 50; x++) {
-                        costs.set(x, 0, 10);
-                    }
-                    for (y = 0; y < 50; y++) {
-                        costs.set(49, y, 10);
-                    }
-                    for (y = 0; y < 50; y++) {
-                        costs.set(0, y, 10);
-                    }
-
-                    // Avoid creeps in the room
-                    room.find(FIND_CREEPS).forEach(function (creep) {
-                        costs.set(creep.pos.x, creep.pos.y, 0xff);
-                    });
-
-                    return costs;
-                }
-                else {
-                    return;
-                }
-            },
-        });
-
-        if (rsl != 0) {
-            creep.moveTo(target, {reusePath: 7, plainCost: 1, swampCost: 4});
-        }
     }
 };
