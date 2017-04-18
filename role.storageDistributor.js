@@ -118,14 +118,14 @@ module.exports = {
                 if (terminal.store[resourceType] < 100) continue;
 
                 if (global.storageData[resourceType]) {
-                    if (room.storage.store[resourceType] < global.storageData[resourceType] - creep.carryCapacity) {
+                    if (!room.storage.store[resourceType] || (room.storage.store[resourceType] < global.storageData[resourceType] - creep.carryCapacity)) {
                         theResourceType = resourceType;
                         break;
                     }
                 }
                 else {
                     if (!global.storageData2[resourceType]) continue;
-                    if (room.storage.store[resourceType] < global.storageData2[resourceType] - creep.carryCapacity) {
+                    if (!room.storage.store[resourceType] || (room.storage.store[resourceType] < global.storageData2[resourceType] - creep.carryCapacity)) {
                         theResourceType = resourceType;
                         break;
                     }
