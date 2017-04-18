@@ -37,7 +37,7 @@ module.exports = {
 
                 this.creepActions(creep, undefined);
 
-                var strDstNear = creep.pos.findInRange(FIND_CREEPS, 1, {filter: (c) => c.memory.role == 'storageDistributor'})[0];
+                var strDstNear = creep.pos.findInRange(FIND_MY_CREEPS, 1, {filter: (c) => c.memory.role == 'storageDistributor'})[0];
                 if (strDstNear) creep.move(global.REVERSE_DIR[creep.pos.getDirectionTo(strDstNear)]);
             }
         }
