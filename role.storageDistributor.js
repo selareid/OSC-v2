@@ -259,7 +259,8 @@ module.exports = {
             if (needsGhodium) {
                 if (!room.storage.store[RESOURCE_GHODIUM]) return 'error no ghodium';
 
-                var result = creep.withdraw(room.storage, RESOURCE_GHODIUM, nuke.ghodiumCapacity-nuke.ghodium);
+                var amtTW = nuke.ghodiumCapacity-nuke.ghodium > creep.carryCapacity ? undefined : nuke.ghodiumCapacity-nuke.ghodium;
+                var result = creep.withdraw(room.storage, RESOURCE_GHODIUM, amtTW);
                 creep.memory.working = true;
                 //console.log(result);
                 if (result == OK) return OK;
@@ -268,7 +269,8 @@ module.exports = {
             else if (needsEnergy) {
                 if (!room.storage.store[RESOURCE_ENERGY] || room.storage.store[RESOURCE_ENERGY] < 10000) return 'error not enough energy';
 
-                var result = creep.withdraw(room.storage, RESOURCE_ENERGY, nuke.energyCapacity-nuke.energy);
+                var amtTW = nuke.energyCapacity-nuke.energy > creep.carryCapacity ? undefined : nuke.energyCapacity-nuke.energy;
+                var result = creep.withdraw(room.storage, RESOURCE_ENERGY, amtTW);
                 creep.memory.working = true;
                 //console.log(result);
                 if (result == OK) return OK;
