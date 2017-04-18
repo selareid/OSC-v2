@@ -22,8 +22,7 @@ module.exports = {
         if (!Memory.rooms[room].clm) Memory.rooms[room].clm = [];
 
         try {
-            var d = new Date();
-            if (d.getHours % 10 == 0 && d.getMinutes() % 0 == 0 && d.getSeconds() < 3) {
+            if (Game.time % 1500 == 0) {
                 room.buildThings();
             }
         }
