@@ -164,6 +164,7 @@ module.exports = function () {
                         else {
                             var maxPart = Math.floor((room.storage.store.energy-5000)/10000);
                             if (numberOfParts > maxPart) numberOfParts = maxPart > 7 ? 7 : maxPart;
+                            if (numberOfParts < 1) return;
                         }
 
                         for (let i = 0; i < numberOfParts; i++) {
