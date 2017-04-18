@@ -105,12 +105,20 @@ module.exports = {
          if (!terminal) return 'error no terminal';
             var theResourceType;
             for (let resourceType in room.storage.store) {
-                if (!global.storageData[resourceType]) continue;
                 if (resourceType == RESOURCE_ENERGY && terminal.store[resourceType] > 100000) continue;
-                
-                if (room.storage.store[resourceType] > global.storageData[resourceType]+creep.carryCapacity) {
-                    theResourceType = resourceType;
-                    break;
+
+                if (global.storageData[resourceType]) {
+                    if (room.storage.store[resourceType] > global.storageData[resourceType] + creep.carryCapacity) {
+                        theResourceType = resourceType;
+                        break;
+                    }
+                }
+                else {
+                    if (!global.storageData2[resourceType]) continue;
+                    if (room.storage.store[resourceType] > global.storageData2[resourceType] + creep.carryCapacity) {
+                        theResourceType = resourceType;
+                        break;
+                    }
                 }
             }
             if (theResourceType) {

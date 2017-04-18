@@ -9,7 +9,7 @@ module.exports = {
 
                 var order = _.filter(Game.market.orders, (o) => o.roomName == room.name && o.type == ORDER_SELL && o.resourceType == resourceType)[0];
                 if (!order) {
-                    this.createNewOrder(room, resourceType);
+                    this.createSellNewOrder(room, resourceType);
                     return;
                 }
 
@@ -30,10 +30,41 @@ module.exports = {
 
             }
         }
+
+        (function () {
+            if (room.controller.level >= 8) {
+                var order = _.filter(Game.market.orders, (o) => o.roomName == room.name && o.type == ORDER_BUY && o.resourceType == RESOURCE_GHODIUM)[0];
+
+                if (room.storage && (!room.storage.store[RESOURCE_GHODIUM] || room.storage.store[RESOURCE_GHODIUM] < global.storageData[RESOURCE_GHODIUM])) {
+                    var allOrders = Game.market.getAllOrders({resourceType: RESOURCE_GHODIUM});
+                    var avgGhodiumPrice = Math.floor((_.sum(allOrders, '.price') / allOrders.length * 100)) / 100;
+
+                    if (avgGhodiumPrice > 2.5) return;
+
+                    if (!order) {
+                        var amountNeeded = room.storage.store[RESOURCE_GHODIUM] ? Math.abs(room.storage.store[RESOURCE_GHODIUM] - room.storage.store[RESOURCE_GHODIUM]) : global.storageData[RESOURCE_GHODIUM];
+
+                        if (amountNeeded * avgGhodiumPrice > Game.market.credits - 10000) return;
+
+                        this.createBuyNewOrder(room, RESOURCE_GHODIUM, amountNeeded, avgGhodiumPrice)
+                    }
+                    else {
+                        if (Math.abs(order.price - avgGhodiumPrice) > 0.05) rslTwo = Game.market.changeOrderPrice(order.id, avgGhodiumPrice);
+                    }
+                }
+                else {
+                    if (order) Game.market.cancelOrder(order.id);
+                }
+            }
+        })();
     },
     
-    createNewOrder: function (room, resource) {
+    createSellNewOrder: function (room, resource) {
         Game.market.createOrder(ORDER_SELL, resource, 0.01, 1, room.name);
+    },
+
+    createBuyNewOrder: function (room, resource, amount, price) {
+        Game.market.createOrder(ORDER_BUY, resource, 0.01, 1, room.name);
     },
 
     getAvrg: function (allOrders) {
