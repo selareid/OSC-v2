@@ -233,20 +233,20 @@ global.roadTest = function (roomName) {
         //     });
         // }
         // else {
-            let pathController = Memory.rooms[room].srcpth[source.id][1] ? Room.deserializePath(Memory.rooms[room].srcpth[source.id][1]) : undefined;
-            if (!pathController) {
-                pathController = room.findPath(room.controller.pos, source.pos, {
-                        ignoreCreeps: true,
-                        ignoreRoads: true,
-                        plainCost: 1,
-                        swampCost: 1
-                    }) || [];
-                Memory.rooms[room].srcpth[source.id][1] = Room.serializePath(pathController);
-            }
-
-            _.forEach(pathController, (pathData) => {
-                room.visual.circle(pathData.x, pathData.y, {radius: radius, lineStyle: style});
-            });
+        //     let pathController = Memory.rooms[room].srcpth[source.id][1] ? Room.deserializePath(Memory.rooms[room].srcpth[source.id][1]) : undefined;
+        //     if (!pathController) {
+        //         pathController = room.findPath(room.controller.pos, source.pos, {
+        //                 ignoreCreeps: true,
+        //                 ignoreRoads: true,
+        //                 plainCost: 1,
+        //                 swampCost: 1
+        //             }) || [];
+        //         Memory.rooms[room].srcpth[source.id][1] = Room.serializePath(pathController);
+        //     }
+        //
+        //     _.forEach(pathController, (pathData) => {
+        //         room.visual.circle(pathData.x, pathData.y, {radius: radius, lineStyle: style});
+        //     });
 
             if (!Memory.rooms[room].srcpth[source.id][2]) Memory.rooms[room].srcpth[source.id][2] = {};
 
