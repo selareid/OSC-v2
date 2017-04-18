@@ -31,6 +31,8 @@ module.exports = {
             }
         }
 
+        var that = this;
+
         (function () {
             if (room.controller.level >= 8) {
                 var order = _.filter(Game.market.orders, (o) => o.roomName == room.name && o.type == ORDER_BUY && o.resourceType == RESOURCE_GHODIUM)[0];
@@ -46,7 +48,7 @@ module.exports = {
 
                         if (amountNeeded * avgGhodiumPrice > Game.market.credits - 10000) return;
 
-                        this.createBuyNewOrder(room, RESOURCE_GHODIUM, amountNeeded, avgGhodiumPrice)
+                        that.createBuyNewOrder(room, RESOURCE_GHODIUM, amountNeeded, avgGhodiumPrice)
                     }
                     else {
                         if (Math.abs(order.price - avgGhodiumPrice) > 0.05) rslTwo = Game.market.changeOrderPrice(order.id, avgGhodiumPrice);
