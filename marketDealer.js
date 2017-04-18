@@ -66,7 +66,7 @@ module.exports = {
     },
 
     createBuyNewOrder: function (room, resource, amount, price) {
-        Game.market.createOrder(ORDER_BUY, resource, 0.01, 1, room.name);
+        Game.market.createOrder(ORDER_BUY, resource, price, amount, room.name);
     },
 
     getAvrg: function (allOrders) {
