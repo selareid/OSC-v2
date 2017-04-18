@@ -188,7 +188,7 @@ module.exports = function () {
                     });
                 }
                 else {
-                    let pathController = Memory.rooms[room].srcpth[source.id][1] ? Room.deserializePath(Memory.rooms[room].srcpth[source.id][1]) undefined;
+                    let pathController = Memory.rooms[room].srcpth[source.id][1] ? Room.deserializePath(Memory.rooms[room].srcpth[source.id][1]) : undefined;
                     if (!pathController) {
                         pathController = room.findPath(room.controller.pos, source.pos, {
                                 ignoreCreeps: true,
