@@ -37,7 +37,7 @@ module.exports = {
             if (room.controller.level >= 8) {
                 var order = _.filter(Game.market.orders, (o) => o.roomName == room.name && o.type == ORDER_BUY && o.resourceType == RESOURCE_GHODIUM)[0];
 
-                if (room.storage && (!room.storage.store[RESOURCE_GHODIUM] || room.storage.store[RESOURCE_GHODIUM] < global.storageData[RESOURCE_GHODIUM])) {
+                if (room.storage && (!room.storage.store[RESOURCE_GHODIUM] || room.storage.store[RESOURCE_GHODIUM] < global.storageData[RESOURCE_GHODIUM]-1000)) {
                     var allOrders = Game.market.getAllOrders({resourceType: RESOURCE_GHODIUM});
                     var avgGhodiumPrice = Math.floor((_.sum(allOrders, '.price') / allOrders.length * 100)) / 100;
 
