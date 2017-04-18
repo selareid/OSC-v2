@@ -47,7 +47,7 @@ module.exports = {
 
         //repair structure underneath
         if (creep.carry.energy > 0) {
-            var needingRepair = creep.pos.lookFor(LOOK_STRUCTURES);
+            var needingRepair = _.filter(creep.pos.lookFor(LOOK_STRUCTURES), (s) => s.hits < s.hitsMax);
             if (needingRepair.length > 0) creep.repair(needingRepair[Game.time % needingRepair.length]); //repairs random structure underneath
         }
 
