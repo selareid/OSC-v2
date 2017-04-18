@@ -162,3 +162,109 @@ global.creepErrorLog = function (message, creep, room) {
     else if (creep && creep.name) return console.log('[' + Game.time + '] ' + '[' + global.objectLinker(creep, creep.name) + '] ' + global.errorString + message);
     else return console.log('[' + Game.time + '] ' + global.errorString + message); // I swear that else is only there for clarity
 };
+
+
+global.roadTest = function (roomName) {
+    if (!roomName) return 'No Room Name';
+    var room = Game.rooms[roomName];
+    if (!room) return 'bad room';
+
+    if (!Memory.rooms[room].pthSpwn) Memory.rooms[room].pthSpwn = {};
+    if (!Memory.rooms[room].srcpth) Memory.rooms[room].srcpth = [];
+
+    var storage = room.storage;
+    var terminal = room.terminal;
+
+
+    if (storage) {
+        let pathController = Memory.rooms[room].pthCntrl ? Room.deserializePath(Memory.rooms[room].pthCntrl) : undefined;
+
+        if (!pathController) {
+            pathController = room.findPath(storage.pos, room.controller.pos, {
+                    ignoreCreeps: true,
+                    ignoreRoads: true,
+                    plainCost: 1,
+                    swampCost: 1
+                }) || [];
+            Memory.rooms[room].pthCntrl = Room.serializePath(pathController);
+        }
+
+        _.forEach(pathController, (pathData) => {
+            room.visual.circle(pathData.x, pathData.y, {radius: radius, lineStyle: style});
+        });
+
+
+        _.forEach(global[room.name].spawns, (spawn) => {
+            let pathSpawn = Memory.rooms[room].pthSpwn[spawn.name] ? Room.deserializePath(Memory.rooms[room].pthSpwn[spawn.name]) : undefined;
+
+            if (!pathSpawn) {
+                pathSpawn = room.findPath(storage.pos, spawn.pos, {
+                        ignoreCreeps: true,
+                        ignoreRoads: true,
+                        plainCost: 1,
+                        swampCost: 1
+                    }) || [];
+                Memory.rooms[room].pthSpwn[spawn.name] = Room.serializePath(pathSpawn);
+            }
+            _.forEach(pathSpawn, (pathData) => {
+                room.visual.circle(pathData.x, pathData.y, {radius: radius, lineStyle: style});
+            });
+        });
+    }
+
+    _.forEach(global[room.name].sources, (source) => {
+        if (!Memory.rooms[room].srcpth[source.id]) Memory.rooms[room].srcpth[source.id] = [];
+
+        if (storage) {
+            let pathStorage = Memory.rooms[room].srcpth[source.id][0] ? Room.deserializePath(Memory.rooms[room].srcpth[source.id][0]) : undefined;
+            if (!pathStorage) {
+                pathStorage = room.findPath(storage.pos, source.pos, {
+                        ignoreCreeps: true,
+                        ignoreRoads: true,
+                        plainCost: 1,
+                        swampCost: 1
+                    }) || [];
+                Memory.rooms[room].srcpth[source.id][0] = Room.serializePath(pathStorage);
+            }
+            _.forEach(pathStorage, (pathData) => {
+                room.visual.circle(pathData.x, pathData.y, {radius: radius, lineStyle: style});
+            });
+        }
+        else {
+            let pathController = Memory.rooms[room].srcpth[source.id][1] ? Room.deserializePath(Memory.rooms[room].srcpth[source.id][1]) : undefined;
+            if (!pathController) {
+                pathController = room.findPath(room.controller.pos, source.pos, {
+                        ignoreCreeps: true,
+                        ignoreRoads: true,
+                        plainCost: 1,
+                        swampCost: 1
+                    }) || [];
+                Memory.rooms[room].srcpth[source.id][1] = Room.serializePath(pathController);
+            }
+
+            _.forEach(pathController, (pathData) => {
+                room.visual.circle(pathData.x, pathData.y, {radius: radius, lineStyle: style});
+            });
+
+            if (!Memory.rooms[room].srcpth[source.id][2]) Memory.rooms[room].srcpth[source.id][2] = {};
+
+            _.forEach(global[room.name].spawns, (spawn) => {
+                let pathSpawn = Memory.rooms[room].srcpth[source.id][2][spawn.name] ? Room.deserializePath(Memory.rooms[room].srcpth[source.id][2][spawn.name]) : undefined;
+                if (!pathSpawn) {
+                    pathSpawn = room.findPath(spawn.pos, source.pos, {
+                            ignoreCreeps: true,
+                            ignoreRoads: true,
+                            plainCost: 1,
+                            swampCost: 1
+                        }) || [];
+                    Memory.rooms[room].srcpth[source.id][2][spawn.name][2] = Room.serializePath(pathSpawn);
+                }
+
+                _.forEach(pathSpawn, (pathData) => {
+                    room.visual.circle(pathData.x, pathData.y, {radius: radius, lineStyle: style});
+                });
+            });
+        }
+
+    });
+};
