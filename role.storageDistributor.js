@@ -39,6 +39,9 @@ module.exports = {
                     case 'labBoost':
                         this.boostLab(room, creep);
                         break;
+                    case 'fillNuke':
+                        this.fillNuke(room, creep);
+                        break;
                     default:
                         global.creepErrorLog('creep.memory.doing is undefined', creep, room);
                         creep.memory.doing = 'link';
@@ -56,6 +59,9 @@ module.exports = {
                 }
                 else if (this.putExcessInTerminal(room, creep) == OK) {
                     creep.memory.doing = 'terminal';
+                }
+                else if (this.fillNuke(room, creep) == OK) {
+                    creep.memory.doing = 'fillNuke';
                 }
                 else {
                     creep.creepSpeech(undefined, 'bored');
@@ -207,7 +213,7 @@ module.exports = {
         if (!lab) return 'error no labs';
 
         if (creep.memory.working == true) {
-            for (let resourceType in room.storage.store) {
+            for (let resourceType in creep.carry) {
                 creep.transfer(lab, resourceType);
                 creep.memory.working = true;
             }
@@ -227,6 +233,41 @@ module.exports = {
                 if (!boostNeeded) return 'nothing to do';
 
                 var result = creep.withdraw(room.storage, boostNeeded);
+                creep.memory.working = true;
+                //console.log(result);
+                if (result == OK) return OK;
+                else return 'failed';
+            }
+        }
+    },
+    
+    fillNuke: function (room, creep) {
+        var nuke = creep.pos.findInRange(FIND_MY_STRUCTURES, 1, {filter: (s) => s.structureType == STRUCTURE_NUKER})[0];
+        if (!nuke) return 'error no nuke';
+
+        if (creep.memory.working == true) {
+            for (let resourceType in creep.carry) {
+                creep.transfer(nuke, resourceType);
+                creep.memory.working = true;
+            }
+        }
+        else {// carry empty
+            var needsGhodium = nuke.ghodium < nuke.ghodiumCapacity;
+            var needsEnergy = nuke.energy < nuke.energyCapacity;
+
+            if (needsGhodium) {
+                if (!room.storage.store[RESOURCE_GHODIUM]) return 'error no ghodium';
+
+                var result = creep.withdraw(room.storage, RESOURCE_GHODIUM);
+                creep.memory.working = true;
+                //console.log(result);
+                if (result == OK) return OK;
+                else return 'failed';
+            }
+            else {
+                if (!room.storage.store[RESOURCE_ENERGY] || room.storage.store[RESOURCE_ENERGY] < 10000) return 'error not enough energy';
+
+                var result = creep.withdraw(room.storage, RESOURCE_ENERGY);
                 creep.memory.working = true;
                 //console.log(result);
                 if (result == OK) return OK;
