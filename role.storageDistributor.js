@@ -33,6 +33,9 @@ module.exports = {
                     case 'terminal':
                         this.putExcessInTerminal(room, creep);
                         break;
+                    case 'terminalToStorage':
+                        this.terminalToStorage(room, creep);
+                        break;
                     case 'labBoost':
                         this.boostLab(room, creep);
                         break;
@@ -44,6 +47,9 @@ module.exports = {
             else {
                 if (this.linkToStorage(room, creep) == OK) {
                     creep.memory.doing = 'link';
+                }
+                else if (this.terminalToStorage(room, creep) == OK) {
+                    creep.memory.doing = 'terminalToStorage';
                 }
                 else if (this.boostLab(room, creep) == OK) {
                     creep.memory.doing = 'labBoost';
@@ -74,6 +80,66 @@ module.exports = {
                 return OK;
             }
             else return 'no structure'
+        }
+    },
+
+    terminalToStorage: function (room, creep) {
+        if (creep.memory.working == true) {//if carry is full, put in Storage
+
+            var terminal = creep.pos.isNearTo(room.terminal) ? room.terminal : undefined;
+            if (terminal) {
+                if (_.sum(room.storage.store) < room.storage.storeCapacity) {
+                    for (let resourceType in creep.carry) {
+                        creep.transfer(room.storage, resourceType);
+                    }
+                }
+                else {
+                    for (let resourceType in creep.carry) {
+                        creep.transfer(terminal, resourceType);
+                    }
+                    return 'terminal full'
+                }
+            }
+            else {
+                for (let resourceType in creep.carry) {
+                    creep.transfer(room.storage, resourceType);
+                }
+                return 'no structure';
+            }
+
+        }
+        else {//if carry is empty, take out of Terminal
+
+            var terminal = creep.pos.isNearTo(room.terminal) ? room.terminal : undefined;
+            if (!terminal) return 'error no terminal';
+
+            var theResourceType;
+            for (let resourceType in terminal.store) {
+                if (global.storageData[resourceType]) {
+                    if (room.storage.store[resourceType] < global.storageData[resourceType] - creep.carryCapacity) {
+                        theResourceType = resourceType;
+                        break;
+                    }
+                }
+                else {
+                    if (!global.storageData2[resourceType]) continue;
+                    if (room.storage.store[resourceType] < global.storageData2[resourceType] - creep.carryCapacity) {
+                        theResourceType = resourceType;
+                        break;
+                    }
+                }
+            }
+
+            if (theResourceType) {
+                var result = creep.withdraw(terminal, theResourceType);
+                creep.memory.working = true;
+                //console.log(result);
+                if (result == OK) return OK;
+                else return 'failed';
+            }
+            else {
+                return 'nothing to do'
+            }
         }
     },
 
