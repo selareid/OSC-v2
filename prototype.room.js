@@ -125,7 +125,7 @@ module.exports = function () {
                     });
                 }
 
-                    let pathController = Room.deserializePath(Memory.rooms[room].pthCntrl);
+                    let pathController = Memory.rooms[room].pthCntrl ? Room.deserializePath(Memory.rooms[room].pthCntrl) : undefined;
 
                     if (!pathController) {
                         pathController = room.findPath(storage.pos, room.controller.pos, {
@@ -146,7 +146,7 @@ module.exports = function () {
 
 
                 _.forEach(global[room.name].spawns, (spawn) => {
-                    let pathSpawn = Room.deserializePath(Memory.rooms[room].pthSpwn[spawn.name]);
+                    let pathSpawn = Memory.rooms[room].pthSpwn[spawn.name] ? Room.deserializePath(Memory.rooms[room].pthSpwn[spawn.name]) : undefined;
 
                     if (!pathSpawn) {
                         pathSpawn = room.findPath(storage.pos, spawn.pos, {
@@ -170,7 +170,7 @@ module.exports = function () {
                 if (!Memory.rooms[room].srcpth[source.id]) Memory.rooms[room].srcpth[source.id] = [];
 
                 if (storage) {
-                    let pathStorage = Room.deserializePath(Memory.rooms[room].srcpth[source.id][0]);
+                    let pathStorage = Memory.rooms[room].srcpth[source.id][0] ? Room.deserializePath(Memory.rooms[room].srcpth[source.id][0]) : undefined;
                     if (!pathStorage) {
                         pathStorage = room.findPath(storage.pos, source.pos, {
                                 ignoreCreeps: true,
@@ -188,7 +188,7 @@ module.exports = function () {
                     });
                 }
                 else {
-                    let pathController = Room.deserializePath(Memory.rooms[room].srcpth[source.id][1]);
+                    let pathController = Memory.rooms[room].srcpth[source.id][1] ? Room.deserializePath(Memory.rooms[room].srcpth[source.id][1]) undefined;
                     if (!pathController) {
                         pathController = room.findPath(room.controller.pos, source.pos, {
                                 ignoreCreeps: true,
@@ -209,7 +209,7 @@ module.exports = function () {
                     if (!Memory.rooms[room].srcpth[source.id][2]) Memory.rooms[room].srcpth[source.id][2] = {};
 
                     _.forEach(global[room.name].spawns, (spawn) => {
-                        let pathSpawn = Room.deserializePath(Memory.rooms[room].srcpth[source.id][2][spawn.name]);
+                        let pathSpawn = Memory.rooms[room].srcpth[source.id][2][spawn.name] ? Room.deserializePath(Memory.rooms[room].srcpth[source.id][2][spawn.name]) : undefined;
                         if (!pathSpawn) {
                             pathSpawn = room.findPath(spawn.pos, source.pos, {
                                     ignoreCreeps: true,
