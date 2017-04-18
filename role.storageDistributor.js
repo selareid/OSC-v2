@@ -115,6 +115,8 @@ module.exports = {
 
             var theResourceType;
             for (let resourceType in terminal.store) {
+                if (terminal.store[resourceType] < 100) continue;
+
                 if (global.storageData[resourceType]) {
                     if (room.storage.store[resourceType] < global.storageData[resourceType] - creep.carryCapacity) {
                         theResourceType = resourceType;
