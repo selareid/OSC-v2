@@ -3,6 +3,8 @@
 global.allianceName = 'INT_MAX';
 global.Allies = ['Lur', 'starwar15432', 'Leonyx', 'theKraken'];
 
+global.sign = ['Territory Of INTEGER_MAX', 'CIRCLE WORLD!, An INTEGER_MAX MEMBER', 'INTEGER_MAX, An INTEGER_MAX MEMBER', 'Cake!, An INTEGER_MAX MEMBER', 'My Cake Is Real, An INTEGER_MAX MEMBER!', 'Territory Of STARWAR15432, An INTEGER_MAX MEMBER'];
+
 global.REVERSE_DIR = {
     [TOP]            : BOTTOM,
     [TOP_RIGHT]        : BOTTOM_LEFT,
