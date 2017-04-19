@@ -164,7 +164,10 @@ module.exports = function () {
                         else {
                             var maxPart = Math.floor((room.storage.store.energy-5000)/10000);
                             if (numberOfParts > maxPart) numberOfParts = maxPart > 7 ? 7 : maxPart;
-                            if (numberOfParts < 1) return 'remove';
+                            if (numberOfParts < 1) {
+                                if (room.controller.ticksToDowngrade < 10000) return 'remove';
+                                numberOfParts = 1;
+                            }
                         }
 
                         for (let i = 0; i < numberOfParts; i++) {
