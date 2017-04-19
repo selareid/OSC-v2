@@ -15,13 +15,35 @@ module.exports = {
         else if (!creep.memory.qR) creep.memory.qR = this.whatQueue(room, creep.memory.lndR);
         else {
             if (creep.pos.roomName == roomToGoTo) {
+                var controller = creep.pos.isNearTo(creep.room.controller) ? creep.room.controller : undefined;
+                if (controller) {
+                    if (!controller.sign || controller.sign.username != creep.owner.username || Game.time - controller.sign.time > 15000) {
+                        var text = global.sign[Math.floor(Math.random() * global.sign.length)];
+                        creep.signController(controller, text);
+                    }
+                }
+
                 if (creep.memory.qR == 'reserve') {
 
                     if (creep.room.controller && creep.room.controller.reservation && creep.room.controller.reservation.ticksToEnd >= 5000) {
                         delete creep.memory.lndR;
                         delete creep.memory.qR;
                     }
-                    switch (creep.reserveController(creep.room.controller)) {
+                }
+                switch (creep.reserveController(creep.room.controller)) {
+                    case ERR_NOT_IN_RANGE:
+                        creep.moveTo(creep.room.controller, {reusePath: 21, maxRooms: 1});
+                        break;
+                    case ERR_INVALID_TARGET:
+                        creep.attackController(creep.room.controller);
+                        break;
+                }
+
+            }
+            else if (creep.memory.qR == 'claim') {
+
+                if (Game.rooms[roomToGoTo] && Game.rooms[roomToGoTo].controller && Game.rooms[roomToGoTo].controller.my === false) {
+                    switch (creep.claimController(creep.room.controller)) {
                         case ERR_NOT_IN_RANGE:
                             creep.moveTo(creep.room.controller, {reusePath: 21, maxRooms: 1});
                             break;
@@ -29,26 +51,12 @@ module.exports = {
                             creep.attackController(creep.room.controller);
                             break;
                     }
-
                 }
-                else if (creep.memory.qR == 'claim') {
-
-                    if (Game.rooms[roomToGoTo] && Game.rooms[roomToGoTo].controller && Game.rooms[roomToGoTo].controller.my === false) {
-                        switch (creep.claimController(creep.room.controller)) {
-                            case ERR_NOT_IN_RANGE:
-                                creep.moveTo(creep.room.controller, {reusePath: 21, maxRooms: 1});
-                                break;
-                            case ERR_INVALID_TARGET:
-                                creep.attackController(creep.room.controller);
-                                break;
-                        }
-                    }
-                    else {
-                        delete creep.memory.lndR;
-                        delete creep.memory.qR;
-                    }
-
+                else {
+                    delete creep.memory.lndR;
+                    delete creep.memory.qR;
                 }
+
             }
             else {
                 creep.moveTo(new RoomPosition(25, 25, roomToGoTo), {reusePath: 21, range: 23});
