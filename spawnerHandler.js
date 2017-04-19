@@ -652,7 +652,7 @@ module.exports = {
                 if (Game.creeps[name] || name == 'remove') {
                     _.filter(Memory.rooms[room].spawnQueue, (q) => q.length > 0)[Game.time % _.filter(Memory.rooms[room].spawnQueue, (q) => q.length > 0).length].splice(0, 1);
 
-                    global.roomLog("[SPAWNING] " + name, room);
+                    if (!name == 'remove') global.roomLog("[SPAWNING] " + name, room);
                 }
             }
         }
