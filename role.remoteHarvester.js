@@ -106,7 +106,7 @@ creep.say('harvester remote');
                     switch (creep.harvest(source)) {
                         case ERR_NOT_IN_RANGE:
                             creep.creepSpeech(room, 'movingToSource');
-                            creep.moveTo(source, {reusePath: 37});
+                            creep.moveTo(source, {reusePath: 37, maxRooms: 1});
                             break;
                         case OK:
                             creep.creepSpeech(room, 'harvesting');
