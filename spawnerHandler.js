@@ -218,7 +218,7 @@ module.exports = {
                 var temp_minimumNumberOfRemoteHaulers = 0;
                 var temp_minimumNumberOfRemoteGuards = 0;
 
-                for (let rmtR in remoteRooms) {
+                for (let rmtR of remoteRooms) {
                     let splitRMTR = rmtR.split(',');
 
                     let temp_room = splitRMTR[0];
