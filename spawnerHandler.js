@@ -277,10 +277,10 @@ module.exports = {
                             break;
                     }
 
-                    temp_minimumNumberOfRemoteHarvesters += temp_harvesters;
-                    temp_minimumNumberOfRemoteMiners += temp_miners;
-                    temp_minimumNumberOfRemoteHaulers += temp_haulers;
-                    temp_minimumNumberOfRemoteGuards += temp_guards;
+                    temp_minimumNumberOfRemoteHarvesters += Number.parseInt(temp_harvesters);
+                    temp_minimumNumberOfRemoteMiners += Number.parseInt(temp_miners);
+                    temp_minimumNumberOfRemoteHaulers += Number.parseInt(temp_haulers);
+                    temp_minimumNumberOfRemoteGuards += Number.parseInt(temp_guards);
                 }
 
                 minimumNumberOfRemoteHarvesters = temp_minimumNumberOfRemoteHarvesters;
