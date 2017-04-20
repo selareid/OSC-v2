@@ -215,7 +215,6 @@ module.exports = {
 
                 var temp_minimumNumberOfRemoteHarvesters = 0;
                 var temp_minimumNumberOfRemoteMiners = 0;
-                var temp_minimumNumberOfRemoteHaulers = 0;
                 var temp_minimumNumberOfRemoteGuards = 0;
 
                 for (let rmtR of remoteRooms) {
@@ -227,8 +226,6 @@ module.exports = {
 
                     //if (((temp_harvesters == undefined || temp_harvesters == undefined) && (temp_miners == undefined || temp_miners == null))
                       //  || (temp_harvesters < 1 && temp_miners < 1)) Memory.rooms[room].rmtR.splice(rmtR.length, 1);
-
-                    let temp_haulers = Math.round(temp_harvesters+temp_miners/2);
 
                     let temp_guards = 0;
 
@@ -279,13 +276,12 @@ module.exports = {
 
                     temp_minimumNumberOfRemoteHarvesters += Number.parseInt(temp_harvesters);
                     temp_minimumNumberOfRemoteMiners += Number.parseInt(temp_miners);
-                    temp_minimumNumberOfRemoteHaulers += Number.parseInt(temp_haulers);
                     temp_minimumNumberOfRemoteGuards += Number.parseInt(temp_guards);
                 }
 
                 minimumNumberOfRemoteHarvesters = temp_minimumNumberOfRemoteHarvesters;
                 minimumNumberOfRemoteMiners = temp_minimumNumberOfRemoteMiners;
-                minimumNumberOfRemoteHaulers = temp_minimumNumberOfRemoteHaulers;
+                minimumNumberOfRemoteHaulers = Math.round(temp_minimumNumberOfRemoteHarvesters+temp_minimumNumberOfRemoteMiners/2);
                 minimumNumberOfRemoteGuards = temp_minimumNumberOfRemoteGuards;
 
                //remote creeps ends
