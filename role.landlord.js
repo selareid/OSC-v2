@@ -29,21 +29,7 @@ module.exports = {
                         delete creep.memory.lndR;
                         delete creep.memory.qR;
                     }
-                }
-                switch (creep.reserveController(creep.room.controller)) {
-                    case ERR_NOT_IN_RANGE:
-                        creep.moveTo(creep.room.controller, {reusePath: 21, maxRooms: 1});
-                        break;
-                    case ERR_INVALID_TARGET:
-                        creep.attackController(creep.room.controller);
-                        break;
-                }
-
-            }
-            else if (creep.memory.qR == 'claim') {
-
-                if (Game.rooms[roomToGoTo] && Game.rooms[roomToGoTo].controller && Game.rooms[roomToGoTo].controller.my === false) {
-                    switch (creep.claimController(creep.room.controller)) {
+                    switch (creep.reserveController(creep.room.controller)) {
                         case ERR_NOT_IN_RANGE:
                             creep.moveTo(creep.room.controller, {reusePath: 21, maxRooms: 1});
                             break;
@@ -52,9 +38,23 @@ module.exports = {
                             break;
                     }
                 }
-                else {
-                    delete creep.memory.lndR;
-                    delete creep.memory.qR;
+                else if (creep.memory.qR == 'claim') {
+
+                    if (Game.rooms[roomToGoTo] && Game.rooms[roomToGoTo].controller && Game.rooms[roomToGoTo].controller.my === false) {
+                        switch (creep.claimController(creep.room.controller)) {
+                            case ERR_NOT_IN_RANGE:
+                                creep.moveTo(creep.room.controller, {reusePath: 21, maxRooms: 1});
+                                break;
+                            case ERR_INVALID_TARGET:
+                                creep.attackController(creep.room.controller);
+                                break;
+                        }
+                    }
+                    else {
+                        delete creep.memory.lndR;
+                        delete creep.memory.qR;
+                    }
+
                 }
 
             }
