@@ -9,6 +9,7 @@ global.sign = [
     'CIRCLE WORLD!',
     'INTEGER_MAX',
     'Cake!',
+    'Delicious Cake!',
     'My Cake Is Real',
     'The Cake Is A Lie',
     'Territory Of STARWAR15432, An INTEGER_MAX MEMBER',
