@@ -134,7 +134,7 @@ module.exports = {
                                 // pickup successful
                                 break;
                             case -9:
-                                creep.moveTo(droppedResource, {reusePath: 7});
+                                creep.moveTo(droppedResource, {reusePath: 7, maxRooms: 1});
                                 break;
                         }
 
@@ -152,7 +152,7 @@ module.exports = {
                                             break;
                                         }
                                         else if (creep.withdraw(container, resourceType) == ERR_NOT_IN_RANGE) {
-                                            creep.moveTo(container, {reusePath: 10});
+                                            creep.moveTo(container, {reusePath: 10, maxRooms: 1});
                                         }
                                     }
                                 }
