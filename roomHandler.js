@@ -20,6 +20,7 @@ module.exports = {
 
         if (!Memory.rooms[room].rsv) Memory.rooms[room].rsv = [];
         if (!Memory.rooms[room].clm) Memory.rooms[room].clm = [];
+        if (!Memory.rooms[room].rmtR) Memory.rooms[room].rmtR = [];
 
         try {
             if (Game.time % 1500 == 0) {
@@ -109,20 +110,6 @@ module.exports = {
         }
         //room to steal from stuff ends
 
-        //remote flag stuff starts
-        if (Game.time % 23 == 0 || global[room.name].cachedRemoteCreepFlags == undefined) {
-            var newRemoteCreepFlags = room.getRemoteFlags(); // get remote flags
-            global[room.name].cachedRemoteCreepFlags = newRemoteCreepFlags; //cache remote flags
-        }
-        //remote flag stuff ends
-
-        //remote guard stuff starts here
-        if (Game.time % 23 == 0 || global[room.name].cachedRemoteGuardFlags == undefined) {
-            var newRemoteGuardCreepFlags = room.getRemoteGuardFlags(); // get remote flags
-            global[room.name].cachedRemoteGuardFlags = newRemoteGuardCreepFlags; //cache remote flags
-        }
-        //remote guard stuff ends here
-
         //energyHelperFlag stuff starts
         if (Game.cpu.bucket > 2000) {
             if (Game.time % 7 == 0 || global[room.name].cachedEnergyHelperFlags == undefined) {
@@ -142,20 +129,28 @@ module.exports = {
             }
         }
 
+
         //remote room guard stuff starts
-        if (Game.time % 4 == 0 || global[room.name].cachedAreRemotesUnderAttack == undefined) {
-            var remoteRoomsUnderAttackFlags = [];
-            _.forEach(global[room.name].cachedRemoteCreepFlags, (flag) => {
-                if (Game.rooms[flag.pos.roomName]) {
-                    var enemiesInRemoteRoom = Game.rooms[flag.pos.roomName].find(FIND_HOSTILE_CREEPS, {filter: (c) => !global.Allies.includes(c.owner.username)});
+        if (Game.time % 11 == 0 || global[room.name].cachedRemotesUnderAttack == undefined) {
+            var remoteRooms = Memory.rooms[room].rmtR;
+            var remoteRoomsUnderAttack = global[room.name].cachedRemotesUnderAttack ? global[room.name].cachedRemotesUnderAttack : [];
+
+            for (let rr_it in remoteRooms) {
+                let rroomName = remoteRooms[rr_it];
+
+                if (Game.rooms[rroomName]) {
+                    let enemiesInRemoteRoom = Game.rooms[flag.pos.roomName].find(FIND_HOSTILE_CREEPS, {filter: (c) => !global.Allies.includes(c.owner.username)});
                     if (enemiesInRemoteRoom.length > 0) {
-                        remoteRoomsUnderAttackFlags.push(flag);
+                        remoteRoomsUnderAttack.push(rroomName);
+                    }
+                    else {
+                        let key = _.findKey(remoteRoomsUnderAttack, (r) => r == rroomName);
+                        global[room.name].cachedRemotesUnderAttack.splice(key, 1);
                     }
                 }
-            });
+            }
 
-            global[room.name].cachedAreRemotesUnderAttack = remoteRoomsUnderAttackFlags.length > 0;
-            global[room.name].cachedRemoteRoomsUnderAttackFlags = remoteRoomsUnderAttackFlags[0] || [];
+            global[room.name].cachedRemotesUnderAttack = remoteRoomsUnderAttack;
 
         }
         //remote room guard stuff ends

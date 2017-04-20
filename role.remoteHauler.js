@@ -3,21 +3,19 @@ require('prototype.creep');
 require('prototype.creepSpeech')();
 
 module.exports = {
-    run: function (room, creep, remoteCreepFlags = global[room.name].cachedRemoteCreepFlags) {
-        creep.say('yeah');
-        if (remoteCreepFlags.length > 0) {
+    run: function (room, creep) {
+        var remoteRooms = Memory.rooms[room].rmtR;
 
-            var creepRemoteFlag = creep.memory.remoteFlag;
+        if (!remoteRooms || remoteRooms.length > 0) {
+            var remoteRoom = creep.memory.rr;
 
-            if (!creepRemoteFlag) {
-                creep.memory.remoteFlag = this.getRemoteFlag(room, creep, remoteCreepFlags);
-                creepRemoteFlag = creep.memory.remoteFlag;
+            if (!remoteRoom) {
+                creep.memory.rr = this.setRemoteRoomMemory(room, creep, remoteRooms);
+                remoteRoom = creep.memory.rr;
             }
 
-            var remoteFlag = Game.flags[creepRemoteFlag];
-
-            if (remoteFlag) {
-                this.realRun(room, creep, remoteFlag);
+            if (remoteRoom) {
+                this.realRun(room, creep, remoteRoom);
             }
             else {
                 creep.runInSquares();
@@ -29,19 +27,14 @@ module.exports = {
         }
     },
 
-    getRemoteFlag: function (room, creep, remoteCreepFlags) {
+    setRemoteRoomMemory: function (room, creep, remoteRooms) {
 
-        var zeChosenFlag = remoteCreepFlags[Math.floor(Math.random() * remoteCreepFlags.length)];
+        var zeChosenRoom = remoteRooms[Math.floor(Math.random() * remoteRooms.length)];
 
-        if (zeChosenFlag) {
-            return zeChosenFlag.name;
-        }
-        else {
-            return undefined;
-        }
+        return zeChosenRoom ? zeChosenRoom.split(',')[0] : undefined;
     },
 
-    realRun: function (room, creep, remoteFlag) {
+    realRun: function (room, creep, remoteRoom) {
         var that = this;
         creep.say('hauler remote');
 
@@ -123,8 +116,8 @@ module.exports = {
         }
         else {
             (function () {
-                if (creep.pos.roomName != remoteFlag.pos.roomName) {
-                    creep.moveTo(remoteFlag.pos, {reusePath: 37});
+                if (creep.pos.roomName != remoteRoom) {
+                    creep.moveTo(new RoomPosition(25, 25, remoteRoom), {reusePath: 21, range: 23});
 
                     if (creep.carry.energy > 0) {
                         var storage = creep.pos.isNearTo(room.storage) ? room.storage : undefined;
@@ -166,16 +159,17 @@ module.exports = {
                             }
                         }
                         else {
-                            // randomly pick out a new remote flag :)
+                            // randomly pick out a new remote room :)
                             // since there's nothing to pick up in this room
+                            var remoteRooms = Memory.rooms[room].rmtR;
                             var counter = 0;
                             do {
-                                var newFlag = that.getRemoteFlag(room, creep, global[room.name].cachedRemoteCreepFlags);
+                                var newRoom = that.setRemoteRoomMemory(room, creep, remoteRooms);
                                 counter =+ 1;
                             }
-                            while (counter < (global[room.name].cachedRemoteCreepFlags.length + 1) && (newFlag == Game.flags[newFlag] || !Game.flags[newFlag].room));
+                            while (counter < (remoteRooms + 1) && (newRoom == remoteRoom || !Game.rooms[newRoom]));
 
-                             creep.memory.remoteFlag = newFlag;
+                             creep.memory.rr = newRoom;
                         }
                     }
                 }

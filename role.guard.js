@@ -3,7 +3,6 @@ require('prototype.creepWar')();
 
 module.exports = {
     run: function (room, creep) {
-        PathFinder.use(true);
 
         creep.creepSpeech(room);
 
@@ -32,11 +31,11 @@ module.exports = {
             }
         }
         else {
-            if (global[room.name].cachedAreRemotesUnderAttack == true) {
-                var remoteFlag = global[room.name].cachedRemoteRoomsUnderAttackFlags;
-                if (remoteFlag) {
-                    if (creep.pos.roomName != remoteFlag.pos.roomName) {
-                        creep.moveTo(remoteFlag, {reusePath: 11, ignoreRoads: true})
+            if (global[room.name].cachedRemotesUnderAttack.length > 0) {
+                var remoteRoom = global[room.name].cachedRemotesUnderAttack[0];
+                if (remoteRoom) {
+                    if (creep.pos.roomName != remoteRoom) {
+                        creep.moveTo(new RoomPosition(25, 25, remoteRoom), {reusePath: 13, range: 23});
                     }
                     else {
                         var target = this.getTarget(creep.room, creep);

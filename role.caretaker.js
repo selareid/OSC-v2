@@ -4,7 +4,6 @@ require('prototype.creepSpeech')();
 
 module.exports = {
     run: function (room, creep) {
-        PathFinder.use(true);
 
         if (creep.memory.working == true && creep.carry.energy == 0) {
             creep.memory.working = false;

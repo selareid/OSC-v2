@@ -36,32 +36,6 @@ module.exports = function () {
             }
         };
 
-    Room.prototype.getRemoteFlags =
-        function () {
-            var Flags = _.filter(Game.flags, f => f.name.split(' ')[0] == 'remoteFlag' && f.memory.room == this.name
-            && f.memory.numberOfRemoteHarvesters != undefined);
-
-            if (Flags.length > 0) {
-                return Flags;
-            }
-            else {
-                return [];
-            }
-        };
-
-    Room.prototype.getRemoteGuardFlags =
-        function () {
-            var Flags = _.filter(Game.flags, f => f.name.split(' ')[0] == 'remoteGuardFlag' && f.memory.room == this.name
-            && f.memory.numberOfGuards != undefined);
-
-            if (Flags.length > 0) {
-                return Flags;
-            }
-            else {
-                return [];
-            }
-        };
-
     Room.prototype.getEnergyHelperFlags =
         function () {
             var Flags = _.filter(Game.flags, f => f.memory.type == 'energyHelperFlag' && f.memory.room == this.name && f.memory.numberOfCreeps != undefined);

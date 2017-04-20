@@ -12,6 +12,7 @@ console.log("[" + "<p style=\"display:inline; color: #ededed\">RESET</p>" + "] "
 profiler.enable();
 if (Game.cpu.bucket > 300) module.exports.loop = function () {
     profiler.wrap(function () {
+        PathFinder.use(true);
 
         try {
             //memory stuff

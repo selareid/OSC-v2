@@ -102,16 +102,16 @@ module.exports = {
                     if (Game.cpu.bucket > 1000) energyThief.run(room, creep);
                     break;
                 case 'remoteHarvester':
-                    roleRemoteHarvester.run(room, creep, global[room.name].cachedRemoteCreepFlags);
+                    roleRemoteHarvester.run(room, creep);
                     break;
                 case 'remoteHauler':
-                    roleRemoteHauler.run(room, creep, global[room.name].cachedRemoteCreepFlags);
+                    roleRemoteHauler.run(room, creep);
                     break;
                 case 'remoteMiner':
-                    roleRemoteMiner.run(room, creep, global[room.name].cachedRemoteCreepFlags);
+                    roleRemoteMiner.run(room, creep);
                     break;
                 case 'remoteGuard':
-                    roleRemoteGuard.run(room, creep, global[room.name].cachedRemoteGuardFlags);
+                    roleRemoteGuard.run(room, creep);
                     break;
                 case 'energyHelper':
                     var energyHelperFlag = global[room.name].cachedEnergyHelperFlags[0];

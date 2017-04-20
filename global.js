@@ -94,6 +94,13 @@ global.addReserveRoom = function (room, reserveRoom) {
     return Memory.rooms[Game.rooms[room]].rsv.push(reserveRoom);
 };
 
+global.addRemoteMine = function (room, remoteRoom, harvesters = 0, miners = 0) {
+    if (!remoteRoom) return 'bad remoteRoom';
+    if (harvesters == 0 && miners == 0) return 'bad creeps';
+
+    return Memory.rooms[Game.rooms[room]].rmtR.push(remoteRoom, harvesters, miners);
+};
+
 global.errorString = "[" + "<p style=\"display:inline; color: #ed4543\">ERROR</p>" + "] ";
 
 global.objectLinker = function(roomArg, text = undefined, select = true) {

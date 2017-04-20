@@ -209,54 +209,85 @@ module.exports = {
                 }
                 //set number of landlords ends
 
-                //set number of remote creeps starts
-                (function() {
-                    if (Game.time % 6 == 0 || global[room.name]['cachedMinimumNumberOfRemoteCreeps'] == undefined || global[room.name]['cachedMinimumNumberOfRemoteCreeps'].length < 3) {
-                        var remoteCreepFlags = global[room.name].cachedRemoteCreepFlags;
-                        var tempRemoteHarvesters = 0;
-                        var tempRemoteHaulers = 0;
-                        var tempRemoteMiners = 0;
+               //remote creeps starts
 
-                        for (let flag of remoteCreepFlags) {
-                            tempRemoteHarvesters += flag.memory.numberOfRemoteHarvesters;
-                            if (flag.memory.numberOfRemoteHaulers !== undefined && flag.memory.numberOfRemoteHaulers !== null) tempRemoteHaulers += flag.memory.numberOfRemoteHaulers;
-                            if (flag.memory.numberOfRemoteMiners !== undefined && flag.memory.numberOfRemoteMiners !== null) tempRemoteMiners += flag.memory.numberOfRemoteMiners;
+                var remoteRooms = Memory.rooms[room].rmtR;
+
+                var temp_minimumNumberOfRemoteHarvesters = 0;
+                var temp_minimumNumberOfRemoteMiners = 0;
+                var temp_minimumNumberOfRemoteHaulers = 0;
+                var temp_minimumNumberOfRemoteGuards = 0;
+
+                for (let rmtR in remoteRooms) {
+                    let splitRMTR = rmtR.split(',');
+
+                    let temp_room = splitRMTR[0];
+                    let temp_harvesters = splitRMTR[1] ? splitRMTR[1] : 0;
+                    let temp_miners = splitRMTR[2] ? splitRMTR[2] : 0;
+
+                    if (!temp_harvesters && !temp_miners || temp_harvesters < 1 && temp_miners < 1) Memory.rooms[room].rmtR.splice(rmtR.length, 1);
+
+                    let temp_haulers = Math.round(temp_harvesters+temp_miners/2);
+
+                    let temp_guards = 0;
+
+                    function isES456(temp_room) {
+                        if (Number.isNaN(temp_room[2]) == false) {
+                            switch (temp_room[2]) {
+                                case 4:
+                                    return true;
+                                    break;
+                                case 5:
+                                    return true;
+                                    break;
+                                case 6:
+                                    return true;
+                                    break;
+                                default:
+                                    return false;
+                            }
                         }
-
-                        minimumNumberOfRemoteHarvesters = tempRemoteHarvesters;
-                        minimumNumberOfRemoteHaulers = tempRemoteHaulers;
-                        minimumNumberOfRemoteMiners = tempRemoteMiners;
-
-                        global[room.name]['cachedMinimumNumberOfRemoteCreeps'] = minimumNumberOfRemoteHarvesters + ',' + minimumNumberOfRemoteHaulers + ',' + minimumNumberOfRemoteMiners;
-                    }
-                    else {
-                        var foo = global[room.name]['cachedMinimumNumberOfRemoteCreeps'].split(',');
-                        minimumNumberOfRemoteHarvesters = foo[0];
-                        minimumNumberOfRemoteHaulers = foo[1];
-                        minimumNumberOfRemoteMiners = foo[2];
-                    }
-                })();
-                //set number of remote creeps ends
-
-                //set number of remote guards starts
-                (function() {
-                    if (Game.time % 6 == 0 || global[room.name]['cachedMinimumNumberOfGuards'] == undefined) {
-                        var remoteGuardFlags = global[room.name].cachedRemoteGuardFlags;
-                        var tempRemoteGuards = 0;
-
-                        for (let flag of remoteGuardFlags) {
-                            tempRemoteGuards += flag.memory.numberOfGuards;
+                        else {
+                            switch (temp_room[1]) {
+                                case 4:
+                                    return true;
+                                    break;
+                                case 5:
+                                    return true;
+                                    break;
+                                case 6:
+                                    return true;
+                                    break;
+                                default:
+                                    return false;
+                            }
                         }
-
-                        minimumNumberOfRemoteGuards = tempRemoteGuards;
-
-                        global[room.name]['cachedMinimumNumberOfGuards'] = minimumNumberOfRemoteGuards;
                     }
-                    else {
-                        minimumNumberOfRemoteGuards = global[room.name]['cachedMinimumNumberOfGuards'];
+
+                    switch (temp_room[temp_room.length-1]) {
+                        case 4:
+                            if (isES456(temp_room) == true) temp_guards = 0;
+                            break;
+                        case 5:
+                            if (isES456(temp_room) == true) temp_guards = 0;
+                            break;
+                        case 6:
+                            if (isES456(temp_room) == true) temp_guards = 0;
+                            break;
                     }
-                })();
-                //set number of remote guards ends
+
+                    temp_minimumNumberOfRemoteHarvesters = temp_harvesters;
+                    temp_minimumNumberOfRemoteMiners = temp_miners;
+                    temp_minimumNumberOfRemoteHaulers = temp_haulers;
+                    temp_minimumNumberOfRemoteGuards = temp_guards;
+                }
+
+                minimumNumberOfRemoteHarvesters = temp_minimumNumberOfRemoteHarvesters;
+                minimumNumberOfRemoteMiners = temp_minimumNumberOfRemoteMiners;
+                minimumNumberOfRemoteHaulers = temp_minimumNumberOfRemoteHaulers;
+                minimumNumberOfRemoteGuards = temp_minimumNumberOfRemoteGuards;
+
+               //remote creeps ends
 
                 if (room.find(FIND_MY_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_EXTRACTOR})[0]) {
                     var mineral = global[room.name].mineral;

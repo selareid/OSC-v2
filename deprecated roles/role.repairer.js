@@ -18,7 +18,7 @@ module.exports = {
             var structureToRepair = this.findStructureToRepair(room, creep);
             if (structureToRepair) {
                 if (creep.repair(structureToRepair) == ERR_NOT_IN_RANGE) {
-                    PathFinder.use(true);
+
                     creep.moveTo(structureToRepair, {
                         reusePath: 7, plainCost: 1, swampCost: 4,
                         costCallback: function (roomName) {

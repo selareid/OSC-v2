@@ -3,7 +3,6 @@ require('prototype.creepWar')();
 
 module.exports = {
     run: function (room, creep) {
-        PathFinder.use(true);
 
         if (creep.memory.team) {
             var teamGlobal = global['warCache'][creep.memory.team];

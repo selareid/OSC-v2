@@ -4,22 +4,21 @@ require('prototype.creepSpeech')();
 
 module.exports = {
 
-    run: function (room, creep, remoteCreepFlags) {
-        creep.say('yeah');
-        if (remoteCreepFlags.length > 0) {
+    run: function (room, creep) {
 
-            var creepRemoteFlag = creep.memory.remoteFlag;
+        var remoteRooms = Memory.rooms[room].rmtR;
 
-            if (!creepRemoteFlag) {
-                creep.memory.remoteFlag = this.setRemoteFlagMemory(room, creep, remoteCreepFlags);
-                creepRemoteFlag = creep.memory.remoteFlag;
+        if (!remoteRooms || remoteRooms.length > 0) {
+            var remoteRoom = creep.memory.rr;
+
+            if (!remoteRoom) {
+                creep.memory.rr = this.setRemoteRoomMemory(room, creep, remoteRooms);
+                remoteRoom = creep.memory.rr;
             }
 
-            var remoteFlag = Game.flags[creepRemoteFlag];
-
-            if (remoteFlag) {
-                if (creep.pos.roomName != remoteFlag.pos.roomName) {
-                    creep.moveTo(remoteFlag, {reusePath: 37});
+            if (remoteRoom) {
+                if (creep.pos.roomName != remoteRoom) {
+                    creep.moveTo(new RoomPosition(25, 25, remoteRoom), {reusePath: 21, range: 23});
                 }
                 else {
                     this.realRun(room, creep);
@@ -35,25 +34,23 @@ module.exports = {
         }
     },
 
-    setRemoteFlagMemory: function (room, creep, remoteCreepFlags) {
+    setRemoteRoomMemory: function (room, creep, remoteRooms) {
 
-        var zeChosenFlag;
+        var zeChosenRoom;
 
-                for (let flag of remoteCreepFlags) {
-                    var amountOfCreepsAssignedToThisFlag = _.filter(Game.creeps, (c) => c.memory.room == room.name && c.memory.role == 'remoteHarvester' && c.memory.remoteFlag == flag.name).length;
-                    if (amountOfCreepsAssignedToThisFlag < flag.memory.numberOfRemoteHarvesters) {
-                        zeChosenFlag = flag;
-                        break;
-                    }
-                }
+        for (let rr of remoteRooms) {
+            let rroomName = rr.split(',')[0];
+            let rrHarvesters = rr.split(',')[1];
 
+            let amountOfCreepsAssignedToThisRoom = _.filter(Game.creeps, (c) => c.memory.room == room.name && c.memory.role == 'remoteHarvester' && c.memory.rr == rroomName).length;
 
-        if (zeChosenFlag) {
-            return zeChosenFlag.name;
+            if (amountOfCreepsAssignedToThisRoom < rrHarvesters) {
+                zeChosenRoom = rroomName;
+                break;
+            }
         }
-        else {
-            return undefined;
-        }
+
+        return zeChosenRoom;
     },
 
     realRun: function (room, creep) {
