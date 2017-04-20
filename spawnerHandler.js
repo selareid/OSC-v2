@@ -221,9 +221,9 @@ module.exports = {
                 for (let rmtR of remoteRooms) {
                     let splitRMTR = rmtR.split(',');
 
-                    let temp_room = splitRMTR[0];
-                    let temp_harvesters = splitRMTR[1] ? splitRMTR[1] : 0;
-                    let temp_miners = splitRMTR[2] ? splitRMTR[2] : 0;
+                    let temp_room = Number.parseInt(splitRMTR[0]);
+                    let temp_harvesters = Number.parseInt(splitRMTR[1]) ? Number.parseInt(splitRMTR[1]) : 0;
+                    let temp_miners = Number.parseInt(splitRMTR[2]) ? Number.parseInt(splitRMTR[2]) : 0;
 
                     //if (((temp_harvesters == undefined || temp_harvesters == undefined) && (temp_miners == undefined || temp_miners == null))
                       //  || (temp_harvesters < 1 && temp_miners < 1)) Memory.rooms[room].rmtR.splice(rmtR.length, 1);
