@@ -132,6 +132,8 @@ module.exports = {
 
         //remote room guard stuff starts
         if (Game.time % 11 == 0 || global[room.name].cachedRemotesUnderAttack == undefined) {
+            if (global[room.name].cachedRemotesUnderAttack == undefined) global[room.name].cachedRemotesUnderAttack = [];
+
             var remoteRooms = Memory.rooms[room].rmtR;
             var remoteRoomsUnderAttack = global[room.name].cachedRemotesUnderAttack ? global[room.name].cachedRemotesUnderAttack : [];
 
