@@ -225,7 +225,8 @@ module.exports = {
                     let temp_harvesters = splitRMTR[1] ? splitRMTR[1] : 0;
                     let temp_miners = splitRMTR[2] ? splitRMTR[2] : 0;
 
-                    if (!temp_harvesters && !temp_miners || temp_harvesters < 1 && temp_miners < 1) Memory.rooms[room].rmtR.splice(rmtR.length, 1);
+                    if (((temp_harvesters == undefined || temp_harvesters == undefined) && (temp_miners == undefined || temp_miners == null)
+                        || (temp_harvesters < 1 && temp_miners < 1)) Memory.rooms[room].rmtR.splice(rmtR.length, 1);
 
                     let temp_haulers = Math.round(temp_harvesters+temp_miners/2);
 
