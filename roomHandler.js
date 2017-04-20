@@ -139,7 +139,7 @@ module.exports = {
                 let rroomName = remoteRooms[rr_it];
 
                 if (Game.rooms[rroomName]) {
-                    let enemiesInRemoteRoom = Game.rooms[flag.pos.roomName].find(FIND_HOSTILE_CREEPS, {filter: (c) => !global.Allies.includes(c.owner.username)});
+                    let enemiesInRemoteRoom = Game.rooms[rroomName].find(FIND_HOSTILE_CREEPS, {filter: (c) => !global.Allies.includes(c.owner.username)});
                     if (enemiesInRemoteRoom.length > 0) {
                         remoteRoomsUnderAttack.push(rroomName);
                     }
@@ -147,6 +147,10 @@ module.exports = {
                         let key = _.findKey(remoteRoomsUnderAttack, (r) => r == rroomName);
                         global[room.name].cachedRemotesUnderAttack.splice(key, 1);
                     }
+                }
+                else {
+                    let key = _.findKey(remoteRoomsUnderAttack, (r) => r == rroomName);
+                    global[room.name].cachedRemotesUnderAttack.splice(key, 1);
                 }
             }
 
