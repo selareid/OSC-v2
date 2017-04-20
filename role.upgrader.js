@@ -26,7 +26,7 @@ module.exports = {
                 creep.moveTo(controller);
             }
             else {
-                if (!controller.sign || controller.sign.username != creep.owner.username || Game.time-controller.sign.time > 15000) {
+                if (!controller.sign || controller.sign.username != creep.owner.username || Game.time-global.signTime > 15000) {
                     var text = global.sign[Math.floor(Math.random() * global.sign.length)];
                     creep.signController(controller, text);
                 }

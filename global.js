@@ -3,6 +3,7 @@
 global.allianceName = 'INT_MAX';
 global.Allies = ['Lur', 'starwar15432', 'Leonyx', 'theKraken'];
 
+global.signTime = 4500;
 global.sign = [
     'Territory Of INTEGER_MAX',
     'CIRCLE WORLD!',
