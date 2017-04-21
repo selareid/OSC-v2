@@ -150,10 +150,6 @@ module.exports = {
                         global[room.name].cachedRemotesUnderAttack.splice(key, 1);
                     }
                 }
-                else {
-                    let key = _.findKey(remoteRoomsUnderAttack, (r) => r == rroomName);
-                    global[room.name].cachedRemotesUnderAttack.splice(key, 1);
-                }
             }
 
             global[room.name].cachedRemotesUnderAttack = remoteRoomsUnderAttack;
