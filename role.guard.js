@@ -31,8 +31,8 @@ module.exports = {
             }
         }
         else {
-            if (global[room.name].cachedRemotesUnderAttack.length > 0) {
-                var remoteRoom = global[room.name].cachedRemotesUnderAttack[0];
+            if (Memory.rooms[room].rmtUA.length > 0) {
+                var remoteRoom = global[room.name].Memory.rooms[room].rmtUA[0];
                 if (remoteRoom) {
                     if (creep.pos.roomName != remoteRoom) {
                         creep.moveTo(new RoomPosition(25, 25, remoteRoom), {reusePath: 13, range: 23});
