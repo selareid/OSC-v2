@@ -32,7 +32,7 @@ module.exports = {
         }
         else {
             var remoteRoom = Memory.rooms[room].rmtUA;
-            if (remoteRoom) {
+            if (remoteRoom && Game.rooms[remoteRoom]) {
                 if (creep.pos.roomName != remoteRoom) {
                     var posToMoveTo = new RoomPosition(25, 25, remoteRoom);
                     creep.moveTo(posToMoveTo, {reusePath: 13, range: 23});
