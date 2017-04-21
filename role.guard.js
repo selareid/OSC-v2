@@ -59,10 +59,9 @@ module.exports = {
                     }
                     else Memory.rooms[room].rmtUA = undefined;
 
+                }
             }
-            else creep.moveTo(global[room.name].guardStationFlag);
         }
-
     },
 
     getTarget: function (room, creep) {
