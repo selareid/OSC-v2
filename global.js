@@ -296,4 +296,85 @@ global.roadTest = function (roomName) {
         // }
 
     });
+
+    global.createFlowField = function (roomName) {
+        if (!roomName) return;
+
+        var room = Game.rooms[roomName];
+        if (!room) return;
+
+        var storage = room.storage;
+        var storageXY = storage.pos.x + ',' + storage.pos.y;
+
+        var nodes = {};
+
+        nodes[storageXY] = 0;
+
+        var nodeNumb = 0;
+
+
+            for (let pos_it in nodes) {
+                let cost = nodes[pos_it];
+
+                Game.rooms[room.name].visual.text(cost, pos_it.split(',')[0], pos_it.split(',')[1], {font: 0.5});
+
+                if (cost < nodeNumb) continue;
+
+                _.forEach([TOP, RIGHT, LEFT, BOTTOM], (s) => {
+                    function virtualMove(pos, dir) {
+                        var tempPos;
+                        var newPos;
+
+                        if (!pos) return;
+                        if (pos.x == 0 || pos.x == 49 || pos.y == 0 || pos.y == 49) return;
+
+                        tempPos = pos;
+
+                        switch (dir) {
+                            case TOP:
+                                tempPos.y = tempPos.y - 1;
+                                break;
+                            case TOP_RIGHT:
+                                tempPos.y = tempPos.y - 1;
+                                tempPos.x = tempPos.x + 1;
+                                break;
+                            case RIGHT:
+                                tempPos.x = tempPos.x + 1;
+                                break;
+                            case BOTTOM_RIGHT:
+                                tempPos.y = tempPos.y + 1;
+                                tempPos.x = tempPos.x + 1;
+                                break;
+                            case BOTTOM:
+                                tempPos.y = tempPos.y + 1;
+                                break;
+                            case BOTTOM_LEFT:
+                                tempPos.y = tempPos.y + 1;
+                                tempPos.x = tempPos.x - 1;
+                                break;
+                            case LEFT:
+                                tempPos.x = tempPos.x - 1;
+                                break;
+                            case TOP_LEFT:
+                                tempPos.y = tempPos.y - 1;
+                                tempPos.x = tempPos.x - 1;
+                                break;
+                            default:
+                                return;
+                        }
+
+                        newPos = tempPos;
+
+                        return newPos;
+                    }
+
+                    let newPos = virtualMove({x: pos_it.split(',')[0], y: pos_it.split(',')[1]}, s);
+                    if (!newPos) return;
+
+                    nodes[newPos.x+','+newPos.y] = cost+1;
+                });
+
+                nodeNumb += 1;
+            }
+    };
 };
