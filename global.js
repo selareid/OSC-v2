@@ -316,7 +316,7 @@ global.createFlowField = function (roomName) {
 
         let cost = 0;
 
-        room.visual.text(cost, Number.parseInt(pos_it.split(',')[0]), Number.parseInt(pos_it.split(',')[1]), {font: 0.7, background: '#ffffff'});
+        room.visual.text(cost, Number.parseInt(storageXY.split(',')[0]), Number.parseInt(storageXY.split(',')[1]), {font: 0.7, background: '#ffffff'});
 
         _.forEach([TOP, RIGHT, LEFT, BOTTOM], (s) => {
             function virtualMove(pos, dir) {
