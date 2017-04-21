@@ -194,6 +194,7 @@ module.exports = {
                     if (rsl == OK) {
                         Memory.eQ.splice(0, 1);
                         Game.notify('Room ' + room.name + ' sent resource energy to room ' + queue[0] + ' as energy sink');
+                        console.log('Room ' + room.name + ' sent resource energy to room ' + queue[0] + ' as energy sink');
                     }
                 }
             }
