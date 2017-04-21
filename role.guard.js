@@ -35,7 +35,8 @@ module.exports = {
             if (remoteRoom) {
                 if (remoteRoom) {
                     if (creep.pos.roomName != remoteRoom) {
-                        creep.moveTo(new RoomPosition(25, 25, remoteRoom), {reusePath: 13, range: 23});
+                        var posToMoveTo = new RoomPosition(25, 25, remoteRoom);
+                        creep.moveTo(posToMoveTo, {reusePath: 13, range: 23});
                     }
                     else {
                         var target = this.getTarget(creep.room, creep);
