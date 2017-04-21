@@ -175,6 +175,25 @@ module.exports = {
             }
         }
 
+        (function () {
+        if (room.terminal) {
+            if (!room.terminal[RESOURCE_ENERGY] || room.terminal[RESOURCE_ENERGY] < 1000) {
+                var roomInQueue = _.filter(Memory.eQ, (r) => r == room.name)[0];
+                if (roomInQueue == undefined || roomInQueue == null) {
+                    Memory.eQ.push(room.name);
+                }
+            }
+            else if (room.terminal[RESOURCE_ENERGY] > 100000) { //maybe send resources
+                var queue = Memory.eQ;
+                if (Game.map.getRoomLinearDistance(room.name, queue[0], true) > 15) return Memory.eQ.splice(0, 1);
+                var rsl = room.terminal.send(RESOURCE_ENERGY, 50000, queue[0], 'energy sinking');
+
+                if (rsl == OK) {
+                    Memory.eQ.splice(0, 1);
+                    Game.notify('Room ' + room.name + ' sent resource energy to room ' + queue[0] + ' as energy sink');
+                }
+            }
+        })();
 
         if (Game.time % 11 == 0) grafana.summarize_room_internal(room);
     }

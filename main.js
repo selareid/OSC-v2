@@ -16,6 +16,8 @@ if (Game.cpu.bucket > 300) module.exports.loop = function () {
 
         try {
             //memory stuff
+            if (!Memory.eQ) Memory.eQ = [];
+
             if (Game.time % 13 == 0) {
                 for (let name in Memory.creeps) {
                     if (!Game.creeps[name]) {
