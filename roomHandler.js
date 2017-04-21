@@ -193,7 +193,7 @@ module.exports = {
                     Game.notify('Room ' + room.name + ' sent resource energy to room ' + queue[0] + ' as energy sink');
                 }
             }
-        })();
+        }})();
 
         if (Game.time % 11 == 0) grafana.summarize_room_internal(room);
     }
