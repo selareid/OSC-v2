@@ -183,15 +183,18 @@ module.exports = {
                     Memory.eQ.push(room.name);
                 }
             }
-            else if (room.terminal.store[RESOURCE_ENERGY] > 100000) { //maybe send resources
+            else {
                 var queue = Memory.eQ;
                 if (room.name == queue[0]) return Memory.eQ.splice(0, 1);
-                if (Game.map.getRoomLinearDistance(room.name, queue[0], true) > 15) return Memory.eQ.splice(0, 1);
-                var rsl = room.terminal.send(RESOURCE_ENERGY, 50000, queue[0], 'energy sinking');
 
-                if (rsl == OK) {
-                    Memory.eQ.splice(0, 1);
-                    Game.notify('Room ' + room.name + ' sent resource energy to room ' + queue[0] + ' as energy sink');
+                if (queue.length > 0 && room.terminal.store[RESOURCE_ENERGY] > 100000) { //maybe send resources
+                    if (Game.map.getRoomLinearDistance(room.name, queue[0], true) > 15) return Memory.eQ.splice(0, 1);
+                    var rsl = room.terminal.send(RESOURCE_ENERGY, 50000, queue[0], 'energy sinking');
+
+                    if (rsl == OK) {
+                        Memory.eQ.splice(0, 1);
+                        Game.notify('Room ' + room.name + ' sent resource energy to room ' + queue[0] + ' as energy sink');
+                    }
                 }
             }
         }})();
