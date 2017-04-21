@@ -310,7 +310,6 @@ global.createFlowField = function (roomName) {
     var font = 0.7;
     var background = '#ffffff';
 
-    var runIt = run();
     function run(room, startPos) {
         if (startPos) {
             costs.set(startPos.x, startPos.y, 0);
@@ -320,8 +319,9 @@ global.createFlowField = function (roomName) {
         }
     }
 
-    do {
-        var ok = run(room, startPosition);
+    var ok = run(room, startPosition);
+
+    while (ok == true) {
+        run(room);
     }
-    while (ok == true);
 };
