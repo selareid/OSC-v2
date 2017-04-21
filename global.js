@@ -304,67 +304,20 @@ global.createFlowField = function (roomName) {
     var room = Game.rooms[roomName];
     if (!room) return;
 
-    function getNeighbours(pos) {
-        var neighbours = [];
-        _.forEach([TOP, TOP_RIGHT, TOP_LEFT, RIGHT, LEFT, BOTTOM, BOTTOM_RIGHT, BOTTOM_LEFT], (s) => {
-            function virtualMove(pos, dir) {
-                var tempPos;
-                var newPos;
+    var costs = new PathFinder.CostMatrix();
+    var startPosition = {x: room.storage.pos.x, y: room.storage.pos.y};
 
-                if (!pos) return;
-                if (pos.x == 0 || pos.x == 49 || pos.y == 0 || pos.y == 49) return;
+    var font = 0.7;
+    var background = '#ffffff';
 
-                tempPos = pos;
-                tempPos.cost += 1;
+    function run(room, startPos) {
+        if (startPos) {
+            costs.set(startPos.x, startPos.y, 0);
+            room.visual.text(0, startPos.x, startPos.y, {font: font, background: background});
 
-                switch (dir) {
-                    case TOP:
-                        tempPos.y = tempPos.y - 1;
-                        break;
-                    case TOP_RIGHT:
-                        tempPos.y = tempPos.y - 1;
-                        tempPos.x = tempPos.x + 1;
-                        break;
-                    case RIGHT:
-                        tempPos.x = tempPos.x + 1;
-                        break;
-                    case BOTTOM_RIGHT:
-                        tempPos.y = tempPos.y + 1;
-                        tempPos.x = tempPos.x + 1;
-                        break;
-                    case BOTTOM:
-                        tempPos.y = tempPos.y + 1;
-                        break;
-                    case BOTTOM_LEFT:
-                        tempPos.y = tempPos.y + 1;
-                        tempPos.x = tempPos.x - 1;
-                        break;
-                    case LEFT:
-                        tempPos.x = tempPos.x - 1;
-                        break;
-                    case TOP_LEFT:
-                        tempPos.y = tempPos.y - 1;
-                        tempPos.x = tempPos.x - 1;
-                        break;
-                    default:
-                        return;
-                }
-
-                newPos = tempPos;
-
-                neighbours.push(newPos);
-            }
-
-            virtualMove(pos, s);
-        });
-        return neighbours;
+            this(room);
+        }
     }
 
-    var storage = room.storage;
-    var storageXY = {x: storage.pos.x, y: storage.pos.y, cost: 0};
-    var storageNeighbours = getNeighbours(storageXY);
-
-    _.forEach(storageNeighbours, (p) => {
-        room.visual.text(p.cost, p.x, p.y, {font: 0.7, background: '#ffffff'});
-    });
+    run(room, startPosition);
 };
