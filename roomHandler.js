@@ -185,6 +185,7 @@ module.exports = {
             }
             else if (room.terminal.store[RESOURCE_ENERGY] > 100000) { //maybe send resources
                 var queue = Memory.eQ;
+                if (room.name == queue[0]) return Memory.eQ.splice(0, 1);
                 if (Game.map.getRoomLinearDistance(room.name, queue[0], true) > 15) return Memory.eQ.splice(0, 1);
                 var rsl = room.terminal.send(RESOURCE_ENERGY, 50000, queue[0], 'energy sinking');
 
