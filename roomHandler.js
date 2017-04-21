@@ -177,7 +177,7 @@ module.exports = {
 
         (function () {
         if (room.terminal) {
-            if (!room.terminal[RESOURCE_ENERGY] || room.terminal.store[RESOURCE_ENERGY] < 1000) {
+            if (!room.terminal.store[RESOURCE_ENERGY] || room.terminal.store[RESOURCE_ENERGY] < 1000) {
                 var roomInQueue = _.filter(Memory.eQ, (r) => r == room.name)[0];
                 if (roomInQueue == undefined || roomInQueue == null) {
                     Memory.eQ.push(room.name);
