@@ -131,8 +131,8 @@ module.exports = {
 
 
         //remote room guard stuff starts
-        if (Game.time % 11 == 0 || global[room.name].cachedRemotesUnderAttack == undefined) {
-            if (global[room.name].cachedRemotesUnderAttack == undefined) global[room.name].cachedRemotesUnderAttack = [];
+        if (Game.time % 5 == 0 || Memory.rooms[room].rmtUA == undefined) {
+            if (Memory.rooms[room].rmtUA == undefined) Memory.rooms[room].rmtUA = [];
 
             var remoteRooms = Memory.rooms[room].rmtR;
 
@@ -142,11 +142,11 @@ module.exports = {
                 if (Game.rooms[rroomName]) {
                     let enemiesInRemoteRoom = Game.rooms[rroomName].find(FIND_HOSTILE_CREEPS, {filter: (c) => !global.Allies.includes(c.owner.username)});
                     if (enemiesInRemoteRoom.length > 0) {
-                        global[room.name].cachedRemotesUnderAttack.push(rroomName);
+                        Memory.rooms[room].rmtUA.push(rroomName);
                     }
                     else {
-                        let key = _.findKey(global[room.name].cachedRemotesUnderAttack, (r) => r == rroomName);
-                        global[room.name].cachedRemotesUnderAttack.splice(key, 1);
+                        let key = _.findKey(Memory.rooms[room].rmtUA, (r) => r == rroomName);
+                        Memory.rooms[room].rmtUA.splice(key, 1);
                     }
                 }
             }
