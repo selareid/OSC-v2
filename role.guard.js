@@ -33,32 +33,29 @@ module.exports = {
         else {
             var remoteRoom = Memory.rooms[room].rmtUA;
             if (remoteRoom) {
-                if (remoteRoom) {
-                    if (creep.pos.roomName != remoteRoom) {
-                        var posToMoveTo = new RoomPosition(25, 25, remoteRoom);
-                        creep.moveTo(posToMoveTo, {reusePath: 13, range: 23});
-                    }
-                    else {
-                        var target = this.getTarget(creep.room, creep);
-                        if (target) {
-                            var attackResult = creep.rangedAttack(target);
+                if (creep.pos.roomName != remoteRoom) {
+                    var posToMoveTo = new RoomPosition(25, 25, remoteRoom);
+                    creep.moveTo(posToMoveTo, {reusePath: 13, range: 23});
+                }
+                else {
+                    var target = this.getTarget(creep.room, creep);
+                    if (target) {
+                        var attackResult = creep.rangedAttack(target);
 
-                            switch (attackResult) {
-                                case -9: // returns ERR_NOT_IN_RANGE
-                                    creep.moveTo(target, {reusePath: 3, ignoreRoads: true});
-                                    break;
-                                case 0: // returns OK
-                                    this.kite(creep.room, creep, target);
-                                    //creep.say something here using prototype.creepSpeech.js
-                                    break;
-                                default:
-                                    global.creepErrorLog('Attack Error: ' + attackResult, creep, room);
-                            }
-
+                        switch (attackResult) {
+                            case -9: // returns ERR_NOT_IN_RANGE
+                                creep.moveTo(target, {reusePath: 3, ignoreRoads: true});
+                                break;
+                            case 0: // returns OK
+                                this.kite(creep.room, creep, target);
+                                //creep.say something here using prototype.creepSpeech.js
+                                break;
+                            default:
+                                global.creepErrorLog('Attack Error: ' + attackResult, creep, room);
                         }
+
                     }
                 }
-                else creep.moveTo(global[room.name].guardStationFlag);
             }
             else creep.moveTo(global[room.name].guardStationFlag);
         }
