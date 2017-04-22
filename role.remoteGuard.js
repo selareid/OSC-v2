@@ -60,6 +60,7 @@ module.exports = {
 
         var target = this.getTarget(creep.room, creep);
         if (target) {
+
             var attackResult = creep.rangedAttack(target);
 
             switch (attackResult) {
@@ -75,7 +76,9 @@ module.exports = {
             }
 
         }
-
+        else if (creep.hasActiveBodyparts(HEAL) && creep.hits < creep.hitsMax) {
+            creep.heal(creep);
+        }
     },
 
     getTarget: function (room, creep) {
@@ -119,8 +122,11 @@ module.exports = {
             creep.moveTo(target, {reusePath: 2})
         }
 
-        if (creep.hasActiveBodyparts(ATTACK)) {
+        if (creep.hasActiveBodyparts(ATTACK) && creep.hits > creep.hitsMax*0.5) {
             creep.attack(target);
+        }
+        else if (creep.hasActiveBodyparts(HEAL) && creep.hits < creep.hitsMax) {
+            creep.heal(creep);
         }
     },
 
