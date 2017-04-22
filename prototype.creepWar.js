@@ -50,6 +50,52 @@ module.exports = function () {
 
     Creep.prototype.kite =
         function (room, creep, target) {
+            function virtualMove (pos, dir) {
+                var tempPos;
+                var newPos;
+
+                if (!pos) return;
+
+                tempPos = pos;
+
+                switch (dir) {
+                    case TOP:
+                        tempPos.y = tempPos.y - 1;
+                        break;
+                    case TOP_RIGHT:
+                        tempPos.y = tempPos.y - 1;
+                        tempPos.x = tempPos.x + 1;
+                        break;
+                    case RIGHT:
+                        tempPos.x = tempPos.x + 1;
+                        break;
+                    case BOTTOM_RIGHT:
+                        tempPos.y = tempPos.y + 1;
+                        tempPos.x = tempPos.x + 1;
+                        break;
+                    case BOTTOM:
+                        tempPos.y = tempPos.y + 1;
+                        break;
+                    case BOTTOM_LEFT:
+                        tempPos.y = tempPos.y + 1;
+                        tempPos.x = tempPos.x - 1;
+                        break;
+                    case LEFT:
+                        tempPos.x = tempPos.x - 1;
+                        break;
+                    case TOP_LEFT:
+                        tempPos.y = tempPos.y - 1;
+                        tempPos.x = tempPos.x - 1;
+                        break;
+                    default:
+                        return;
+                }
+
+                newPos = tempPos;
+
+                return newPos;
+            }
+
             var targetDangerous = false;
             if (target.hasActiveBodyparts(ATTACK) || target.hasActiveBodyparts(RANGED_ATTACK)) {
                 targetDangerous = true;
@@ -62,7 +108,7 @@ module.exports = function () {
                 var directionToTarget = creep.pos.getDirectionTo(target);
                 if (creep.pos.getRangeTo(target) <= 2) {
                     var oppositeDir = global.REVERSE_DIR[directionToTarget];
-                    var virtualMoveResult = this.virtualMove(creep.pos, oppositeDir);
+                    var virtualMoveResult = virtualMove(creep.pos, oppositeDir);
                     if (virtualMoveResult) {
                         var look = virtualMoveResult.look();
                         if (look[0].terrain && look[0].terrain != 'wall') {

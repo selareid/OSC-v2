@@ -95,52 +95,6 @@ module.exports = {
         if (targets.length > 0) {
             return creep.pos.findClosestByRange(targets);
         }
-    },
-
-    virtualMove: function (pos, dir) {
-        var tempPos;
-        var newPos;
-
-        if (!pos) return;
-
-        tempPos = pos;
-
-        switch (dir) {
-            case TOP:
-                tempPos.y = tempPos.y - 1;
-                break;
-            case TOP_RIGHT:
-                tempPos.y = tempPos.y - 1;
-                tempPos.x = tempPos.x + 1;
-                break;
-            case RIGHT:
-                tempPos.x = tempPos.x + 1;
-                break;
-            case BOTTOM_RIGHT:
-                tempPos.y = tempPos.y + 1;
-                tempPos.x = tempPos.x + 1;
-                break;
-            case BOTTOM:
-                tempPos.y = tempPos.y + 1;
-                break;
-            case BOTTOM_LEFT:
-                tempPos.y = tempPos.y + 1;
-                tempPos.x = tempPos.x - 1;
-                break;
-            case LEFT:
-                tempPos.x = tempPos.x - 1;
-                break;
-            case TOP_LEFT:
-                tempPos.y = tempPos.y - 1;
-                tempPos.x = tempPos.x - 1;
-                break;
-            default:
-                return;
-        }
-
-        newPos = tempPos;
-
-        return newPos;
     }
 };
 
