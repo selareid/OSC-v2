@@ -76,8 +76,16 @@ module.exports = {
             }
 
         }
-        else if (creep.hasActiveBodyparts(HEAL) && creep.hits < creep.hitsMax) {
-            creep.heal(creep);
+        else {
+            if (creep.hasActiveBodyparts(HEAL) && creep.hits < creep.hitsMax) creep.heal(creep);
+
+            var SKL = room.find(FIND_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_KEEPER_LAIR});
+            if (SKL.length > 0) {
+                var next = _.min(SKL, 'ticksToSpawn');
+                if (!global.isUndefinedOrNull(next)) {
+                    creep.moveTo(next, {reusePath: 3})
+                }
+            }
         }
     },
 
@@ -87,7 +95,6 @@ module.exports = {
         if (targets.length > 0) {
             return creep.pos.findClosestByRange(targets);
         }
-        else return;
     },
 
     kite: function (room, creep, target) {
