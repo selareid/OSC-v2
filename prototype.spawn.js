@@ -295,7 +295,7 @@ module.exports = function () {
                     });
                 case 'remoteGuard':
                     numberOfParts = Math.floor((energy - (energy * amountToSave)) / 590);
-                    if (numberOfParts > 1) {
+                    if ((room.controller.level < 8 && numberOfParts > 1) || numberOfParts > 5) {
                         if (numberOfParts > 5) numberOfParts = 5;
 
                         _.times(numberOfParts, () => body.push(RANGED_ATTACK));
@@ -305,7 +305,7 @@ module.exports = function () {
                         _.times(numberOfParts * 4, () => body.push(MOVE));
 
                     }
-                    else if (room.energyCapacityAvailable < 2000) {
+                    else if (room.energyCapacityAvailable < 12900) {
                         numberOfParts = Math.floor((energy - (energy * amountToSave)) / 280);
                         if (numberOfParts > 16) numberOfParts = 16;
 
