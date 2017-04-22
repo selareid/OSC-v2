@@ -1,4 +1,6 @@
-require ('prototype.creepSpeech')();
+require('global');
+require('prototype.creep');
+require('prototype.creepSpeech')();
 require('prototype.creepWar')();
 
 module.exports = {
@@ -82,46 +84,6 @@ module.exports = {
         else {
             if (Memory.rooms[room]) Memory.rooms[room].isUnderAttack = false;
             return;
-        }
-    },
-
-    kite: function (room, creep, target) {
-        var targetDangerous = false;
-        if (target.hasActiveBodyparts(ATTACK) || target.hasActiveBodyparts(RANGED_ATTACK)) {
-            targetDangerous = true;
-        }
-
-        if (targetDangerous) {
-            var directionToTarget = creep.pos.getDirectionTo(target);
-            if (creep.pos.getRangeTo(target) <= 2) {
-                var oppositeDir = global.REVERSE_DIR[directionToTarget];
-                var virtualMoveResult = this.virtualMove(creep.pos, oppositeDir);
-                if (virtualMoveResult) {
-                    var look = virtualMoveResult.look();
-                    if (look[0].terrain && look[0].terrain != 'wall') {
-                        creep.move(oppositeDir);
-                    }
-                    else if (look[0].structure && look[0].structure.structureType == STRUCTURE_ROAD) {
-                        creep.move(oppositeDir);
-                    }
-                    else {
-                        creep.moveTo(room.find(FIND_MINERALS)[0], {reusePath: 2});
-                    }
-                }
-            }
-            else {
-                creep.move(directionToTarget);
-            }
-        }
-        else {
-            creep.moveTo(target, {reusePath: 2})
-        }
-
-        if (creep.hasActiveBodyparts(ATTACK) && creep.hits > creep.hitsMax*0.5) {
-            creep.attack(target);
-        }
-        else if (creep.hasActiveBodyparts(HEAL) && creep.hits < creep.hitsMax) {
-            creep.heal(creep);
         }
     },
     
