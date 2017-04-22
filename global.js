@@ -322,7 +322,7 @@ global.pathFinderFlee = function (roomName, x, y) {
         _.forEach(room.find(FIND_STRUCTURES), function (struct) {
             if (struct.structureType === STRUCTURE_ROAD) {
                 // Favor roads over plain tiles
-                costs.set(struct.pos.x, structure.pos.y, 1);
+                costs.set(struct.pos.x, struct.pos.y, 1);
             } else if (struct.structureType !== STRUCTURE_CONTAINER &&
                 (struct.structureType !== STRUCTURE_RAMPART || !struct.my)) {
                 // Can't walk through non-walkable buildings
