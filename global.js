@@ -304,12 +304,42 @@ global.pathFinderFlee = function (roomName, x, y) {
     var room = Game.rooms[roomName];
     if (!room) return;
 
-    var storage = room.storage;
-    var goal = new RoomPosition(x, y, room.name);
+    var pos = new RoomPosition(x, y, room.name);
 
-    var path = PathFinder.search(storage, {pos: goal, range: 1}, {swampCost: 1, flee: true});
+    var goals = _.map(room.find(FIND_MY_SPAWNS).concat(room.find(FIND_STRUCTURES)).concat([room.storage, room.terminal]), function(s) {
+        return { pos: s.pos, range: 15};
+    });
+
+    var path = PathFinder.search(pos, goals, {swampCost: 1, flee: true, roomCallback: function(roomName) {
+
+        let room = Game.rooms[roomName];
+        // In this example `room` will always exist, but since
+        // PathFinder supports searches which span multiple rooms
+        // you should be careful!
+        if (!room) return;
+        let costs = new PathFinder.CostMatrix;
+
+        room.find(FIND_STRUCTURES).forEach(function(struct) {
+            if (struct.structureType === STRUCTURE_ROAD) {
+                // Favor roads over plain tiles
+                costs.set(struct.pos.x, structure.pos.y, 1);
+            } else if (struct.structureType !== STRUCTURE_CONTAINER &&
+                (struct.structureType !== STRUCTURE_RAMPART ||
+                !struct.my)) {
+                // Can't walk through non-walkable buildings
+                costs.set(struct.pos.x, struct.pos.y, 0xff);
+            }
+        });
+
+        // Avoid creeps in the room
+        room.find(FIND_CREEPS).forEach(function(creep) {
+            costs.set(creep.pos.x, creep.pos.y, 0xff);
+        });
+
+        return costs;
+    }});
 
     _.forEach(path.path, (p) => {
-        room.visual.circle(p, {radius: 0.55, stroke: 'red'});
+        room.visual.circle(p, {radius: 0.5, fill: 'red'});
     });
 };
