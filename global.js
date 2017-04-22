@@ -298,30 +298,18 @@ global.roadTest = function (roomName) {
     });
 };
 
-global.createFlowField = function (roomName) {
+global.pathFinderFlee = function (roomName, x, y) {
     if (!roomName) return;
 
     var room = Game.rooms[roomName];
     if (!room) return;
 
-    var costs = new PathFinder.CostMatrix();
-    var startPosition = {x: room.storage.pos.x, y: room.storage.pos.y};
+    var storage = room.storage;
+    var goal = new RoomPosition(x, y, room.name);
 
-    var font = 0.7;
-    var background = '#ffffff';
+    var path = PathFinder.search(storage, {pos: goal, range: 1}, {swampCost: 1, flee: true});
 
-    function run(room, startPos) {
-        if (startPos) {
-            costs.set(startPos.x, startPos.y, 0);
-            room.visual.text(0, startPos.x, startPos.y, {font: font, background: background});
-
-            return true;
-        }
-    }
-
-    var ok = run(room, startPosition);
-
-    while (ok == true) {
-        run(room);
-    }
+    _.forEach(path.path, (p) => {
+        room.visual.circle(p, {radius: 0.55, stroke: 'red'});
+    });
 };
