@@ -30,9 +30,8 @@ module.exports = {
                     }
 
                 }
-                else if (creep.hasActiveBodyparts(HEAL) && creep.hits < creep.hitsMax) {
-                    creep.heal(creep);
-                }
+                else if (creep.hasActiveBodyparts(HEAL) && creep.hits < creep.hitsMax) creep.heal(creep);
+                else creep.moveTo(global[room.name].guardStationFlag);
             }
         }
         else {
