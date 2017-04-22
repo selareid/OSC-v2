@@ -634,11 +634,12 @@ module.exports = {
                     name = spawn.createCustomCreep(room, energy, roleToSpawn, amountToSave);
                 }
 
-                if (Game.creeps[name] || name == 'remove') {
+                if (Game.creeps[name]) {
                     _.filter(Memory.rooms[room].spawnQueue, (q) => q.length > 0)[Game.time % _.filter(Memory.rooms[room].spawnQueue, (q) => q.length > 0).length].splice(0, 1);
 
-                    if (!name == 'remove') global.roomLog("[SPAWNING] " + name, room);
+                     global.roomLog("[SPAWNING] " + name, room);
                 }
+                else if (name == 'remove') _.filter(Memory.rooms[room].spawnQueue, (q) => q.length > 0)[Game.time % _.filter(Memory.rooms[room].spawnQueue, (q) => q.length > 0).length].splice(0, 1);
             }
         }
     }
