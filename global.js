@@ -306,7 +306,7 @@ global.pathFinderFlee = function (roomName, x, y) {
 
     var pos = new RoomPosition(x, y, room.name);
 
-    var goals = _.map(room.find(FIND_MY_SPAWNS).concat([room.storage, room.terminal]), function(s) {
+    var goals = _.map(room.find(FIND_MY_SPAWNS).concat(room.find(FIND_MY_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_EXTENSION}).concat([room.storage, room.terminal])), function(s) {
         return { pos: s.pos, range: 15};
     });
 
