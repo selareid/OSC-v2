@@ -61,14 +61,13 @@ module.exports = {
         var target = this.getTarget(creep.room, creep);
         if (target) {
 
-            var attackResult = creep.rangedAttack(target);
+            var attackResult = creep.attack(target);
 
             switch (attackResult) {
                 case -9: // returns ERR_NOT_IN_RANGE
                     creep.moveTo(target, {reusePath: 3, ignoreRoads: true});
                     break;
                 case 0: // returns OK
-                    creep.kite(creep.room, creep, target);
                     //creep.say something here using prototype.creepSpeech.js
                     break;
                 default:
