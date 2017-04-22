@@ -28,6 +28,9 @@ module.exports = {
                     }
 
                 }
+                else if (creep.hasActiveBodyparts(HEAL) && creep.hits < creep.hitsMax) {
+                    creep.heal(creep);
+                }
             }
         }
         else {
@@ -57,7 +60,12 @@ module.exports = {
                         }
 
                     }
-                    else Memory.rooms[room].rmtUA = undefined;
+                    else {
+                        if (creep.hasActiveBodyparts(HEAL) && creep.hits < creep.hitsMax) {
+                            creep.heal(creep);
+                        }
+                        Memory.rooms[room].rmtUA = undefined;
+                    }
 
                 }
             }
@@ -109,8 +117,11 @@ module.exports = {
             creep.moveTo(target, {reusePath: 2})
         }
 
-        if (creep.hasActiveBodyparts(ATTACK)) {
+        if (creep.hasActiveBodyparts(ATTACK) && creep.hits > creep.hitsMax*0.5) {
             creep.attack(target);
+        }
+        else if (creep.hasActiveBodyparts(HEAL) && creep.hits < creep.hitsMax) {
+            creep.heal(creep);
         }
     },
     
