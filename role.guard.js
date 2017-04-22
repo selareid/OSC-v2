@@ -70,6 +70,7 @@ module.exports = {
 
                 }
             }
+            else creep.moveTo(global[room.name].guardStationFlag);
         }
     },
 
