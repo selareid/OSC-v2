@@ -138,7 +138,7 @@ module.exports = {
                 let rroomName = remoteRooms[rr_it].split(',')[0];
 
                 if (Game.rooms[rroomName]) {
-                    let enemiesInRemoteRoom = Game.rooms[rroomName].find(FIND_HOSTILE_CREEPS, {filter: (c) => !global.Allies.includes(c.owner.username)});
+                    let enemiesInRemoteRoom = Game.rooms[rroomName].find(FIND_HOSTILE_CREEPS, {filter: (c) => c.owner.username != 'Source Keeper' && !global.Allies.includes(c.owner.username)});
                     if (enemiesInRemoteRoom.length > 0) {
                         Memory.rooms[room].rmtUA = rroomName;
                         break;
