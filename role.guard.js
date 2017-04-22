@@ -85,53 +85,6 @@ module.exports = {
             if (Memory.rooms[room]) Memory.rooms[room].isUnderAttack = false;
             return;
         }
-    },
-    
-    virtualMove: function (pos, dir) {
-        var tempPos;
-        var newPos;
-
-        if (!pos) return;
-        if (pos.x == 0 || pos.x == 49 || pos.y == 0 || pos.y == 49) return;
-
-        tempPos = pos;
-
-        switch (dir) {
-            case TOP:
-                tempPos.y = tempPos.y - 1;
-                break;
-            case TOP_RIGHT:
-                tempPos.y = tempPos.y - 1;
-                tempPos.x = tempPos.x + 1;
-                break;
-            case RIGHT:
-                tempPos.x = tempPos.x + 1;
-                break;
-            case BOTTOM_RIGHT:
-                tempPos.y = tempPos.y + 1;
-                tempPos.x = tempPos.x + 1;
-                break;
-            case BOTTOM:
-                tempPos.y = tempPos.y + 1;
-                break;
-            case BOTTOM_LEFT:
-                tempPos.y = tempPos.y + 1;
-                tempPos.x = tempPos.x - 1;
-            break;
-            case LEFT:
-                tempPos.x = tempPos.x - 1;
-                break;
-            case TOP_LEFT:
-                tempPos.y = tempPos.y - 1;
-                tempPos.x = tempPos.x - 1;
-                break;
-            default:
-                return;
-        }
-
-        newPos = tempPos;
-
-        return newPos;
     }
 };
 
