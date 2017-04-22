@@ -42,7 +42,7 @@ module.exports = {
             let rroomName = rrSpilt[0];
             let guardRoom = rrSpilt[3] < 1 || !rrSpilt[3];
 
-            if (guardRoom === false) continue;
+            if (guardRoom === true) continue;
 
             let amountOfCreepsAssignedToThisRoom = _.filter(Game.creeps, (c) => c.memory.room == room.name && c.memory.role == 'remoteGuard' && c.memory.rr == rroomName).length;
 
