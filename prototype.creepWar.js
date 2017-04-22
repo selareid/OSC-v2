@@ -55,7 +55,10 @@ module.exports = function () {
                 targetDangerous = true;
             }
 
-            if (targetDangerous) {
+            if (target.owner && target.owner.username == 'Source Keeper') {
+                creep.moveTo(target, {reusePath: 2})
+            }
+            else if (targetDangerous) {
                 var directionToTarget = creep.pos.getDirectionTo(target);
                 if (creep.pos.getRangeTo(target) <= 2) {
                     var oppositeDir = global.REVERSE_DIR[directionToTarget];
@@ -81,7 +84,7 @@ module.exports = function () {
                 creep.moveTo(target, {reusePath: 2})
             }
 
-            if (creep.hasActiveBodyparts(ATTACK) && creep.hits > creep.hitsMax * 0.5) {
+            if (creep.pos.isNearTo(target.pos) && creep.hasActiveBodyparts(ATTACK) && creep.hits > creep.hitsMax * 0.5) {
                 creep.attack(target);
             }
             else if (creep.hasActiveBodyparts(HEAL) && creep.hits < creep.hitsMax) {
