@@ -306,7 +306,7 @@ global.pathFinderFlee = function (roomName, x, y) {
 
     var pos = new RoomPosition(x, y, room.name);
 
-    var goals = _.map(room.find(FIND_MY_SPAWNS).concat(room.find(FIND_STRUCTURES)).concat([room.storage, room.terminal]), function(s) {
+    var goals = _.map(room.find(FIND_MY_SPAWNS).concat([room.storage, room.terminal]), function(s) {
         return { pos: s.pos, range: 15};
     });
 
@@ -319,23 +319,16 @@ global.pathFinderFlee = function (roomName, x, y) {
         if (!room) return;
         let costs = new PathFinder.CostMatrix;
 
-        room.find(FIND_STRUCTURES).forEach(function(struct) {
+        room.find(FIND_STRUCTURES).forEach(function (struct) {
             if (struct.structureType === STRUCTURE_ROAD) {
                 // Favor roads over plain tiles
                 costs.set(struct.pos.x, structure.pos.y, 1);
             } else if (struct.structureType !== STRUCTURE_CONTAINER &&
-                (struct.structureType !== STRUCTURE_RAMPART ||
-                !struct.my)) {
+                (struct.structureType !== STRUCTURE_RAMPART || !struct.my)) {
                 // Can't walk through non-walkable buildings
                 costs.set(struct.pos.x, struct.pos.y, 0xff);
             }
         });
-
-        // Avoid creeps in the room
-        room.find(FIND_CREEPS).forEach(function(creep) {
-            costs.set(creep.pos.x, creep.pos.y, 0xff);
-        });
-
         return costs;
     }});
 
