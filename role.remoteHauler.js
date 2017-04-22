@@ -28,7 +28,7 @@ module.exports = {
     },
 
     setRemoteRoomMemory: function (room, creep, remoteRooms) {
-        remoteRooms = _.filter(remoteRooms, (r) => r.split(',')[1] == 0&& r.split(',')[2] == 0);
+        remoteRooms = _.filter(remoteRooms, (r) => !r.split(',')[1] == 0 && !r.split(',')[2] == 0);
 
         var zeChosenRoom = remoteRooms[Math.floor(Math.random() * remoteRooms.length)];
 
