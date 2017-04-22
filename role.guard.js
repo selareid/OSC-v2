@@ -1,8 +1,7 @@
 require('global');
 require('prototype.creep');
 require('prototype.creepSpeech')();
-
-const creepWar = require ('prototype.creepWar');
+require('prototype.creepWar')();
 
 module.exports = {
     run: function (room, creep) {
@@ -23,7 +22,7 @@ module.exports = {
                             creep.moveTo(target, {reusePath: 3, ignoreRoads: true});
                             break;
                         case 0: // returns OK
-                            creepWar.kite(room, creep, target);
+                            creep.kite(room, creep, target);
                             //creep.say something here using prototype.creepSpeech.js
                             break;
                         default:
@@ -54,7 +53,7 @@ module.exports = {
                                 creep.moveTo(target, {reusePath: 3, ignoreRoads: true});
                                 break;
                             case 0: // returns OK
-                                creepWar.kite(creep.room, creep, target);
+                                creep.kite(creep.room, creep, target);
                                 //creep.say something here using prototype.creepSpeech.js
                                 break;
                             default:

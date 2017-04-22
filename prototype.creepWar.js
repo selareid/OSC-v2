@@ -48,58 +48,59 @@ module.exports = function () {
             }
         };
 
-    function kite(room, creep, target) {
-        var targetDangerous = target.hasActiveBodyparts(ATTACK) || target.hasActiveBodyparts(RANGED_ATTACK);
+    Creep.prototype.kite =
+        function (room, creep, target) {
+            var targetDangerous = target.hasActiveBodyparts(ATTACK) || target.hasActiveBodyparts(RANGED_ATTACK);
 
-        if (targetDangerous) {
-            var directionToTarget = creep.pos.getDirectionTo(target);
-            if (creep.pos.getRangeTo(target) <= 2) {
-                var fleePath = PathFinder.search(creep.pos, {goal: target, range: 3}, {flee: true, plainCost: 2, swampCost: 10,
-                        roomCallback: function(roomName) {
+            if (targetDangerous) {
+                var directionToTarget = creep.pos.getDirectionTo(target);
+                if (creep.pos.getRangeTo(target) <= 2) {
+                    var fleePath = PathFinder.search(creep.pos, {goal: target, range: 3}, {
+                            flee: true, plainCost: 2, swampCost: 10,
+                            roomCallback: function (roomName) {
 
-                            let room = Game.rooms[roomName];
+                                let room = Game.rooms[roomName];
 
-                            if (!room) return;
-                            let costs = new PathFinder.CostMatrix;
+                                if (!room) return;
+                                let costs = new PathFinder.CostMatrix;
 
-                            room.find(FIND_STRUCTURES).forEach(function(struct) {
-                                if (struct.structureType === STRUCTURE_ROAD) {
-                                    // Favor roads over plain tiles
-                                    costs.set(struct.pos.x, struct.pos.y, 1);
-                                } else if (struct.structureType !== STRUCTURE_CONTAINER &&
-                                    (struct.structureType !== STRUCTURE_RAMPART ||
-                                    !struct.my)) {
-                                    // Can't walk through non-walkable buildings
-                                    costs.set(struct.pos.x, struct.pos.y, 0xff);
-                                }
-                            });
+                                room.find(FIND_STRUCTURES).forEach(function (struct) {
+                                    if (struct.structureType === STRUCTURE_ROAD) {
+                                        // Favor roads over plain tiles
+                                        costs.set(struct.pos.x, struct.pos.y, 1);
+                                    } else if (struct.structureType !== STRUCTURE_CONTAINER &&
+                                        (struct.structureType !== STRUCTURE_RAMPART || !struct.my)) {
+                                        // Can't walk through non-walkable buildings
+                                        costs.set(struct.pos.x, struct.pos.y, 0xff);
+                                    }
+                                });
 
-                            // Avoid creeps in the room
-                            room.find(FIND_CREEPS).forEach(function(creep) {
-                                costs.set(creep.pos.x, creep.pos.y, 0xff);
-                            });
+                                // Avoid creeps in the room
+                                room.find(FIND_CREEPS).forEach(function (creep) {
+                                    costs.set(creep.pos.x, creep.pos.y, 0xff);
+                                });
 
-                            return costs;
-                        },
-                    }
-                );
+                                return costs;
+                            },
+                        }
+                    );
 
-                let pos = fleePath.path[0];
-                creep.move(creep.pos.getDirectionTo(pos));
+                    let pos = fleePath.path[0];
+                    creep.move(creep.pos.getDirectionTo(pos));
+                }
+                else {
+                    creep.move(directionToTarget);
+                }
             }
             else {
-                creep.move(directionToTarget);
+                creep.moveTo(target, {reusePath: 2})
+            }
+
+            if (creep.hasActiveBodyparts(ATTACK) && creep.hits > creep.hitsMax * 0.5) {
+                creep.attack(target);
+            }
+            else if (creep.hasActiveBodyparts(HEAL) && creep.hits < creep.hitsMax) {
+                creep.heal(creep);
             }
         }
-        else {
-            creep.moveTo(target, {reusePath: 2})
-        }
-
-        if (creep.hasActiveBodyparts(ATTACK) && creep.hits > creep.hitsMax * 0.5) {
-            creep.attack(target);
-        }
-        else if (creep.hasActiveBodyparts(HEAL) && creep.hits < creep.hitsMax) {
-            creep.heal(creep);
-        }
-    }
 };
