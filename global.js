@@ -319,7 +319,7 @@ global.pathFinderFlee = function (roomName, x, y) {
         if (!room) return;
         let costs = new PathFinder.CostMatrix;
 
-        room.find(FIND_STRUCTURES).forEach(function (struct) {
+        _.forEach(room.find(FIND_STRUCTURES), function (struct) {
             if (struct.structureType === STRUCTURE_ROAD) {
                 // Favor roads over plain tiles
                 costs.set(struct.pos.x, structure.pos.y, 1);
