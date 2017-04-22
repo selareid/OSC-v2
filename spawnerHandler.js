@@ -611,7 +611,7 @@ module.exports = {
             var queueUsed = 0; // 0 is normal and 1 is priority 2 is war
             var roleToSpawn;
 
-            if (room.energyAvailable >= 400) {
+            if (room.energyAvailable >= 400 && (!room.storage || room.storage[RESOURCE_ENERGY] < 10000)) {
                 if ((numberOfHarvesters >= minimumNumberOfHarvesters)
                     && (numberOfDistributors >= minimumNumberOfDistributors)
                     && (numberOfCarriers > 0)) {
