@@ -227,52 +227,9 @@ module.exports = {
                     //if (((temp_harvesters == undefined || temp_harvesters == undefined) && (temp_miners == undefined || temp_miners == null))
                       //  || (temp_harvesters < 1 && temp_miners < 1)) Memory.rooms[room].rmtR.splice(rmtR.length, 1);
 
-                    let temp_guards = 0;
+                    let temp_guards = Number.parseInt(splitRMTR[3]) ? Number.parseInt(splitRMTR[3]) : 0;
 
-                    function isES456(temp_room) {
-                        if (Number.isNaN(temp_room[2]) == false) {
-                            switch (temp_room[2]) {
-                                case 4:
-                                    return true;
-                                    break;
-                                case 5:
-                                    return true;
-                                    break;
-                                case 6:
-                                    return true;
-                                    break;
-                                default:
-                                    return false;
-                            }
-                        }
-                        else {
-                            switch (temp_room[1]) {
-                                case 4:
-                                    return true;
-                                    break;
-                                case 5:
-                                    return true;
-                                    break;
-                                case 6:
-                                    return true;
-                                    break;
-                                default:
-                                    return false;
-                            }
-                        }
-                    }
 
-                    switch (temp_room[temp_room.length-1]) {
-                        case 4:
-                            if (isES456(temp_room) == true) temp_guards = 0;
-                            break;
-                        case 5:
-                            if (isES456(temp_room) == true) temp_guards = 0;
-                            break;
-                        case 6:
-                            if (isES456(temp_room) == true) temp_guards = 0;
-                            break;
-                    }
 
                     temp_minimumNumberOfRemoteHarvesters += Number.parseInt(temp_harvesters);
                     temp_minimumNumberOfRemoteMiners += Number.parseInt(temp_miners);

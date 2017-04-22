@@ -38,9 +38,11 @@ module.exports = {
         var zeChosenRoom;
 
         for (let rr of remoteRooms) {
-            let rroomName = rr.split(',')[0];
+            let rrSpilt = rr.split(',');
+            let rroomName = rrSpilt[0];
+            let guardRoom = rrSpilt[3] < 1 || !rrSpilt[3];
 
-            this.isGuardR(rroomName);
+            if (guardRoom === false) continue;
 
             let amountOfCreepsAssignedToThisRoom = _.filter(Game.creeps, (c) => c.memory.room == room.name && c.memory.role == 'remoteGuard' && c.memory.rr == rroomName).length;
 
@@ -166,53 +168,6 @@ module.exports = {
         newPos = tempPos;
 
         return newPos;
-    },
-
-    isGuardR: function (roomToCheck) {
-        function isES456(roomToCheck) {
-            if (Number.isNaN(roomToCheck[2]) == false) {
-                switch (roomToCheck[2]) {
-                    case 4:
-                        return true;
-                        break;
-                    case 5:
-                        return true;
-                        break;
-                    case 6:
-                        return true;
-                        break;
-                    default:
-                        return false;
-                }
-            }
-            else {
-                switch (roomToCheck[1]) {
-                    case 4:
-                        return true;
-                        break;
-                    case 5:
-                        return true;
-                        break;
-                    case 6:
-                        return true;
-                        break;
-                    default:
-                        return false;
-                }
-            }
-        }
-
-        switch (roomToCheck[roomToCheck.length-1]) {
-            case 4:
-                return isES456(roomToCheck);
-                break;
-            case 5:
-                return isES456(roomToCheck);
-                break;
-            case 6:
-                return isES456(roomToCheck);
-                break;
-        }
     }
 };
 
