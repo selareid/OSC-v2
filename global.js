@@ -112,8 +112,8 @@ global.modifyRemoteMine = function (room, remoteRoom, harvesters, miners, guards
     if (!remoteRoom) return 'bad remoteRoom';
     if (global.isUndefinedOrNull(harvesters) || global.isUndefinedOrNull(miners) || global.isUndefinedOrNull(guards)) return 'bad creeps';
 
-    var key = _.findKey(Memory.rooms[Game.rooms[room]].rmtR, (v) => v == remoteRoom);
-    if (global.isUndefinedOrNull(key)) return 'remote room does not exist';
+    var key = _.indexOf(Memory.rooms[Game.rooms[room]].rmtR, remoteRoom);
+    if (global.isUndefinedOrNull(key || key < 0)) return 'remote room does not exist';
 
     return Memory.rooms[Game.rooms[room]].rmtR[key] = remoteRoom + ',' + harvesters + ',' + miners + ',' + guards;
 };
