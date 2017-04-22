@@ -305,7 +305,7 @@ module.exports = function () {
                         _.times(numberOfParts * 4, () => body.push(MOVE));
 
                     }
-                    else {
+                    else if (room.energyCapacityAvailable < 2000) {
                         numberOfParts = Math.floor((energy - (energy * amountToSave)) / 280);
                         if (numberOfParts > 16) numberOfParts = 16;
 
@@ -409,7 +409,7 @@ module.exports = function () {
                         _.times(numberOfParts * 4, () => body.push(MOVE));
 
                     }
-                    else {
+                    else if (room.energyCapacityAvailable < 2000) {
                         numberOfParts = Math.floor((energy - (energy * amountToSave)) / 280);
                         if (numberOfParts > 16) numberOfParts = 16;
 
