@@ -92,6 +92,10 @@ global.storageData2[RESOURCE_CATALYZED_LEMERGIUM_ALKALIDE] = 6000;
 global.storageData2[RESOURCE_CATALYZED_ZYNTHIUM_ACID] = 6000;
 global.storageData2[RESOURCE_CATALYZED_ZYNTHIUM_ALKALIDE] = 6000;
 
+global.isUndefinedOrNull = function(i) {
+    return i === undefined || i === null;
+};
+
 global.addReserveRoom = function (room, reserveRoom) {
     return Memory.rooms[Game.rooms[room]].rsv.push(reserveRoom);
 };
@@ -101,6 +105,17 @@ global.addRemoteMine = function (room, remoteRoom, harvesters = 0, miners = 0, g
     if (harvesters == 0 && miners == 0 && guards == 0) return 'bad creeps';
 
     return Memory.rooms[Game.rooms[room]].rmtR.push(remoteRoom + ',' + harvesters + ',' + miners + ',' + guards);
+};
+
+global.modifyRemoteMine = function (room, remoteRoom, harvesters, miners, guards) {
+    
+    if (!remoteRoom) return 'bad remoteRoom';
+    if (global.isUndefinedOrNull(harvesters) || global.isUndefinedOrNull(miners) || global.isUndefinedOrNull(guards)) return 'bad creeps';
+
+    var key = _.findKey(Memory.rooms[Game.rooms[room]].rmtR, (v) => v == remoteRoom);
+    if (global.isUndefinedOrNull(key)) return 'remote room does not exist';
+
+    return Memory.rooms[Game.rooms[room]].rmtR[key] = remoteRoom + ',' + harvesters + ',' + miners + ',' + guards;
 };
 
 global.errorString = "[" + "<p style=\"display:inline; color: #ed4543\">ERROR</p>" + "] ";
