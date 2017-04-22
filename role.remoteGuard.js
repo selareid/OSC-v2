@@ -18,7 +18,7 @@ module.exports = {
 
             if (remoteRoom) {
                 if (creep.pos.roomName != remoteRoom) {
-                    creep.moveTo(new RoomPosition(25, 25, remoteRoom), {reusePath: 21, range: 20});
+                    creep.moveTo(new RoomPosition(25, 25, remoteRoom), {reusePath: 21, range: 20, ignoreRoads: true});
                 }
                 else {
                     this.realRun(room, creep);
@@ -84,7 +84,7 @@ module.exports = {
             if (SKL.length > 0) {
                 var next = _.min(SKL, 'ticksToSpawn');
                 if (!global.isUndefinedOrNull(next)) {
-                    creep.moveTo(next, {reusePath: 3})
+                    creep.moveTo(next, {reusePath: 3, ignoreRoads: true})
                 }
             }
         }
