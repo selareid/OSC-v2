@@ -42,7 +42,7 @@ module.exports = {
                     let rrSpilt = rr.split(',');
 
                     let rroomName = rrSpilt[0];
-                    if (!rroomName) return;
+                    if (!rroomName) break;
 
                     let lastCalc = global.isUndefinedOrNull(rrSpilt[4]) ? 0 : rrSpilt[4];
 
