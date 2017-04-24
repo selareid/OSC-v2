@@ -18,7 +18,7 @@ module.exports = {
                 var controller = creep.pos.isNearTo(creep.room.controller) ? creep.room.controller : undefined;
                 if (controller) {
                     if (!controller.sign || controller.sign.username != creep.owner.username || Game.time-controller.sign.time > global.signTime) {
-                        var text = global.sign[Math.floor(Math.random() * global.sign.length)];
+                        var text = Memory.sign[Math.floor(Math.random() * Memory.sign.length)];
                         creep.signController(controller, text);
                     }
                 }
