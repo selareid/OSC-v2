@@ -47,7 +47,7 @@ module.exports = {
 
                         let lastCalc = global.isUndefinedOrNull(rrSpilt[4]) ? 0 : rrSpilt[4];
 
-                        if (Game.time % 100000 - lastCalc > 4500 && _.size(Game.constructionSites) < 50) {
+                        if (Math.abs(Game.time % 100000 - lastCalc > 4500) && _.size(Game.constructionSites) < 50) {
 
                             room.remoteRoad(rroomName);
 
