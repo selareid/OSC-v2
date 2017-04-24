@@ -49,7 +49,7 @@ module.exports = {
 
                         if (lastCalc.length > 6) lastCalc = lastCalc % 100000;
 
-                        if (Math.abs(Game.time % 100000 - lastCalc > 4500) && _.size(Game.constructionSites) < 50) {
+                        if (Math.abs(Game.time % 100000 - lastCalc) > 4500 && _.size(Game.constructionSites) < 50) {
 
                             room.remoteRoad(rroomName);
 

@@ -263,7 +263,7 @@ module.exports = function () {
                     if (!room) return;
                     if (!new RoomPosition(pos.x, pos.y, room.name).lookFor(LOOK_STRUCTURES)[0]) {
                         var res = room.createConstructionSite(pos.x, pos.y, STRUCTURE_ROAD);
-                        if (res == 0) global.roomLog('Created Construction Site At ' + pos.x + ' ' + pos.y + ' ', this.name);
+                        if (res == 0) global.roomLog('Created Construction Site At ' + pos.roomName + ' ' + pos.x + ' ' + pos.y + ' ', this.name);
                     }
                 });
             });
