@@ -35,23 +35,25 @@ module.exports = {
         }
 
         try {
-            var remoteRooms = Memory.rooms[room].rmtR;
-            if (remoteRooms && remoteRooms.length > 0) {
-                for (let rr_it in remoteRooms) {
-                    let rr = remoteRooms[rr_it];
-                    let rrSpilt = rr.split(',');
+            if (Gam.time % 3 == 0) {
+                var remoteRooms = Memory.rooms[room].rmtR;
+                if (remoteRooms && remoteRooms.length > 0) {
+                    for (let rr_it in remoteRooms) {
+                        let rr = remoteRooms[rr_it];
+                        let rrSpilt = rr.split(',');
 
-                    let rroomName = rrSpilt[0];
-                    if (!rroomName) break;
+                        let rroomName = rrSpilt[0];
+                        if (!rroomName) break;
 
-                    let lastCalc = global.isUndefinedOrNull(rrSpilt[4]) ? 0 : rrSpilt[4];
+                        let lastCalc = global.isUndefinedOrNull(rrSpilt[4]) ? 0 : rrSpilt[4];
 
-                    if (Game.time%100000-lastCalc > 4500 && _.size(Game.constructionSites) < 50) {
+                        if (Game.time % 100000 - lastCalc > 4500 && _.size(Game.constructionSites) < 50) {
 
-                        room.remoteRoad(rroomName);
+                            room.remoteRoad(rroomName);
 
-                        Memory.rooms[room].rmtR[rr_it] = rrSpilt[0] + ',' + rrSpilt[1] + ',' + rrSpilt[2] + ',' + rrSpilt[3] + ',' + Game.time;
-                        break;
+                            Memory.rooms[room].rmtR[rr_it] = rrSpilt[0] + ',' + rrSpilt[1] + ',' + rrSpilt[2] + ',' + rrSpilt[3] + ',' + Game.time;
+                            break;
+                        }
                     }
                 }
             }
