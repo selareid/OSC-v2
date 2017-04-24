@@ -11,6 +11,7 @@ module.exports = {
         if (Memory.rooms[room].isUnderAttack == true) {
             if (creep.pos.roomName != room.name) {
                 creep.moveTo(room.controller, {reusePath: 7, ignoreRoads: true});
+                if (creep.hasActiveBodyparts(HEAL) && creep.hits < creep.hitsMax) creep.heal(creep);
             }
             else {
                 var target = this.getTarget(room, creep);
@@ -30,8 +31,10 @@ module.exports = {
                     }
 
                 }
-                else if (creep.hasActiveBodyparts(HEAL) && creep.hits < creep.hitsMax) creep.heal(creep);
-                else creep.moveTo(global[room.name].guardStationFlag, {ignoreRoads: true});
+                else {
+                    creep.moveTo(global[room.name].guardStationFlag, {ignoreRoads: true});
+                    if (creep.hasActiveBodyparts(HEAL) && creep.hits < creep.hitsMax) creep.heal(creep);
+                }
             }
         }
         else {
@@ -42,6 +45,8 @@ module.exports = {
                 if (creep.pos.roomName != remoteRoom.name) {
                     var posToMoveTo = new RoomPosition(25, 25, remoteRoom.name);
                     creep.moveTo(posToMoveTo, {reusePath: 13, range: 23, ignoreRoads: true});
+
+                    if (creep.hasActiveBodyparts(HEAL) && creep.hits < creep.hitsMax) creep.heal(creep);
                 }
                 else {
                     var target = this.getTarget(creep.room, creep);
@@ -70,7 +75,10 @@ module.exports = {
 
                 }
             }
-            else creep.moveTo(global[room.name].guardStationFlag, {ignoreRoads: true});
+            else {
+                creep.moveTo(global[room.name].guardStationFlag, {ignoreRoads: true});
+                if (creep.hasActiveBodyparts(HEAL) && creep.hits < creep.hitsMax) creep.heal(creep);
+            }
         }
     },
 
