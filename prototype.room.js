@@ -250,6 +250,10 @@ module.exports = function () {
                                 }
                             });
 
+                            room.find(FIND_CONSTRUCTION_SITES).forEach(function (constr) {
+                                if (constr.structureType !== STRUCTURE_RAMPART || constr.structureType !== STRUCTURE_ROAD) costs.set(constr.pos.x, constr.pos.y, 0xff);
+                            });
+
                             return costs;
                         },
                     });

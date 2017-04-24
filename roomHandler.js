@@ -45,13 +45,15 @@ module.exports = {
                         let rroomName = rrSpilt[0];
                         if (!rroomName) break;
 
-                        let lastCalc = global.isUndefinedOrNull(rrSpilt[4]) ? 0 : rrSpilt[4];
+                        let lastCalc = global.isUndefinedOrNull(rrSpilt[4]) ? 0 : Number.parseInt(rrSpilt[4]);
+
+                        if (lastCalc.length > 6) lastCalc = lastCalc % 100000;
 
                         if (Math.abs(Game.time % 100000 - lastCalc > 4500) && _.size(Game.constructionSites) < 50) {
 
                             room.remoteRoad(rroomName);
 
-                            Memory.rooms[room].rmtR[rr_it] = rrSpilt[0] + ',' + rrSpilt[1] + ',' + rrSpilt[2] + ',' + rrSpilt[3] + ',' + Game.time;
+                            Memory.rooms[room].rmtR[rr_it] = rrSpilt[0] + ',' + rrSpilt[1] + ',' + rrSpilt[2] + ',' + rrSpilt[3] + ',' + Game.time % 100000;
                             break;
                         }
                     }
