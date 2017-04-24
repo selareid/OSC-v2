@@ -46,7 +46,7 @@ module.exports = {
 
             if (rrMiners == undefined) continue;
 
-            let amountOfCreepsAssignedToThisRoom = _.filter(Game.creeps, (c) => c.memory.room == room.name && c.memory.role == 'remoteHarvester' && c.memory.rr == rroomName).length;
+            let amountOfCreepsAssignedToThisRoom = _.filter(Game.creeps, (c) => c.memory.room == room.name && c.memory.role == 'remoteMiner' && c.memory.rr == rroomName).length;
 
             if (amountOfCreepsAssignedToThisRoom < rrMiners) {
                 zeChosenRoom = rroomName;
