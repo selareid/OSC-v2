@@ -223,7 +223,7 @@ module.exports = function () {
             var sources = remoteRoom.find(FIND_SOURCES);
 
             _.forEach(sources, (s) => {
-                var goal = {pos: s.pos, range: 1};
+                var goal = {pos: s.pos, range: 2};
 
                 let ret = PathFinder.search(
                     start, goal,
