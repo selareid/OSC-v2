@@ -261,7 +261,7 @@ module.exports = function () {
                 _.forEach(ret.path, (pos) => {
                     let room = Game.rooms[pos.roomName];
                     if (!room) return;
-                    if (!new RoomPosition(pos.x, pos.y, room.name).lookFor(LOOK_STRUCTURES)[0]) {
+                    if (!_.filter(new RoomPosition(pos.x, pos.y, room.name).lookFor(LOOK_STRUCTURES), (s) => s.structureType !== STRUCTURE_RAMPART)[0]) {
                         var res = room.createConstructionSite(pos.x, pos.y, STRUCTURE_ROAD);
                         if (res == 0) global.roomLog('Created Construction Site At ' + pos.roomName + ' ' + pos.x + ' ' + pos.y + ' ', this.name);
                     }
