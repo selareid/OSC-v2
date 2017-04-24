@@ -35,6 +35,35 @@ module.exports = {
         }
 
         try {
+            var remoteRooms = Memory.rooms[room].rmtR;
+            if (remoteRooms && remoteRooms.length > 0) {
+                for (let rr_it in remoteRooms) {
+                    let rr = remoteRooms[rr_it];
+                    let rrSpilt = rr.split(',');
+
+                    let rroomName = rrSpilt[0];
+                    if (!rroomName) return;
+
+                    let lastCalc = global.isUndefinedOrNull(rrSpilt[4]) ? 0 : rrSpilt[4];
+
+                    if (Game.time%100000-lastCalc > 4500 && Game.constructionSites < 50) {
+
+                        room.remoteRoad(rroomName);
+
+                        Memory.rooms[room].rmtR[rr_it] = rrSpilt[0] + ',' + rrSpilt[1] + ',' + rrSpilt[2] + ',' + rrSpilt[3] + ',' + Game.time;
+                        break;
+                    }
+                }
+            }
+        }
+        catch (err) {
+            if (err !== null && err !== undefined) {
+                Game.notify("Error in auto remote roads logic: \n" + err + "\n " + err.stack);
+                global.errorLog("Auto remote roads logic: \n" + err + "\n" + err.stack, room);
+            }
+        }
+
+        try {
             if (Game.time % 101 == 0) {
                 if (Game.cpu.bucket > 2000) {
                     var terminal = room.terminal;

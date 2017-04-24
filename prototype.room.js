@@ -208,3 +208,59 @@ module.exports = function () {
 
         };
 };
+
+    Room.prototype.remoteRoad =
+        function (remoteRoomName) {
+            if (!remoteRoomName) return;
+
+            var remoteRoom = Game.rooms[remoteRoomName];
+
+            if (!remoteRoom) return;
+
+            var start = this.storage ? this.storage : undefined;
+            if (!start) return;
+
+            var sources = remoteRoom.find(FIND_SOURCES);
+
+            _.forEach(sources, (s) => {
+                var goal = {pos: s.pos, range: 1};
+
+                let ret = PathFinder.search(
+                    start, goal,
+                    {
+                        // We need to set the defaults costs higher so that we
+                        // can set the road cost lower in `roomCallback`
+                        plainCost: 1,
+                        swampCost: 5,
+
+                        roomCallback: function (roomName) {
+
+                            let room = Game.rooms[roomName];
+                            // In this example `room` will always exist, but since
+                            // PathFinder supports searches which span multiple rooms
+                            // you should be careful!
+                            if (!room) return;
+                            let costs = new PathFinder.CostMatrix;
+
+                            room.find(FIND_STRUCTURES).forEach(function (struct) {
+                                if (struct.structureType !== STRUCTURE_CONTAINER && struct.structureType === STRUCTURE_ROAD &&
+                                    (struct.structureType !== STRUCTURE_RAMPART || !struct.my)) {
+                                    // Can't walk through non-walkable buildings
+                                    costs.set(struct.pos.x, struct.pos.y, 0xff);
+                                }
+                            });
+
+                            return costs;
+                        },
+                    });
+
+                _.forEach(ret.path, (pos) => {
+                    let room = Game.rooms[pos.roomName];
+                    if (!room) return;
+                    if (!new RoomPosition(pos.x, pos.y, room.name).lookFor(LOOK_STRUCTURES)[0]) {
+                        var res = room.createConstructionSite(pos.x, pos.y, STRUCTURE_ROAD);
+                        if (res == 0) global.roomLog('Created Construction Site At ' + pos.x + ' ' + pos.y + ' ', this.name);
+                    }
+                });
+            });
+        };

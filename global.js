@@ -337,10 +337,7 @@ global.remoteRoads = function (start, goal) {
                 let costs = new PathFinder.CostMatrix;
 
                 room.find(FIND_STRUCTURES).forEach(function (struct) {
-                    if (struct.structureType === STRUCTURE_ROAD) {
-                        // Favor roads over plain tiles
-                        costs.set(struct.pos.x, struct.pos.y, 1);
-                    } else if (struct.structureType !== STRUCTURE_CONTAINER &&
+                    if (struct.structureType !== STRUCTURE_CONTAINER && struct.structureType === STRUCTURE_ROAD &&
                         (struct.structureType !== STRUCTURE_RAMPART || !struct.my)) {
                         // Can't walk through non-walkable buildings
                         costs.set(struct.pos.x, struct.pos.y, 0xff);
@@ -352,6 +349,6 @@ global.remoteRoads = function (start, goal) {
         });
 
     _.forEach(ret.path, (pos) => {
-        pos.roomName.visual.circle(pos.x, pos.y, {radius: radius, lineStyle: style});
+        Game.rooms[pos.roomName].visual.circle(pos.x, pos.y, {radius: radius, lineStyle: style});
     });
 };
