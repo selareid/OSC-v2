@@ -51,10 +51,6 @@ module.exports = {
             }
         }
 
-        if (!Memory.rooms[room].roadSites || Game.time % 34 == 0) {
-            Memory.rooms[room].roadSites = [];
-        }
-
         //lab stuff starts
         try {
             if (!Memory.rooms[room].labQueue) {
