@@ -217,7 +217,7 @@ module.exports = function () {
 
             if (!remoteRoom) return;
 
-            var start = this.storage ? this.storage : undefined;
+            var start = this.storage ? this.storage.pos : undefined;
             if (!start) return;
 
             var sources = remoteRoom.find(FIND_SOURCES);
@@ -243,7 +243,7 @@ module.exports = function () {
                             let costs = new PathFinder.CostMatrix;
 
                             room.find(FIND_STRUCTURES).forEach(function (struct) {
-                                if (struct.structureType !== STRUCTURE_CONTAINER && struct.structureType === STRUCTURE_ROAD &&
+                                if (struct.structureType !== STRUCTURE_CONTAINER && struct.structureType !== STRUCTURE_ROAD &&
                                     (struct.structureType !== STRUCTURE_RAMPART || !struct.my)) {
                                     // Can't walk through non-walkable buildings
                                     costs.set(struct.pos.x, struct.pos.y, 0xff);

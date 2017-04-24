@@ -35,7 +35,7 @@ module.exports = {
         }
 
         try {
-            if (Gam.time % 3 == 0) {
+            if (Game.time % 3 == 0) {
                 var remoteRooms = Memory.rooms[room].rmtR;
                 if (remoteRooms && remoteRooms.length > 0) {
                     for (let rr_it in remoteRooms) {
