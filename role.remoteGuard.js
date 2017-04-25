@@ -40,7 +40,9 @@ module.exports = {
         for (let rr of remoteRooms) {
             let rrSpilt = rr.split(',');
             let rroomName = rrSpilt[0];
-            let guardRoom = !global.isUndefinedOrNull(rrSpilt[3]) || rrSpilt[3] < 1;
+
+            rrSpilt[3] = Number.parseInt(rrSpilt[3]);
+            let guardRoom = Number.isNaN(rrSpilt[3]) || !global.isUndefinedOrNull(rrSpilt[3]) || rrSpilt[3] < 1;
 
             if (guardRoom === true) continue;
 
