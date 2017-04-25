@@ -40,13 +40,13 @@ module.exports = {
         for (let rr of remoteRooms) {
             let rrSpilt = rr.split(',');
             let rroomName = rrSpilt[0];
-            let guardRoom = global.isUndefinedOrNull(rrSpilt[3]) || rrSpilt[3] < 1;
+            let guardRoom = !global.isUndefinedOrNull(rrSpilt[3]) || rrSpilt[3] < 1;
 
             if (guardRoom === true) continue;
 
             let amountOfCreepsAssignedToThisRoom = _.filter(Game.creeps, (c) => c.memory.room == room.name && c.memory.role == 'remoteGuard' && c.memory.rr == rroomName).length;
 
-            if (amountOfCreepsAssignedToThisRoom < 1) {
+            if (amountOfCreepsAssignedToThisRoom < rrSpilt[3]) {
                 zeChosenRoom = rroomName;
                 break;
             }
