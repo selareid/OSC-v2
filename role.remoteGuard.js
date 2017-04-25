@@ -74,7 +74,7 @@ module.exports = {
 
             var SKL = room.find(FIND_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_KEEPER_LAIR});
             if (SKL.length > 0) {
-                var next = _.min(SKL, 'ticksToSpawn');
+                var next = _.minBy(SKL, (kl) => kl.ticksToSpawn);
                 if (!global.isUndefinedOrNull(next)) {
                     creep.moveTo(next, {reusePath: 3, ignoreRoads: true})
                 }
