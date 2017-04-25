@@ -239,7 +239,8 @@ module.exports = {
                 minimumNumberOfRemoteHarvesters = temp_minimumNumberOfRemoteHarvesters;
                 minimumNumberOfRemoteMiners = temp_minimumNumberOfRemoteMiners;
                 minimumNumberOfRemoteHaulers = Math.round(temp_minimumNumberOfRemoteHarvesters+temp_minimumNumberOfRemoteMiners/2);
-                minimumNumberOfRemoteGuards = temp_minimumNumberOfRemoteGuards;
+                minimumNumberOfRemoteGuards = _.sum(Game.creeps, (c) => c.memory.role == 'guard' && c.memory.room == room.name && c.ticksToLive < 500) > 0 && remoteGuardsInQueue < 1
+                    ? temp_minimumNumberOfRemoteGuards + 1 : temp_minimumNumberOfRemoteGuards;
 
                //remote creeps ends
 
