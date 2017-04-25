@@ -65,7 +65,7 @@ module.exports = {
             if (creep.hasActiveBodyparts(HEAL) && creep.hits < creep.hitsMax*0.5) creep.heal(creep);
             else {
                 var rsl = creep.attack(target);
-                if (rsl == ERR_NOT_IN_RANGE && creep.hasActiveBodyparts(HEAL) && creep.hits < creep.hitsMax*0.5) creep.heal(creep);
+                if (rsl == ERR_NOT_IN_RANGE && creep.hasActiveBodyparts(HEAL) && creep.hits < creep.hitsMax) creep.heal(creep);
             }
             creep.moveTo(target, {reusePath: 3, ignoreRoads: true});
         }
