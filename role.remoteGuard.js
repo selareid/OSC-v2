@@ -42,7 +42,7 @@ module.exports = {
             let rroomName = rrSpilt[0];
 
             rrSpilt[3] = Number.parseInt(rrSpilt[3]);
-            let guardRoom = Number.isNaN(rrSpilt[3]) || !global.isUndefinedOrNull(rrSpilt[3]) || rrSpilt[3] < 1;
+            let guardRoom = Number.isNaN(rrSpilt[3]) || global.isUndefinedOrNull(rrSpilt[3]) || rrSpilt[3] < 1;
 
             if (guardRoom === true) continue;
 
