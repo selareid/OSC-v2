@@ -270,6 +270,6 @@ module.exports = function () {
 
             _.forEach(sources, (s) => pathingAPlacement(s));
 
-            var mineral = remoteRoom.find(FIND_MINERALS);
-            _.forEach(mineral, (m) => pathingAPlacement(m));
+            // var mineral = remoteRoom.find(FIND_MINERALS);
+            // _.forEach(mineral, (m) => pathingAPlacement(m));
         };
