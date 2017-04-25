@@ -98,8 +98,10 @@ module.exports = {
             }
 
             var mineral = Game.getObjectById(creep.memory.mineral);
+            var hostilesNearMineral = mineral.pos.findInRange(FIND_HOSTILE_CREEPS, 5, {filter: (c) => !global.Allies.includes(c.owner.username)});
 
             if (mineral && !mineral.ticksToRegeneration) {
+                if (hostilesNearMineral.length < 1) {
                     switch (creep.harvest(mineral)) {
                         case ERR_NOT_IN_RANGE:
                             creep.creepSpeech(room, 'movingToSource');
@@ -109,6 +111,7 @@ module.exports = {
                             creep.creepSpeech(room, 'harvesting');
                             break;
                     }
+                }
             }
             else remoteHarvester.realRun(room, creep);
         }

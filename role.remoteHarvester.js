@@ -101,16 +101,19 @@ creep.say('harvester remote');
             else {
 
                 var source = Game.getObjectById(creep.memory.source);
-
+                var hostilesNearSource = source.pos.findInRange(FIND_HOSTILE_CREEPS, 5, {filter: (c) => !global.Allies.includes(c.owner.username)});
+                
                 if (source) {
-                    switch (creep.harvest(source)) {
-                        case ERR_NOT_IN_RANGE:
-                            creep.creepSpeech(room, 'movingToSource');
-                            creep.moveTo(source, {reusePath: 37, maxRooms: 1});
-                            break;
-                        case OK:
-                            creep.creepSpeech(room, 'harvesting');
-                            break;
+                    if (hostilesNearSource.length < 1) {
+                        switch (creep.harvest(source)) {
+                            case ERR_NOT_IN_RANGE:
+                                creep.creepSpeech(room, 'movingToSource');
+                                creep.moveTo(source, {reusePath: 37, maxRooms: 1});
+                                break;
+                            case OK:
+                                creep.creepSpeech(room, 'harvesting');
+                                break;
+                        }
                     }
                 }
                 else {
