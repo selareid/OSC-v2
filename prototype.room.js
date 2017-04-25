@@ -220,9 +220,7 @@ module.exports = function () {
             var start = this.storage ? this.storage.pos : undefined;
             if (!start) return;
 
-            var sources = remoteRoom.find(FIND_SOURCES);
-
-            _.forEach(sources, (s) => {
+            function pathingAPlacement(s) {
                 var goal = {pos: s.pos, range: 2};
 
                 let ret = PathFinder.search(
@@ -266,5 +264,12 @@ module.exports = function () {
                         if (res == 0) global.roomLog('Created Construction Site At ' + pos.roomName + ' ' + pos.x + ' ' + pos.y + ' ', this.name);
                     }
                 });
-            });
+            }
+
+            var sources = remoteRoom.find(FIND_SOURCES);
+
+            _.forEach(sources, (s) => pathingAPlacement(s));
+
+            var mineral = remoteRoom.find(FIND_MINERALS);
+            _.forEach(mineral, (m) => pathingAPlacement(m));
         };
