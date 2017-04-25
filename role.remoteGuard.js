@@ -72,7 +72,7 @@ module.exports = {
         else {
             if (creep.hasActiveBodyparts(HEAL) && creep.hits < creep.hitsMax) creep.heal(creep);
 
-            var SKL = room.find(FIND_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_KEEPER_LAIR});
+            var SKL = creep.room.find(FIND_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_KEEPER_LAIR});
             if (SKL.length > 0) {
                 var next = _.minBy(SKL, (kl) => kl.ticksToSpawn);
                 if (!global.isUndefinedOrNull(next)) {
