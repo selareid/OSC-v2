@@ -60,20 +60,11 @@ module.exports = {
 
         var target = this.getTarget(creep.room, creep);
         if (target) {
-
-            var attackResult = creep.attack(target);
-
-            switch (attackResult) {
-                case -9: // returns ERR_NOT_IN_RANGE
-                    creep.moveTo(target, {reusePath: 3, ignoreRoads: true});
-                    break;
-                case 0: // returns OK
-                    //creep.say something here using prototype.creepSpeech.js
-                    break;
-                default:
-                    global.creepErrorLog('Attack Error: ' + attackResult, creep, room);
+            if (creep.hasActiveBodyparts(HEAL) && creep.hits < creep.hitsMax*0.5) creep.heal(creep);
+            else {
+                creep.attack(target);
             }
-
+            creep.moveTo(target, {reusePath: 3, ignoreRoads: true});
         }
         else {
             if (creep.hasActiveBodyparts(HEAL) && creep.hits < creep.hitsMax) creep.heal(creep);
