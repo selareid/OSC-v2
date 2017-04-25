@@ -72,13 +72,29 @@ module.exports = {
         else {
             if (creep.hasActiveBodyparts(HEAL) && creep.hits < creep.hitsMax) creep.heal(creep);
 
-            var SKL = creep.room.find(FIND_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_KEEPER_LAIR});
-            if (SKL.length > 0) {
-                var next = _.min(SKL, (kl) => kl.ticksToSpawn);
+            var SKL = Game.getObjectById(creep.memory.SKL);
+
+            if (!SKL) {
+                var SKLS = creep.room.find(FIND_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_KEEPER_LAIR});
+                if (SKLS.length > 0) {
+                    var next = _.min(SKLS, (kl) => kl.ticksToSpawn);
+                    var creepsWN = _.filter(Game.creeps, (c) => c.memory.SKL == next.id)[0];
+                    if (creepsWN) {
+                        SKL = _.filter(SKLS, (s) => s.id != next.id);
+                        next = _.min(SKLS, (kl) => kl.ticksToSpawn);
+                    }
+                }
+
+                creep.memory.SKL = next;
+                SKL = Game.getObjectById(creep.memory.SKL);
+            }
+
+            if (SKL && SKL.ticksToSpawn < 250) {
                 if (!global.isUndefinedOrNull(next)) {
                     creep.moveTo(next, {reusePath: 3, ignoreRoads: true})
                 }
             }
+            else delete creep.memory.SKL;
         }
     },
 
