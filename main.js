@@ -17,6 +17,7 @@ if (Game.cpu.bucket > 300) module.exports.loop = function () {
         try {
             //memory stuff
             if (!Memory.eQ) Memory.eQ = [];
+            if (!Memory.cs) Memory.cs = [];
 
             if (Game.time % 13 == 0) {
                 for (let name in Memory.creeps) {
@@ -45,6 +46,36 @@ if (Game.cpu.bucket > 300) module.exports.loop = function () {
                 console.log("Error in memory management logic: \n" + err + "\n" + err.stack);
             }
         }
+
+
+        try {
+            //construction site stuff
+            if (_.size(Game.constructionSites) < 5 && global.isUndefinedOrNull(Memory.cs[0])) {
+                var split_it = Memory.cs[0].split(',');
+                var csRoom = Game.rooms[split_it[0]];
+                var csX = Number.parseInt(split_it[1]);
+                var csY = Number.parseInt(split_it[2]);
+                var csStruc = split_it[3];
+
+                if (csRoom && !csX && !Number.isNaN(csX) && !csY && !Number.isNaN(csY) && csStruc) {
+                    var rsl = csRoom.createConstructionSite(csX, csY, csStruc);
+                    if (rsl == OK) {
+                        Memory.cs.splice(0, 1);
+                    }
+                    else {
+                        global.errorLog('Error ' + rsl + ' when creating cosntruction site at X: ' + csX + ' Y: ' + csY + ' Room: ' + csRoom + ' Struct: ' + csStruc);
+                        Game.notify('Error ' + rsl + ' when creating cosntruction site at X: ' + csX + ' Y: ' + csY + ' Room: ' + csRoom + ' Struct: ' + csStruc);
+                    }
+                }
+            }
+        }
+        catch (err) {
+            if (err !== null && err !== undefined) {
+                Game.notify("Error in construction site logic: \n" + err + "\n " + err.stack);
+                console.log("Error in construction site logic: \n" + err + "\n" + err.stack);
+            }
+        }
+
 
         //do actual stuff
 
