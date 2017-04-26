@@ -129,7 +129,7 @@ module.exports = {
                 }
                 else {
 
-                    var allDroppedResources = _.max(creep.room.find(FIND_DROPPED_RESOURCES));
+                    var allDroppedResources = _.max(creep.room.find(FIND_DROPPED_RESOURCES), '.amount');
                     var droppedResource = allDroppedResources !== Number.POSITIVE_INFINITY && allDroppedResources !== Number.NEGATIVE_INFINITY ? allDroppedResources : undefined;
                     if (droppedResource) {
                         var pickupResult = creep.pickup(droppedResource);
