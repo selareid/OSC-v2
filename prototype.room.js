@@ -229,7 +229,7 @@ module.exports = function () {
                         // We need to set the defaults costs higher so that we
                         // can set the road cost lower in `roomCallback`
                         plainCost: 1,
-                        swampCost: 5,
+                        swampCost: 1,
 
                         roomCallback: function (roomName) {
 
@@ -270,6 +270,6 @@ module.exports = function () {
 
             _.forEach(sources, (s) => pathingAPlacement(s));
 
-            // var mineral = remoteRoom.find(FIND_MINERALS);
-            // _.forEach(mineral, (m) => pathingAPlacement(m));
+            var extractors = remoteRoom.find(FIND_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_EXTRACTOR});
+            _.forEach(extractors, (e) => pathingAPlacement(m));
         };
