@@ -128,7 +128,7 @@ module.exports = {
                     }
                 }
                 else {
-                    var hostilesInRoom = creep.room.find(FIND_HOSTILE_CREEPS, {filter: (c) => !global.Allies.includes(c.owner.username) && c.owner.username != 'Source Keeper'});
+                    var hostilesInRoom = creep.room.find(FIND_HOSTILE_CREEPS, {filter: (c) => c.owner.username == 'Invader'});
                     if (hostilesInRoom > 0) {
                         creep.memory.rr = undefined;
                         return;

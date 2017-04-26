@@ -261,7 +261,7 @@ module.exports = function () {
                         if (numberOfParts > 24) {
                             numberOfParts = 24;
                         }
-                        
+
                         body.push(MOVE);
                         _.times(numberOfParts, () => body.push(MOVE));
                         body.push(CARRY);
