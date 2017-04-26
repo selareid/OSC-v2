@@ -386,9 +386,6 @@ module.exports = {
             else if (minimumNumberOfRemoteHarvesters > remoteHarvestersInQueue + numberOfRemoteHarvesters) {
                 creepToAddToQueue = 'remoteHarvester';
             }
-            else if (minimumNumberOfRemoteHaulers > remoteHaulersInQueue + numberOfRemoteHaulers) {
-                creepToAddToQueue = 'remoteHauler';
-            }
             else if (minimumNumberOfRemoteMiners > remoteMinersInQueue + numberOfRemoteMiners) {
                 creepToAddToQueue = 'remoteMiner';
             }
@@ -400,6 +397,9 @@ module.exports = {
             }
             else if (minimumNumberOfMiners > minersInQueue + numberOfMiners) {
                 creepToAddToQueue = 'miner';
+            }
+            else if (minimumNumberOfRemoteHaulers > remoteHaulersInQueue + numberOfRemoteHaulers) {
+                creepToAddToQueue = 'remoteHauler';
             }
             else if (minimumNumberOfCreepHarassers > creepHarassersInQueue + creepHarassersInWarQueue + numberOfCreepHarassers) {
                     queueToAddTo = 2;
