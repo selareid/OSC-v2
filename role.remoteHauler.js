@@ -72,6 +72,8 @@ module.exports = {
 
                     var closer = creep.pos.findClosestByPath(arrayOfBoth);
 
+                    if (creep.store[RESOURCE_ENERGY] == 0) closer = storage;
+
                     if (closer) {
                         for (let resourceType in creep.carry) {
                             if (creep.transfer(closer, resourceType) == ERR_NOT_IN_RANGE) {
