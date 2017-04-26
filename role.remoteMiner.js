@@ -113,7 +113,7 @@ module.exports = {
                     }
                 }
                 else {
-                    var goals = _.map(hostilesNearSource, function(hostile) {
+                    var goals = _.map(hostilesNearMineral, function(hostile) {
                         return { pos: hostile.pos, range: 6};
                     });
                     var ret = PathFinder.search(
