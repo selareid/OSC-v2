@@ -50,7 +50,7 @@ if (Game.cpu.bucket > 300) module.exports.loop = function () {
 
         try {
             //construction site stuff
-            if (_.size(Game.constructionSites) < 5 && global.isUndefinedOrNull(Memory.cs[0])) {
+            if (_.size(Game.constructionSites) < 5 && !global.isUndefinedOrNull(Memory.cs[0])) {
                 var split_it = Memory.cs[0].split(',');
                 var csRoom = Game.rooms[split_it[0]];
                 var csX = Number.parseInt(split_it[1]);
