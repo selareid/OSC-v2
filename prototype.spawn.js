@@ -291,7 +291,7 @@ module.exports = function () {
                         goingHome: false
                     });
                 case 'remoteGuard':
-                    if (room.controller.level < 8 || CONTROLLER_STRUCTURES.extension[8] > global[room.name].extensions) return 'remove';
+                    if (room.controller.level < 8 || CONTROLLER_STRUCTURES.extension[8] > global[room.name].extensions && Memory.rooms[room].spawnQueue.normal.length > 5) return 'remove';
                     if (room.energyAvailable < room.energyCapacityAvailable) return;
 
                         _.times(25, () => body.push(MOVE));
