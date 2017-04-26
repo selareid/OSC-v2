@@ -38,7 +38,7 @@ module.exports = {
             var source = Game.getObjectById(creep.memory.s);
 
             if (!source) {
-                delete creep.memory.s;
+                creep.memory.s = undefined;
                 return 'error no source';
             }
 

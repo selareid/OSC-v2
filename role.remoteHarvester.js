@@ -117,7 +117,7 @@ creep.say('harvester remote');
                     }
                 }
                 else {
-                    delete creep.memory.source;
+                     creep.memory.source = undefined;
                 }
             }
         }

@@ -126,6 +126,12 @@ module.exports = {
                     }
                 }
                 else {
+                    var hostilesInRoom = creep.room.find(FIND_HOSTILE_CREEPS, {filter: (c) => !global.Allies.includes(c.owner.username) && c.owner.username != 'Source Keeper'});
+                    if (hostilesInRoom > 0) {
+                        creep.memory.rr = undefined;
+                        return;
+                    }
+
                     let allDroppedResources = _.max(creep.room.find(FIND_DROPPED_RESOURCES), '.amount');
                     var droppedResource = allDroppedResources !== Number.POSITIVE_INFINITY && allDroppedResources !== Number.NEGATIVE_INFINITY ? allDroppedResources : undefined;
                     if (droppedResource) {

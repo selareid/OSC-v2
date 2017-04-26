@@ -52,7 +52,7 @@ module.exports = {
                 var pickupResult = creep.pickup(droppedResource);
                 switch (pickupResult) {
                     case 0:
-                        delete creep.memory.container;
+                        creep.memory.container = undefined;
                         break;
                     case -9:
                         creep.moveTo(droppedResource, {reusePath: 7});
@@ -87,7 +87,7 @@ module.exports = {
                         }
                     }
                     else {
-                        delete creep.memory.container;
+                        creep.memory.container = undefined;
                     }
                 }
                 else {
@@ -163,7 +163,7 @@ module.exports = {
                         }
                     }
                     else {
-                        delete creep.memory.container;
+                         creep.memory.container = undefined;
                     }
                 }
                 else {

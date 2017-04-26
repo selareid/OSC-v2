@@ -26,8 +26,8 @@ module.exports = {
                 if (creep.memory.qR == 'reserve') {
 
                     if (creep.room.controller && creep.room.controller.reservation && creep.room.controller.reservation.ticksToEnd >= 5000) {
-                        delete creep.memory.lndR;
-                        delete creep.memory.qR;
+                         creep.memory.lndR = undefined;
+                         creep.memory.qR = undefined;
                     }
                     switch (creep.reserveController(creep.room.controller)) {
                         case ERR_NOT_IN_RANGE:
@@ -51,8 +51,8 @@ module.exports = {
                         }
                     }
                     else {
-                        delete creep.memory.lndR;
-                        delete creep.memory.qR;
+                         creep.memory.lndR = undefined;
+                         creep.memory.qR = undefined;
                     }
 
                 }

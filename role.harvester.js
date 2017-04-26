@@ -109,7 +109,7 @@ module.exports = {
             }
         }
         else {
-            delete creep.memory.source;
+             creep.memory.source = undefined;
         }
     }
 };
