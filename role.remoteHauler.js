@@ -134,7 +134,7 @@ module.exports = {
                         return;
                     }
 
-                    let allDroppedResources = creep.pos.findClosestByRange(FIND_DROPPED_RESOURCES);
+                    var allDroppedResources = creep.pos.findClosestByRange(FIND_DROPPED_RESOURCES, {filter: (r) => r.findInRange(FIND_MY_CREEPS, 3, {filter: (c) => c.memory.role == 'remoteHauler'}) > 0});
                     var droppedResource = allDroppedResources !== Number.POSITIVE_INFINITY && allDroppedResources !== Number.NEGATIVE_INFINITY ? allDroppedResources : undefined;
                     if (droppedResource) {
                         var pickupResult = creep.pickup(droppedResource);
