@@ -260,7 +260,7 @@ module.exports = function () {
                     let room = Game.rooms[pos.roomName];
                     if (!room) return;
                     if (!_.filter(new RoomPosition(pos.x, pos.y, room.name).lookFor(LOOK_STRUCTURES), (s) => s.structureType !== STRUCTURE_RAMPART)[0]) {
-                        var res = Memory.cs.push(pathData.x + ',' + pathData.y + ',' + STRUCTURE_ROAD);
+                        var res = Memory.cs.push(pos.x + ',' + pos.y + ',' + STRUCTURE_ROAD);
                         if (res == 0) global.roomLog('Created Construction Site At ' + pos.roomName + ' ' + pos.x + ' ' + pos.y + ' ', this.name);
                     }
                 });
