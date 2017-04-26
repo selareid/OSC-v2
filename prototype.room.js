@@ -88,14 +88,14 @@ module.exports = function () {
 
 
             if (storage) {
-                if (!storage.pos.lookFor(LOOK_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_RAMPART})[0]) Memory.cs.push(storage.pos.x + ',' + storage.pos.y + ',' + STRUCTURE_RAMPART);
+                if (!storage.pos.lookFor(LOOK_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_RAMPART})[0]) Memory.cs.push(room.name + ',' + storage.pos.x + ',' + storage.pos.y + ',' + STRUCTURE_RAMPART);
                 if (terminal) {
-                    if (!terminal.pos.lookFor(LOOK_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_RAMPART})[0]) Memory.cs.push(terminal.pos.x + ',' + terminal.pos.y + ',' + STRUCTURE_RAMPART);
+                    if (!terminal.pos.lookFor(LOOK_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_RAMPART})[0]) Memory.cs.push(room.name + ',' + terminal.pos.x + ',' + terminal.pos.y + ',' + STRUCTURE_RAMPART);
                     _.forEach(global[this.name].spawns, (spawn) => {
-                        if (!spawn.pos.lookFor(LOOK_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_RAMPART})[0]) Memory.cs.push(spawn.pos.x + ',' + spawn.pos.y + ',' + STRUCTURE_RAMPART);
+                        if (!spawn.pos.lookFor(LOOK_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_RAMPART})[0]) Memory.cs.push(room.name + ',' + spawn.pos.x + ',' + spawn.pos.y + ',' + STRUCTURE_RAMPART);
                     });
                     _.forEach(global[this.name].towers, (tower) => {
-                        if (!tower.pos.lookFor(LOOK_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_RAMPART})[0]) Memory.cs.push(tower.pos.x + ',' + tower.pos.y + ',' + STRUCTURE_RAMPART);
+                        if (!tower.pos.lookFor(LOOK_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_RAMPART})[0]) Memory.cs.push(room.name + ',' + tower.pos.x + ',' + tower.pos.y + ',' + STRUCTURE_RAMPART);
                     });
                 }
 
@@ -113,7 +113,7 @@ module.exports = function () {
 
                 _.forEach(pathController, (pathData) => {
                     if (!new RoomPosition(pathData.x, pathData.y, room.name).lookFor(LOOK_STRUCTURES)[0]) {
-                        var res = Memory.cs.push(pathData.x + ',' + pathData.y + ',' + STRUCTURE_ROAD);
+                        var res = Memory.cs.push(room.name + ',' + pathData.x + ',' + pathData.y + ',' + STRUCTURE_ROAD);
                         if (res == 0) global.roomLog('Created Construction Site At ' + pathData.x + ' ' + pathData.y + ' ', room);
                     }
                 });
@@ -133,7 +133,7 @@ module.exports = function () {
                     }
                     _.forEach(pathSpawn, (pathData) => {
                         if (!new RoomPosition(pathData.x, pathData.y, room.name).lookFor(LOOK_STRUCTURES)[0]) {
-                            var res = Memory.cs.push(pathData.x + ',' + pathData.y + ',' + STRUCTURE_ROAD);
+                            var res = Memory.cs.push(room.name + ',' + pathData.x + ',' + pathData.y + ',' + STRUCTURE_ROAD);
                             if (res == 0) global.roomLog('Created Construction Site At ' + pathData.x + ' ' + pathData.y + ' ', room);
                         }
                     });
@@ -196,7 +196,7 @@ module.exports = function () {
 
                         _.forEach(pathSpawn, (pathData) => {
                             if (!new RoomPosition(pathData.x, pathData.y, room.name).lookFor(LOOK_STRUCTURES)[0]) {
-                                var res = Memory.cs.push(pathData.x + ',' + pathData.y + ',' + STRUCTURE_ROAD);
+                                var res = Memory.cs.push(room.name + ',' + pathData.x + ',' + pathData.y + ',' + STRUCTURE_ROAD);
                                 if (res == 0) global.roomLog('Created Construction Site At ' + pathData.x + ' ' + pathData.y + ' ', room);
                             }
                         });
@@ -260,7 +260,7 @@ module.exports = function () {
                     let room = Game.rooms[pos.roomName];
                     if (!room) return;
                     if (!_.filter(new RoomPosition(pos.x, pos.y, room.name).lookFor(LOOK_STRUCTURES), (s) => s.structureType !== STRUCTURE_RAMPART)[0]) {
-                        var res = Memory.cs.push(pos.x + ',' + pos.y + ',' + STRUCTURE_ROAD);
+                        var res = Memory.cs.push(room.name + ',' + pos.x + ',' + pos.y + ',' + STRUCTURE_ROAD);
                         if (res == 0) global.roomLog('Created Construction Site At ' + pos.roomName + ' ' + pos.x + ' ' + pos.y + ' ', this.name);
                     }
                 });
