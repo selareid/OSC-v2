@@ -214,6 +214,7 @@ module.exports = {
                 var remoteRooms = Memory.rooms[room].rmtR;
 
                 var temp_minimumNumberOfRemoteHarvesters = 0;
+                var temp_minimumNumberOfRemoteHaulers = 0;
                 var temp_minimumNumberOfRemoteMiners = 0;
                 var temp_minimumNumberOfRemoteGuards = 0;
 
@@ -234,12 +235,14 @@ module.exports = {
                     temp_minimumNumberOfRemoteHarvesters += Number.parseInt(temp_harvesters);
                     temp_minimumNumberOfRemoteMiners += Number.parseInt(temp_miners);
                     temp_minimumNumberOfRemoteGuards += Number.parseInt(temp_guards);
+                    temp_minimumNumberOfRemoteHaulers += temp_minimumNumberOfRemoteHarvesters+temp_minimumNumberOfRemoteMiners == 4
+                        ? 4 : Math.round(temp_minimumNumberOfRemoteHarvesters+temp_minimumNumberOfRemoteMiners/1.5);
                 }
 
                 minimumNumberOfRemoteHarvesters = temp_minimumNumberOfRemoteHarvesters;
                 minimumNumberOfRemoteMiners = temp_minimumNumberOfRemoteMiners;
-                minimumNumberOfRemoteHaulers = Math.round(temp_minimumNumberOfRemoteHarvesters+temp_minimumNumberOfRemoteMiners/1.4);
-                minimumNumberOfRemoteGuards = _.sum(Game.creeps, (c) => c.memory.role == 'guard' && c.memory.room == room.name && c.ticksToLive < 500) > 0 && remoteGuardsInQueue < 1
+                minimumNumberOfRemoteHaulers = temp_minimumNumberOfRemoteHaulers;
+                minimumNumberOfRemoteGuards = _.sum(Game.creeps, (c) => c.memory.role == 'remoteGuard' && c.memory.room == room.name && c.ticksToLive < 500) > 0 && remoteGuardsInQueue < 1
                     ? temp_minimumNumberOfRemoteGuards + 1 : temp_minimumNumberOfRemoteGuards;
 
                //remote creeps ends
