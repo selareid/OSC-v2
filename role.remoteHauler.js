@@ -128,11 +128,6 @@ module.exports = {
                     }
                 }
                 else {
-                    var hostilesInRoom = creep.room.find(FIND_HOSTILE_CREEPS, {filter: (c) => c.owner.username == 'Invader'});
-                    if (hostilesInRoom > 0) {
-                        creep.memory.rr = undefined;
-                        return;
-                    }
 
                     var allDroppedResources = creep.pos.findClosestByRange(FIND_DROPPED_RESOURCES, {filter: (r) => r.pos.findInRange(FIND_MY_CREEPS, 3, {filter: (c) => c.memory.role == 'remoteHauler'}) > 0});
                     var droppedResource = allDroppedResources !== Number.POSITIVE_INFINITY && allDroppedResources !== Number.NEGATIVE_INFINITY ? allDroppedResources : undefined;
