@@ -261,12 +261,11 @@ module.exports = function () {
                         if (numberOfParts > 24) {
                             numberOfParts = 24;
                         }
-                        body.push(CARRY);
+                        
                         body.push(MOVE);
-                        for (let i = 0; i < numberOfParts; i++) {
-                            body.push(MOVE);
-                            body.push(WORK);
-                        }
+                        _.times(numberOfParts, () => body.push(MOVE));
+                        body.push(CARRY);
+                        _.times(numberOfParts, () => body.push(WORK));
                     }
                     return this.createCreep(sortedParts(body), creepName(roleName), {
                         role: roleName,
