@@ -110,6 +110,7 @@ module.exports = function () {
                     var oppositeDir = global.REVERSE_DIR[directionToTarget];
                     var virtualMoveResult = virtualMove(creep.pos, oppositeDir);
                     if (virtualMoveResult) {
+                        if (virtualMoveResult.x == 0 || virtualMoveResult.x == 49 ||virtualMoveResult.y == 0 || virtualMoveResult.y == 49) return creep.move(oppositeDir);
                         var look = virtualMoveResult.look();
                         if (look[0].terrain && look[0].terrain != 'wall') {
                             creep.move(oppositeDir);
