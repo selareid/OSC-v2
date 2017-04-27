@@ -34,6 +34,7 @@ module.exports = {
             for (let name in Game.creeps) {
                 let creep = Game.creeps[name];
 
+                if (!creep.memory.w) creep.memory.w = false;
 
                 this.creepActions(creep, undefined);
 
