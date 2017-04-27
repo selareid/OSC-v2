@@ -6,14 +6,14 @@ module.exports = {
         var energyThiefFlag = global[room.name].cachedroomToStealFrom;
         if (energyThiefFlag) {
 
-            if (creep.memory.working == true && _.sum(creep.carry) == 0) {
-                creep.memory.working = false;
+            if (creep.memory.w == true && _.sum(creep.carry) == 0) {
+                creep.memory.w = false;
             }
-            else if (creep.memory.working == false && _.sum(creep.carry) == creep.carryCapacity) {
-                creep.memory.working = true;
+            else if (creep.memory.w == false && _.sum(creep.carry) == creep.carryCapacity) {
+                creep.memory.w = true;
             }
 
-            if (creep.memory.working == true) {
+            if (creep.memory.w == true) {
                 if (creep.pos.roomName != room.name) {
                     creep.moveTo(room.storage, {reusePath: 20});
                 }

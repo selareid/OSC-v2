@@ -5,14 +5,14 @@ require('prototype.creepSpeech')();
 module.exports = {
     run: function (room, creep, isUnderAttack) {
         creep.say('defend');
-        if (creep.memory.working == true && creep.carry.energy == 0) {
-            creep.memory.working = false;
+        if (creep.memory.w == true && creep.carry.energy == 0) {
+            creep.memory.w = false;
         }
-        else if (creep.memory.working == false && creep.carry.energy == creep.carryCapacity) {
-            creep.memory.working = true;
+        else if (creep.memory.w == false && creep.carry.energy == creep.carryCapacity) {
+            creep.memory.w = true;
         }
 
-        if (creep.memory.working == true) {
+        if (creep.memory.w == true) {
             var towerLowerThan = room.find(FIND_MY_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_TOWER && s.energy < 210});
             if (isUnderAttack === true || towerLowerThan.length > 0) {
                 var tower = this.getTowerToRefill(room);

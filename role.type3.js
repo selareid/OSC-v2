@@ -6,14 +6,14 @@ var type2 = require ('role.type2');
 module.exports = {
     run: function(creep) {
 
-        if (creep.memory.working == true && creep.carry.energy == 0) {
-            creep.memory.working = false;
+        if (creep.memory.w == true && creep.carry.energy == 0) {
+            creep.memory.w = false;
         }
-        else if (creep.memory.working == false && creep.carry.energy == creep.carryCapacity) {
-            creep.memory.working = true;
+        else if (creep.memory.w == false && creep.carry.energy == creep.carryCapacity) {
+            creep.memory.w = true;
         }
 
-        if (creep.memory.working == true) {
+        if (creep.memory.w == true) {
             var structure = creep.pos.findClosestByRange(FIND_STRUCTURES,
                 {filter: (s) => (((s.structureType == STRUCTURE_RAMPART && s.hits <= 30000)
                 || (s.hits < s.hitsMax && s.structureType != STRUCTURE_WALL && s.structureType != STRUCTURE_RAMPART)))});

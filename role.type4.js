@@ -5,14 +5,14 @@ var type2 = require ('role.type2');
 
 module.exports = {
     run: function(creep) {
-        if (creep.memory.working == true && creep.carry.energy == 0) {
-            creep.memory.working = false;
+        if (creep.memory.w == true && creep.carry.energy == 0) {
+            creep.memory.w = false;
         }
-        else if (creep.memory.working == false && creep.carry.energy == creep.carryCapacity) {
-            creep.memory.working = true;
+        else if (creep.memory.w == false && creep.carry.energy == creep.carryCapacity) {
+            creep.memory.w = true;
         }
 
-        if (creep.memory.working == true) {
+        if (creep.memory.w == true) {
             var percentOfWall = 0.0001;
             var structure = creep.pos.findClosestByPath(FIND_STRUCTURES,
                 {filter: (s) => s.structureType == STRUCTURE_WALL && s.hits <= s.hitsMax*percentOfWall});

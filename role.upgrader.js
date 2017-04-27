@@ -5,15 +5,15 @@ require('prototype.roomPosition')();
 
 module.exports = {
     run: function (room, creep) {
-        if (creep.memory.working == true && creep.carry.energy < creep.getActiveBodyparts(WORK)) {
-            creep.memory.working = false;
+        if (creep.memory.w == true && creep.carry.energy < creep.getActiveBodyparts(WORK)) {
+            creep.memory.w = false;
         }
-        else if (creep.memory.working == false && creep.carry.energy == creep.carryCapacity) {
-            creep.memory.working = true;
+        else if (creep.memory.w == false && creep.carry.energy == creep.carryCapacity) {
+            creep.memory.w = true;
         }
 
 
-        if (creep.memory.working == true) {
+        if (creep.memory.w == true) {
 
             var controller = room.controller;
 

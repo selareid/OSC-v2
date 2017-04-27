@@ -20,23 +20,23 @@ module.exports = {
         var order = Game.market.getOrderById(orders[0]);
 
         if (order || terminalStore == 0) {
-            if (creep.memory.working == true && creep.carry.energy == 0) {
-                creep.memory.working = false;
+            if (creep.memory.w == true && creep.carry.energy == 0) {
+                creep.memory.w = false;
             }
-            else if (creep.memory.working == false && _.sum(creep.carry) == creep.carryCapacity) {
-                creep.memory.working = true;
+            else if (creep.memory.w == false && _.sum(creep.carry) == creep.carryCapacity) {
+                creep.memory.w = true;
             }
         }
         else {
-            if (creep.memory.working == false && creep.carry.energy == 0) {
-                creep.memory.working = true;
+            if (creep.memory.w == false && creep.carry.energy == 0) {
+                creep.memory.w = true;
             }
-            else if (creep.memory.working == true && _.sum(creep.carry) == creep.carryCapacity) {
-                creep.memory.working = false;
+            else if (creep.memory.w == true && _.sum(creep.carry) == creep.carryCapacity) {
+                creep.memory.w = false;
             }
         }
 
-        if (creep.memory.working == true) {
+        if (creep.memory.w == true) {
             if (terminal) {
                 if (order || terminalStore == 0) {
                     if (_.sum(terminal.store) < terminal.storeCapacity) {

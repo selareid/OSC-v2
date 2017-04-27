@@ -18,14 +18,14 @@ module.exports = {
         }
         else { // do stuff
 
-            if (creep.memory.working == true && _.sum(creep.carry) == 0) {
-                creep.memory.working = false;
+            if (creep.memory.w == true && _.sum(creep.carry) == 0) {
+                creep.memory.w = false;
             }
-            else if (creep.memory.working == false && _.sum(creep.carry) == creep.carryCapacity) {
-                creep.memory.working = true;
+            else if (creep.memory.w == false && _.sum(creep.carry) == creep.carryCapacity) {
+                creep.memory.w = true;
             }
 
-            if (creep.memory.working == true) {
+            if (creep.memory.w == true) {
                 switch (creep.memory.doing) {
                     case 'link':
                         this.linkToStorage(room, creep);
@@ -72,7 +72,7 @@ module.exports = {
     },
     
     linkToStorage: function (room, creep) {
-        if (creep.memory.working == true) {
+        if (creep.memory.w == true) {
             //if carry is full
             var storage = room.storage;
             creep.transfer(storage, RESOURCE_ENERGY);
@@ -81,7 +81,7 @@ module.exports = {
             //if carry is empty
             var linkWithEnergy = creep.pos.findInRange(global[room.name].links, 1, {filter: (s) => s.energy > 0})[0];
             if (linkWithEnergy) {
-                creep.memory.working = true;
+                creep.memory.w = true;
                 creep.withdraw(linkWithEnergy, RESOURCE_ENERGY);
                 return OK;
             }
@@ -90,7 +90,7 @@ module.exports = {
     },
 
     terminalToStorage: function (room, creep) {
-        if (creep.memory.working == true) {//if carry is full, put in Storage
+        if (creep.memory.w == true) {//if carry is full, put in Storage
 
             var terminal = creep.pos.isNearTo(room.terminal) ? room.terminal : undefined;
             if (terminal) {
@@ -140,7 +140,7 @@ module.exports = {
 
             if (theResourceType) {
                 var result = creep.withdraw(terminal, theResourceType);
-                creep.memory.working = true;
+                creep.memory.w = true;
                 //console.log(result);
                 if (result == OK) return OK;
                 else return 'failed';
@@ -152,7 +152,7 @@ module.exports = {
     },
 
     putExcessInTerminal: function (room, creep) {
-        if (creep.memory.working == true) {//if carry is full
+        if (creep.memory.w == true) {//if carry is full
             var terminal = creep.pos.isNearTo(room.terminal) ? room.terminal : undefined;
             if (terminal) {
                 if (_.sum(terminal.store) < terminal.storeCapacity) {
@@ -197,7 +197,7 @@ module.exports = {
             }
             if (theResourceType) {
                 var result = creep.withdraw(room.storage, theResourceType);
-                creep.memory.working = true;
+                creep.memory.w = true;
                 //console.log(result);
                 if (result == OK) return OK;
                 else return 'failed';
@@ -212,17 +212,17 @@ module.exports = {
         var lab = creep.pos.findInRange(FIND_MY_STRUCTURES, 1, {filter: (s) => s.structureType == STRUCTURE_LAB})[0];
         if (!lab) return 'error no labs';
 
-        if (creep.memory.working == true) {
+        if (creep.memory.w == true) {
             for (let resourceType in creep.carry) {
                 creep.transfer(lab, resourceType);
-                creep.memory.working = true;
+                creep.memory.w = true;
             }
         }
         else {
             if (lab.energy < lab.energyCapacity * 0.5) {
                 if (room.storage.store.energy < 30000) return 'not enough energy';
                 var result = creep.withdraw(room.storage, RESOURCE_ENERGY);
-                creep.memory.working = true;
+                creep.memory.w = true;
                 //console.log(result);
                 if (result == OK) return OK;
                 else return 'failed';
@@ -233,7 +233,7 @@ module.exports = {
                 if (!boostNeeded) return 'nothing to do';
 
                 var result = creep.withdraw(room.storage, boostNeeded);
-                creep.memory.working = true;
+                creep.memory.w = true;
                 //console.log(result);
                 if (result == OK) return OK;
                 else return 'failed';
@@ -245,10 +245,10 @@ module.exports = {
         var nuke = creep.pos.findInRange(FIND_MY_STRUCTURES, 1, {filter: (s) => s.structureType == STRUCTURE_NUKER})[0];
         if (!nuke) return 'error no nuke';
 
-        if (creep.memory.working == true) {
+        if (creep.memory.w == true) {
             for (let resourceType in creep.carry) {
                 var result = creep.transfer(nuke, resourceType);
-                creep.memory.working = true;
+                creep.memory.w = true;
                 if (result != OK) creep.transfer(room.storage, resourceType);
             }
         }
@@ -261,7 +261,7 @@ module.exports = {
 
                 var amtTW = nuke.ghodiumCapacity-nuke.ghodium > creep.carryCapacity ? undefined : nuke.ghodiumCapacity-nuke.ghodium;
                 var result = creep.withdraw(room.storage, RESOURCE_GHODIUM, amtTW);
-                creep.memory.working = true;
+                creep.memory.w = true;
                 //console.log(result);
                 if (result == OK) return OK;
                 else return 'failed';
@@ -271,7 +271,7 @@ module.exports = {
 
                 var amtTW = nuke.energyCapacity-nuke.energy > creep.carryCapacity ? undefined : nuke.energyCapacity-nuke.energy;
                 var result = creep.withdraw(room.storage, RESOURCE_ENERGY, amtTW);
-                creep.memory.working = true;
+                creep.memory.w = true;
                 //console.log(result);
                 if (result == OK) return OK;
                 else return 'failed';
