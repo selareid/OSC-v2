@@ -235,8 +235,7 @@ module.exports = {
                     temp_minimumNumberOfRemoteHarvesters += Number.parseInt(temp_harvesters);
                     temp_minimumNumberOfRemoteMiners += Number.parseInt(temp_miners);
                     temp_minimumNumberOfRemoteGuards += Number.parseInt(temp_guards);
-                    temp_minimumNumberOfRemoteHaulers += temp_minimumNumberOfRemoteHarvesters+temp_minimumNumberOfRemoteMiners == 4
-                        ? 4 : Math.round(temp_minimumNumberOfRemoteHarvesters+temp_minimumNumberOfRemoteMiners/1.5);
+                    temp_minimumNumberOfRemoteHaulers += Math.round(temp_minimumNumberOfRemoteHarvesters+temp_minimumNumberOfRemoteMiners/1.5);
                 }
 
                 minimumNumberOfRemoteHarvesters = temp_minimumNumberOfRemoteHarvesters;
