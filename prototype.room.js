@@ -271,5 +271,5 @@ module.exports = function () {
             _.forEach(sources, (s) => pathingAPlacement(s));
 
             var extractors = remoteRoom.find(FIND_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_EXTRACTOR});
-            _.forEach(extractors, (e) => pathingAPlacement(m));
+            _.forEach(extractors, (e) => pathingAPlacement(e));
         };
