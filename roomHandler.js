@@ -36,25 +36,27 @@ module.exports = {
 
         try {
             if (Game.time % 101 == 0) {
-                var remoteRooms = Memory.rooms[room].rmtR;
-                if (remoteRooms && remoteRooms.length > 0) {
-                    for (let rr_it in remoteRooms) {
-                        let rr = remoteRooms[rr_it];
-                        let rrSpilt = rr.split(',');
+                if (Game.cpu.bucket > 5000) {
+                    var remoteRooms = Memory.rooms[room].rmtR;
+                    if (remoteRooms && remoteRooms.length > 0) {
+                        for (let rr_it in remoteRooms) {
+                            let rr = remoteRooms[rr_it];
+                            let rrSpilt = rr.split(',');
 
-                        let rroomName = rrSpilt[0];
-                        if (!rroomName) break;
+                            let rroomName = rrSpilt[0];
+                            if (!rroomName) break;
 
-                        let lastCalc = global.isUndefinedOrNull(rrSpilt[4]) ? 0 : Number.parseInt(rrSpilt[4]);
+                            let lastCalc = global.isUndefinedOrNull(rrSpilt[4]) ? 0 : Number.parseInt(rrSpilt[4]);
 
-                        if (lastCalc.length > 6) lastCalc = lastCalc % 100000;
+                            if (lastCalc.length > 6) lastCalc = lastCalc % 100000;
 
-                        if (Math.abs(Game.time % 100000 - lastCalc) > 4500 && _.size(Game.constructionSites) < 50) {
+                            if (Math.abs(Game.time % 100000 - lastCalc) > 4500 && _.size(Game.constructionSites) < 50) {
 
-                            room.remoteRoad(rroomName);
+                                room.remoteRoad(rroomName);
 
-                            Memory.rooms[room].rmtR[rr_it] = rrSpilt[0] + ',' + rrSpilt[1] + ',' + rrSpilt[2] + ',' + rrSpilt[3] + ',' + Game.time % 100000;
-                            break;
+                                Memory.rooms[room].rmtR[rr_it] = rrSpilt[0] + ',' + rrSpilt[1] + ',' + rrSpilt[2] + ',' + rrSpilt[3] + ',' + Game.time % 100000;
+                                break;
+                            }
                         }
                     }
                 }
