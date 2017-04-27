@@ -139,6 +139,8 @@ module.exports = {
                                 break;
                             case -9:
                                 creep.moveTo(droppedResource, {reusePath: 7, maxRooms: 1});
+                                var resourceInRange = creep.pos.findInRange(FIND_DROPPED_RESOURCES, 1)[0];
+                                if (resourceInRange) creep.pickup(resourceInRange);
                                 break;
                         }
 
