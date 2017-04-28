@@ -120,7 +120,7 @@ module.exports = {
         else {
             (function () {
                 if (creep.pos.roomName != remoteRoom) {
-                    creep.moveTo(new RoomPosition(25, 25, remoteRoom), {reusePath: 21, range: 23});
+                    creep.moveTo(new RoomPosition(25, 25, remoteRoom), {reusePath: 39, range: 23});
 
                     if (creep.carry.energy > 0) {
                         var storage = creep.pos.isNearTo(room.storage) ? room.storage : undefined;
@@ -138,7 +138,7 @@ module.exports = {
                                 // pickup successful
                                 break;
                             case -9:
-                                creep.moveTo(droppedResource, {reusePath: 7, maxRooms: 1});
+                                creep.moveTo(droppedResource, {reusePath: 11, maxRooms: 1});
                                 var resourceInRange = creep.pos.findInRange(FIND_DROPPED_RESOURCES, 1)[0];
                                 if (resourceInRange) creep.pickup(resourceInRange);
                                 break;
