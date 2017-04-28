@@ -10,7 +10,8 @@ const grafana = require('stats');
 console.log("[" + "<p style=\"display:inline; color: #ededed\">RESET</p>" + "] " + "<p style=\"display:inline; color: #6dbbff\">" + Game.cpu.bucket + "</p>"); // reset log
 
 profiler.enable();
-if (Game.cpu.bucket > 1000) module.exports.loop = function () {
+module.exports.loop = function () {
+    if (Game.cpu.bucket < 1000) return;
     profiler.wrap(function () {
         PathFinder.use(true);
 
