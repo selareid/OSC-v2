@@ -113,7 +113,7 @@ module.exports = {
                     }
                 }
                 else {
-                    var goals = _.map(hostilesNearMineral, function(hostile) {
+                    var goals = _.map(creep.room.find(FIND_HOSTILE_CREEPS), function(hostile) {
                         return { pos: hostile.pos, range: 6};
                     });
                     var ret = PathFinder.search(
