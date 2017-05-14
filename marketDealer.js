@@ -20,7 +20,7 @@ module.exports = {
                     global.marketLog('Extended Order ' + order.id + ' By ' + (resource - order.remainingAmount) + '\n With Result: ' + rslOne, room);
                 }
 
-                var avg = this.getAvrg(Game.market.getAllOrders({resourceType: resourceType, type: ORDER_BUY}));
+                var avg = this.getAvrg(Game.market.getAllOrders({resourceType: resourceType, type: ORDER_BUY}))+0.02;
 
                 var rslTwo;
                 if (Math.abs(order.price - avg) > 0.05) rslTwo = Game.market.changeOrderPrice(order.id, avg);
