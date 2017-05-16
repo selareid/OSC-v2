@@ -267,8 +267,8 @@ module.exports = {
             var isUnderAttack = Memory.rooms[room].isUnderAttack;
             //if under attack over ride everything
             if (isUnderAttack === true) {
-                let numberOfHostiles = _.filter(global[room.name].creepsNotMine, (c) => c.getActiveBodyparts(ATTACK) >= 1 || c.getActiveBodyparts(RANGED_ATTACK) >= 1
-                || c.getActiveBodyparts(HEAL) >= 1 || c.getActiveBodyparts(WORK) >= 1).length;
+                let numberOfHostiles = _.filter(global[room.name].creepsNotMine, (c) => (c.getActiveBodyparts(ATTACK) >= 1 || c.getActiveBodyparts(RANGED_ATTACK) >= 1
+                || c.getActiveBodyparts(HEAL) >= 1 || c.getActiveBodyparts(WORK) >= 1) && c.owner.username != 'Invader').length;
 
                 minimumNumberOfGuards = Math.round(numberOfHostiles * 2.6);
                 minimumNumberOfUpgraders = 0;
