@@ -3,17 +3,17 @@ require('global');
 module.exports = function () {
     Creep.prototype.findDroppedEnergy =
         function (room) {
-            var droppedEnergy = this.pos.findClosestByRange(FIND_DROPPED_ENERGY, {filter: (e) => e.amount > 1000});
+            var droppedEnergy = this.pos.findClosestByRange(FIND_DROPPED_RESOURCES, {filter: (e) => e.amount > 1000 && e.resourceType == RESOURCE_ENERGY});
             if (droppedEnergy) {
                 return droppedEnergy;
             }
             else {
-                droppedEnergy = this.pos.findClosestByRange(FIND_DROPPED_ENERGY, {filter: (e) => e.amount > 500});
+                droppedEnergy = this.pos.findClosestByRange(FIND_DROPPED_RESOURCES, {filter: (e) => e.amount > 500 && e.resourceType == RESOURCE_ENERGY});
                 if (droppedEnergy) {
                     return droppedEnergy;
                 }
                 else {
-                    droppedEnergy = this.pos.findClosestByRange(FIND_DROPPED_ENERGY, {filter: (e) => e.amount > 100});
+                    droppedEnergy = this.pos.findClosestByRange(FIND_DROPPED_RESOURCES, {filter: (e) => e.amount > 100 && e.resourceType == RESOURCE_ENERGY});
                     if (droppedEnergy) {
                         return droppedEnergy;
                     }
