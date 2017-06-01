@@ -5,7 +5,7 @@ module.exports = {
         for (let resourceType in terminal.store) {
             if (resourceType == RESOURCE_ENERGY) {
                 if (!room.storage.energy > 200000) continue;
-                else sellEnergy(room, terminal);
+                else this.sellEnergy(room, terminal);
             }
             let resource = terminal.store[resourceType];
             if (resource > 25000) {
