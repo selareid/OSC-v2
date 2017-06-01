@@ -79,17 +79,17 @@ module.exports = {
         
     sellEnergy: function (room, terminal) {
             var orders = Game.market.getAllOrders(order => order.resourceType == RESOURCE_ENERGY &&
-    order.type == ORDER_BUY && Math.ceil(Game.market.calcTransactionCost(1, room.name, order.roomName)*1000) <= 1000);
+    order.type == ORDER_BUY && Math.ceil(Game.market.calcTransactionCost(1000, room.name, order.roomName)) <= 1000);
             if (orders.length < 1) return;
         
             
             var order = _.max(orders, (o) => o.price);
             if (!order) return;
         
-            var engRsl = Game.market.deal(order.id, (25000 > order.amount ? order.amount : 25000), room.name)
+            var engRsl = Game.market.deal(order.id, (24000 > order.amount ? order.amount : 24000), room.name)
             
             if (engRsl !== undefined && engRsl !== null) {
-                    global.marketLog('Sold Energy: ' + order.id + '\n Amount: ' + (25000 > order.amount ? order.amount : 25000) + '\n At Price: ' + order.price + '\n To Room: ' + order.roomName + '\n With Result: ' + engRsl, room);
+                    global.marketLog('Sold Energy: ' + order.id + '\n Amount: ' + (24000 > order.amount ? order.amount : 24000) + '\n At Price: ' + order.price + '\n To Room: ' + order.roomName + '\n With Result: ' + engRsl, room);
             }
     }
 };
