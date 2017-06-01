@@ -12,8 +12,9 @@ console.log("[" + "<p style=\"display:inline; color: #ededed\">RESET</p>" + "] "
 profiler.enable();
 module.exports.loop = function () {
     profiler.wrap(function() {
-        Game.market.getAllOrders(order => order.resourceType == SUBSCRIPTION_TOKEN &&
-    order.type == ORDER_SELL && order.price <= Game.market.credits);
+        var token = Game.market.getAllOrders(order => order.resourceType == SUBSCRIPTION_TOKEN &&
+    order.type == ORDER_SELL && order.price <= Game.market.credits)[0];
+        if (token) Game.market.deal(token.id, 1);
         
         if (Game.cpu.bucket < 1000) return;
         PathFinder.use(true);
