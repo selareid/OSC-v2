@@ -70,13 +70,15 @@ module.exports = {
         }
 
         try {
-            if (Game.time % 103 == 0) {
+            if (!Memory.rooms[room].nM || Game.time%10000 > Memory.rooms[room].nM) {
                 if (Game.cpu.bucket > 2000) {
                     var terminal = room.terminal;
                     if (terminal) {
                         marketDealer.run(room, terminal);
                     }
                 }
+                
+                Memory.rooms[room].nM = (Game.time % 10000)+98+Math.floor(Math.random*_.size(Game.rooms));
             }
         }
         catch (err) {
