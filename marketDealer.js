@@ -78,7 +78,8 @@ module.exports = {
     },
         
     sellEnergy: function (room, terminal) {
-            var orders = _.filter(Game.market.getAllOrders({type: ORDER_BUY, resourceType: RESOURCE_ENERGY}), (o) => Math.ceil(Game.market.calcTransactionCost(1, room.name, o.roomName)*1000) <= 1000);
+            var orders = Game.market.getAllOrders(order => order.resourceType == RESOURCE_ENERGY &&
+    order.type == ORDER_BUY && Math.ceil(Game.market.calcTransactionCost(1, room.name, o.roomName)*1000) <= 1000);
             if (orders.length < 1) return;
         
             
