@@ -3,7 +3,10 @@ require('global');
 module.exports = {
     run: function (room, terminal) {
         for (let resourceType in terminal.store) {
-            if (resourceType == RESOURCE_ENERGY) continue;
+            if (resourceType == RESOURCE_ENERGY) {
+                if (!room.storage.energy > 200000) continue;
+                else sellEnergy(room, terminal);
+            }
             let resource = terminal.store[resourceType];
             if (resource > 25000) {
 
@@ -72,5 +75,20 @@ module.exports = {
 
     getAvrg: function (allOrders) {
         return Math.floor((_.sum(allOrders, '.price') / allOrders.length * 100)) / 100; //average with only 2 decimal places
+    },
+        
+    sellEnergy: function (room, terminal) {
+            var orders = _.filter(Game.market.getAllOrders({type: ORDER_BUY, resourceType: RESOURCE_ENERGY}), (o) => Math.ceil(Game.market.calcTransactionCost(1, room.name, o.roomName)*1000) <= 1000);
+            if (order.length < 1) return;
+        
+            
+            var order = _.max(orders, (o) => o.price);
+            if (!order) return;
+        
+            var engRsl = Game.market.deal(order.id, (25000 > order.amount ? order.amount : 25000), room.name)
+            
+            if (engRsl !== undefined && engRsl !== null) {
+                    global.marketLog('Sold Energy: ' + order.id + '\n At Price: ' + order.price + '\n To Room: ' + order.roomName + '\n With Result: ' + engRsl, room);
+            }
     }
 };
