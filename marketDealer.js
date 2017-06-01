@@ -88,7 +88,7 @@ module.exports = {
             var engRsl = Game.market.deal(order.id, (25000 > order.amount ? order.amount : 25000), room.name)
             
             if (engRsl !== undefined && engRsl !== null) {
-                    global.marketLog('Sold Energy: ' + order.id + '\n At Price: ' + order.price + '\n To Room: ' + order.roomName + '\n With Result: ' + engRsl, room);
+                    global.marketLog('Sold Energy: ' + order.id + '\n Amount: ' + (25000 > order.amount ? order.amount : 25000) + '\n At Price: ' + order.price + '\n To Room: ' + order.roomName + '\n With Result: ' + engRsl, room);
             }
     }
 };
