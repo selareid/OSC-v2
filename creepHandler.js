@@ -52,7 +52,7 @@ module.exports = {
     },
 
     creepActions: function (creep, room = Game.rooms[creep.memory.room]) {
-        if (!room) {
+        if (!room || !room.controller || !room.controller.my) {
             creep.suicide()
         }
         else if (creep.spawning === false) {
